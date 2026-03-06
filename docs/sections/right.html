@@ -1,0 +1,158 @@
+<style>
+  .panelHeader{
+    padding: 14px 14px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .panelTitle{
+    margin:0;
+    font-size: 13px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.70);
+    font-weight: 900;
+  }
+  .panelBody{ padding: 14px; display:grid; gap:12px; }
+
+  .tag{
+    display:inline-flex; align-items:center; gap:6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight:900;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.03);
+    color: rgba(255,255,255,0.82);
+    white-space: nowrap;
+  }
+  .dot{ width:8px;height:8px;border-radius:999px;background: #19c37d; }
+
+  .stat{
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.03);
+    border-radius: 16px;
+    padding: 12px;
+  }
+  .statLabel{
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    font-weight: 900;
+    margin: 0 0 8px 0;
+  }
+  .statValue{
+    margin:0;
+    font-size: 24px;
+    font-weight: 950;
+  }
+  .mini{ margin: 8px 0 0; color: rgba(255,255,255,0.62); font-size: 13px; line-height:1.45; }
+
+  .mutedDivider{ margin: 12px 0; height: 1px; background: rgba(255,255,255,0.08); }
+
+  .balanceRow{ display:flex; gap:10px; margin-top: 10px; }
+  .balanceRow input{
+    flex:1;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.03);
+    color: rgba(255,255,255,0.95);
+    border-radius: 12px;
+    padding: 10px 10px;
+    outline:none;
+  }
+  .smallBtn{
+    border:0;
+    border-radius: 12px;
+    padding: 10px 12px;
+    cursor:pointer;
+    font-weight: 950;
+    color:#111;
+    background: linear-gradient(135deg, #ff6a00, #ff7f2a);
+    box-shadow: 0 16px 30px rgba(255,106,0,0.14);
+    white-space: nowrap;
+  }
+</style>
+
+<div class="panelHeader">
+  <h2 class="panelTitle">Overview</h2>
+  <span class="tag"><span class="dot"></span> Live</span>
+</div>
+
+<div class="panelBody">
+  <div class="stat">
+    <p class="statLabel">Monthly snapshot</p>
+    <p class="statValue" id="monthlyValue">—</p>
+    <p class="mini" id="monthlyHint">Income, expenses, and surplus.</p>
+
+    <div class="mutedDivider"></div>
+
+    <p class="mini" style="margin:0;">
+      Income: <span id="incomeValue">—</span><br/>
+      Expenses: <span id="expenseValue">—</span><br/>
+      Surplus: <span id="surplusValue">—</span>
+    </p>
+  </div>
+
+  <div class="stat">
+    <p class="statLabel">Current balance</p>
+    <p class="statValue" id="balanceValue">—</p>
+    <p class="mini">Update your balance to get smarter recommendations.</p>
+
+    <div class="balanceRow">
+      <input id="balanceInput" type="number" inputmode="decimal" placeholder="e.g. 1200" />
+      <button class="smallBtn" id="saveBalanceBtn">Update</button>
+    </div>
+
+    <div class="mutedDivider"></div>
+    <p class="mini" style="margin:0;">Tip: Use your “available to spend” cash balance.</p>
+  </div>
+</div>
+
+<script type="module">
+  function fmtMoney(currency, n){
+    const num = Number(n);
+    if (!Number.isFinite(num)) return "—";
+    return new Intl.NumberFormat(undefined, { style:"currency", currency, maximumFractionDigits: 0 }).format(num);
+  }
+
+  window.initRight = function initRight(session, profile){
+    const currency = profile.currency || "AED";
+    const income = Number(profile.income_monthly) || 0;
+    const expense = Number(profile.expense_monthly) || 0;
+    const surplus = income - expense;
+
+    document.getElementById("incomeValue").textContent = fmtMoney(currency, income);
+    document.getElementById("expenseValue").textContent = fmtMoney(currency, expense);
+    document.getElementById("surplusValue").textContent = fmtMoney(currency, surplus);
+
+    document.getElementById("monthlyValue").textContent =
+      `Surplus: ${fmtMoney(currency, surplus)} / month`;
+
+    // local balance per user
+    const BAL_KEY = `goalguard_balance_${session.user.id}`;
+    const balanceValueEl = document.getElementById("balanceValue");
+    const balanceInput = document.getElementById("balanceInput");
+
+    function loadBalance(){
+      const saved = localStorage.getItem(BAL_KEY);
+      const v = saved ? Number(saved) : 0;
+      balanceValueEl.textContent = fmtMoney(currency, v);
+    }
+
+    document.getElementById("saveBalanceBtn").addEventListener("click", () => {
+      const v = Number(balanceInput.value);
+      if (!Number.isFinite(v) || v < 0) {
+        alert("Please enter a valid balance.");
+        return;
+      }
+      localStorage.setItem(BAL_KEY, String(v));
+      balanceInput.value = "";
+      loadBalance();
+    });
+
+    loadBalance();
+  };
+</script>

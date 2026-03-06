@@ -1,0 +1,256 @@
+<style>
+  .panelHeader{
+    padding: 14px 14px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    min-width: 0;
+  }
+  .panelTitle{
+    margin:0;
+    font-size: 13px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.70);
+    font-weight: 900;
+    white-space: nowrap;
+  }
+  .panelBody{ padding: 14px; }
+
+  .tag{
+    display:inline-flex; align-items:center; gap:6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight:900;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.03);
+    color: rgba(255,255,255,0.82);
+    white-space: nowrap;
+    user-select:none;
+  }
+  .dot{ width:8px;height:8px;border-radius:999px;background: #19c37d; }
+
+  .btn{
+    border: 1px solid rgba(255,255,255,0.14);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.95);
+    border-radius: 12px;
+    padding: 10px 12px;
+    cursor:pointer;
+    font-weight:800;
+    white-space: nowrap;
+  }
+  .btn:hover{ background: rgba(255,255,255,0.08); }
+
+  .goalList{ display:flex; flex-direction:column; gap:10px; }
+  .goalItem{
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.03);
+    border-radius: 14px;
+  }
+  .goalTopRow{
+    display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+  }
+  .goalName{ font-weight:950; margin:0 0 4px 0; }
+  .goalMeta{ margin:0; color: rgba(255,255,255,0.62); font-size: 13px; line-height: 1.35; }
+  .goalFooter{
+    margin-top:10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .miniBadge{
+    font-size: 12px;
+    font-weight: 950;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.03);
+    white-space: nowrap;
+  }
+  .miniBadge.primary{ border-color: rgba(25,195,125,0.20); background: rgba(25,195,125,0.12); }
+  .miniBadge.secondary{ border-color: rgba(255,180,0,0.20); background: rgba(255,180,0,0.12); }
+
+  .note{ font-size: 12px; color: rgba(255,255,255,0.70); white-space: nowrap; }
+
+  .iconBtn{
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.85);
+    border-radius: 10px;
+    padding: 6px 10px;
+    cursor:pointer;
+    font-weight: 950;
+  }
+  .iconBtn.danger{
+    border-color: rgba(255,80,80,0.25);
+    background: rgba(255,80,80,0.10);
+  }
+
+  .small{ font-size:12px; color: rgba(255,255,255,0.65); }
+</style>
+
+<div class="panelHeader">
+  <h2 class="panelTitle">Goals</h2>
+  <div style="display:flex; gap:10px; align-items:center;">
+    <button class="btn" id="addGoalBtn" type="button">+ Add</button>
+    <span class="tag"><span class="dot"></span> Active</span>
+  </div>
+</div>
+
+<div class="panelBody">
+  <div class="goalList" id="goalsList"></div>
+  <div class="small" id="goalsHint" style="margin-top:10px;"></div>
+</div>
+
+<script type="module">
+  import { supabase } from "../supabaseClient.js";
+
+  function escapeHtml(s){
+    return String(s)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function fmtMoney(currency, n){
+    const num = Number(n);
+    if (!Number.isFinite(num)) return "";
+    return new Intl.NumberFormat(undefined, { style:"currency", currency, maximumFractionDigits: 0 }).format(num);
+  }
+
+  function daysUntil(dateStr){
+    const d = new Date(dateStr + "T00:00:00");
+    const now = new Date();
+    const diff = d.getTime() - now.getTime();
+    return Math.ceil(diff / (1000*60*60*24));
+  }
+
+  async function fetchProfile(userId){
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", userId)
+      .single();
+
+    if (error) throw error;
+    return data;
+  }
+
+  async function saveGoals(userId, goals){
+    const { error } = await supabase
+      .from("profiles")
+      .update({ goals })
+      .eq("id", userId);
+
+    if (error) throw error;
+  }
+
+  window.initLeft = async function initLeft(session, profile){
+    const goalsListEl = document.getElementById("goalsList");
+    const hintEl = document.getElementById("goalsHint");
+    const addBtn = document.getElementById("addGoalBtn");
+
+    let current = Array.isArray(profile.goals) ? profile.goals : [];
+    const currency = profile.currency || "AED";
+
+    function render(){
+      if (!current.length){
+        goalsListEl.innerHTML = "";
+        hintEl.textContent = "No goals yet. Click + Add to create one.";
+        return;
+      }
+
+      hintEl.textContent = `${current.length} goal(s)`;
+      goalsListEl.innerHTML = current.map(g => {
+        const badgeClass = (g.type === "Primary") ? "primary" : "secondary";
+        const due = g.deadline ? daysUntil(g.deadline) : null;
+
+        return `
+          <div class="goalItem" data-id="${escapeHtml(g.id)}">
+            <div class="goalTopRow">
+              <div style="min-width:0;">
+                <p class="goalName">${escapeHtml(g.name || "Goal")}</p>
+                <p class="goalMeta">
+                  Target: ${fmtMoney(currency, g.target)}${due !== null ? ` • Due: ${due} days` : ""}
+                </p>
+              </div>
+              <button class="iconBtn danger" data-action="remove" type="button">Remove</button>
+            </div>
+            <div class="goalFooter">
+              <span class="miniBadge ${badgeClass}">${escapeHtml(g.type || "Secondary")}</span>
+              <span class="note">${g.weekly ? `Weekly: ${fmtMoney(currency, g.weekly)}` : ""}</span>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      goalsListEl.querySelectorAll('[data-action="remove"]').forEach(btn=>{
+        btn.addEventListener("click", async (e)=>{
+          const card = e.currentTarget.closest(".goalItem");
+          const id = card?.dataset?.id;
+          if (!id) return;
+
+          if (!confirm("Remove this goal?")) return;
+
+          current = current.filter(x => x.id !== id);
+          await saveGoals(session.user.id, current);
+
+          // tell center/right to refresh
+          window.dispatchEvent(new CustomEvent("goalguard:profileUpdated"));
+          render();
+        });
+      });
+    }
+
+    addBtn.addEventListener("click", async ()=>{
+      // simple prompt-based add (fast). we can replace with modal later like before.
+      const name = prompt("Goal name (e.g. House Downpayment)?");
+      if (!name) return;
+
+      const target = Number(prompt("Target amount? (number)"));
+      if (!Number.isFinite(target) || target <= 0) return alert("Invalid target.");
+
+      const deadline = prompt("Deadline (YYYY-MM-DD)?");
+      if (!deadline) return alert("Deadline required.");
+
+      const type = prompt("Type: Primary or Secondary?", "Secondary") || "Secondary";
+
+      const weekly = Number(prompt("Weekly contribution? (optional, number)", "0"));
+      const goal = {
+        id: crypto.randomUUID(),
+        name,
+        target,
+        deadline,
+        weekly: Number.isFinite(weekly) ? weekly : 0,
+        type: (type === "Primary") ? "Primary" : "Secondary",
+      };
+
+      current = [goal, ...current];
+      await saveGoals(session.user.id, current);
+
+      window.dispatchEvent(new CustomEvent("goalguard:profileUpdated"));
+      render();
+    });
+
+    // refresh if something else updated profile
+    window.addEventListener("goalguard:profileUpdated", async ()=>{
+      try{
+        const fresh = await fetchProfile(session.user.id);
+        current = Array.isArray(fresh.goals) ? fresh.goals : [];
+        render();
+      }catch(e){
+        console.error(e);
+      }
+    });
+
+    render();
+  };
+</script>

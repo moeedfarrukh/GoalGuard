@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GoalGuard</title>
+  <link rel="icon" href="./favicon.png" type="image/png">
+
+  <!-- Bootstrap (optional) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- CSS in same folder (docs/) -->
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <!-- NAV -->
+  <nav class="gg-nav">
+    <div class="gg-nav-inner">
+      <a class="gg-brand" href="#top">GoalGuard</a>
+
+      <div class="gg-nav-links">
+        <a class="gg-link" href="#how">How it works</a>
+        <a class="gg-link" href="#features">Features</a>
+        <a class="gg-link" href="#goals">Demo</a>
+      </div>
+
+      <div class="gg-nav-actions">
+        <button type="button" class="gg-btn gg-btn-ghost" id="navSignInBtn">
+          Sign In
+        </button>
+        <button type="button" class="gg-btn gg-btn-solid" id="navSignUpBtn">
+          Sign Up
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main scroll/snap container -->
+  <main id="top" class="gg-snap">
+
+    <!-- HERO -->
+    <section class="gg-snap-section">
+      <div class="gg-container gg-hero-clean">
+
+        <h1 class="gg-title">NEW ERA OF SMART SAVINGS</h1>
+
+        <p class="gg-sub">
+          Master real finance decisions with a coach that listens, refines, and adapts to you.<br />
+          Like having a trusted money mentor in your pocket — ready whenever you need clarity.
+        </p>
+
+        <div class="gg-cta-wrap">
+          <a class="gg-cta" href="#start">Start saving for free →</a>
+        </div>
+
+        <div class="gg-note">No card required • Free tool • Cancel anytime</div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="gg-snap-section">
+      <div class="gg-container gg-section gg-steps">
+        <div class="gg-steps-head gg-reveal" data-delay="0">
+          <h2>Faster. Smarter.</h2>
+          <div class="gg-steps-sub">Set up your finance guardrails in minutes — then chat like WhatsApp.</div>
+        </div>
+
+        <div class="gg-steps-row">
+          <div class="gg-step-card gg-reveal" data-delay="1">
+            <div class="gg-step-badge">1</div>
+            <h3>Set your goals</h3>
+            <p>Add <b>Primary</b> and <b>Secondary</b> goals so GoalGuard knows what to protect.</p>
+            <div class="gg-step-mini">
+              <span class="gg-chip">Primary</span>
+              <span class="gg-chip">Secondary</span>
+            </div>
+          </div>
+
+          <div class="gg-step-arrow">→</div>
+
+          <div class="gg-step-card gg-reveal" data-delay="2">
+            <div class="gg-step-badge">2</div>
+            <h3>Set your income & liabilities</h3>
+            <p>Add salary, fixed bills, and living costs — we calculate what’s truly safe to spend.</p>
+            <div class="gg-step-mini">
+              <span class="gg-chip">Salary</span>
+              <span class="gg-chip">Bills</span>
+              <span class="gg-chip">Living</span>
+            </div>
+          </div>
+
+          <div class="gg-step-arrow">→</div>
+
+          <div class="gg-step-card gg-step-accent gg-reveal" data-delay="3">
+            <div class="gg-step-badge gg-step-badge-accent">3</div>
+            <h3>Select the bot style</h3>
+            <p>Pick how you want the coach to talk: strict, friendly, or balanced.</p>
+
+            <div class="gg-step-mini gg-step-mini-stack">
+              <div class="gg-style-row"><span class="gg-style-dot"></span><span>Strict</span></div>
+              <div class="gg-style-row"><span class="gg-style-dot"></span><span>Friendly</span></div>
+              <div class="gg-style-row"><span class="gg-style-dot"></span><span>Balanced</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="gg-snap-section">
+      <div class="gg-container gg-features">
+        <div class="gg-features-head gg-reveal">
+          <h2 class="gg-features-title">
+            Spend smarter with<br />
+            <span class="gg-dim">intelligent feedback</span>
+          </h2>
+          <p class="gg-features-sub">
+            GoalGuard doesn’t just track — it analyzes, protects, and guides your decisions toward your goals.
+          </p>
+        </div>
+
+        <div class="gg-features-grid">
+          <div class="gg-feature-card gg-reveal gg-green" data-delay="1">
+            <div class="gg-feature-top">
+              <div class="gg-feature-icon">📈</div>
+              <div class="gg-feature-border"></div>
+            </div>
+            <h3 class="gg-feature-h">Track your savings</h3>
+            <p class="gg-feature-p">
+              See what’s safe to spend after protecting primary goals — with clear monthly progress.
+            </p>
+            <div class="gg-feature-mini">
+              <div class="gg-mini-bars">
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+              </div>
+              <div class="gg-mini-note">↑ 23% this week</div>
+            </div>
+          </div>
+
+          <div class="gg-feature-card gg-reveal gg-purple" data-delay="2">
+            <div class="gg-feature-top">
+              <div class="gg-feature-icon">🎯</div>
+              <div class="gg-feature-border"></div>
+            </div>
+            <h3 class="gg-feature-h">Set new goals that support existing goals</h3>
+            <p class="gg-feature-p">
+              Add secondary goals without breaking your primary plan — get timelines and tradeoffs instantly.
+            </p>
+            <div class="gg-feature-mini">
+              <div class="gg-mini-ring">
+                <div class="gg-ring">92<span>%</span></div>
+              </div>
+              <div class="gg-mini-wave">
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="gg-feature-card gg-reveal gg-pink" data-delay="3">
+            <div class="gg-feature-top">
+              <div class="gg-feature-icon">🛡️</div>
+              <div class="gg-feature-border"></div>
+            </div>
+            <h3 class="gg-feature-h">Smart purchase guard</h3>
+            <p class="gg-feature-p">
+              Ask “Can I buy this?” and GoalGuard will tell you the impact on goals before you spend.
+            </p>
+            <div class="gg-feature-mini">
+              <div class="gg-chip-row">
+                <span class="gg-chip">House Fund</span>
+                <span class="gg-chip accent">PS5</span>
+                <span class="gg-chip">Trip</span>
+                <span class="gg-chip accent">Rent</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GOALS -->
+    <section id="goals" class="gg-goals gg-snap-section">
+      <div class="gg-container gg-goals">
+        <div class="gg-goals-head gg-reveal">
+          <h2 class="gg-goals-title">Goals <span class="gg-dim">Explorer</span></h2>
+          <p class="gg-goals-sub">
+            Left: goals you’ve selected. Right: common goals people usually pick.
+          </p>
+        </div>
+
+        <div class="gg-goals-shell gg-goals-shell-v2">
+          <aside class="gg-rail">
+            <div class="gg-rail-label">YOUR GOALS</div>
+
+            <button class="gg-rail-item is-active" type="button">
+              <div class="gg-rail-main">
+                <div class="gg-rail-name">House Fund</div>
+                <div class="gg-rail-meta">Primary • Monthly</div>
+              </div>
+              <div class="gg-rail-check">✓</div>
+            </button>
+
+            <button class="gg-rail-item" type="button">
+              <div class="gg-rail-main">
+                <div class="gg-rail-name">Emergency Fund</div>
+                <div class="gg-rail-meta">Primary • Safety</div>
+              </div>
+              <div class="gg-rail-check">✓</div>
+            </button>
+
+            <button class="gg-rail-item" type="button">
+              <div class="gg-rail-main">
+                <div class="gg-rail-name">Trip</div>
+                <div class="gg-rail-meta">Secondary • Flexible</div>
+              </div>
+              <div class="gg-rail-check">✓</div>
+            </button>
+
+            <button class="gg-rail-add" type="button">+ Add a goal</button>
+          </aside>
+
+          <div class="gg-panel">
+            <div class="gg-panel-top">
+              <div>
+                <h3 class="gg-panel-title">Common goals</h3>
+                <p class="gg-panel-sub">Popular choices — pick any to add later (static for now).</p>
+              </div>
+              <div class="gg-panel-badge">SUGGESTED</div>
+            </div>
+
+            <div class="gg-common-grid">
+              <div class="gg-common-card"><div class="gg-common-icon">🏠</div><div class="gg-common-text">Down payment</div></div>
+              <div class="gg-common-card"><div class="gg-common-icon">🚗</div><div class="gg-common-text">Car fund</div></div>
+              <div class="gg-common-card"><div class="gg-common-icon">🎓</div><div class="gg-common-text">Education</div></div>
+              <div class="gg-common-card"><div class="gg-common-icon">💳</div><div class="gg-common-text">Pay off debt</div></div>
+              <div class="gg-common-card"><div class="gg-common-icon">✈️</div><div class="gg-common-text">Travel</div></div>
+              <div class="gg-common-card"><div class="gg-common-icon">🧾</div><div class="gg-common-text">Bills buffer</div></div>
+              <div class="gg-common-card"><div class="gg-common-icon">📦</div><div class="gg-common-text">Business fund</div></div>
+              <div class="gg-common-card"><div class="gg-common-icon">🛡️</div><div class="gg-common-text">Insurance reserve</div></div>
+              <div class="gg-common-card"><div class="gg-common-icon">📈</div><div class="gg-common-text">Investing</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section id="start" class="gg-snap-section">
+      <div class="gg-container gg-final">
+        <h2 class="gg-final-title">Ready to start saving smarter?</h2>
+
+        <p class="gg-final-sub">
+          Get a finance coach that protects your goals and improves your decisions — in minutes.
+        </p>
+
+        <a class="gg-final-btn" id="startSavingBtn" href="#">
+          Start saving for free <span class="gg-final-arrow">→</span>
+        </a>
+
+        <div class="gg-final-note">No card required • Cancel anytime</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Reveal animation -->
+  <script>
+    (function(){
+      const els = document.querySelectorAll('.gg-reveal');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(el => el.classList.add('is-visible'));
+        return;
+      }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      els.forEach(el => io.observe(el));
+    })();
+  </script>
+
+  <!-- ✅ Correct routing logic -->
+  <script type="module">
+    import { supabase } from "./supabaseClient.js";
+
+    // Buttons
+    const navSignInBtn = document.getElementById("navSignInBtn");
+    const navSignUpBtn = document.getElementById("navSignUpBtn");
+    const startSavingBtn = document.getElementById("startSavingBtn");
+
+    // ✅ REQUIRED BY YOU:
+    // Always open the pages first. Routing happens AFTER login on signin page.
+    navSignInBtn?.addEventListener("click", () => {
+      window.location.href = "./signin.html";
+    });
+
+    navSignUpBtn?.addEventListener("click", () => {
+      window.location.href = "./signup.html";
+    });
+
+    // CTA: if logged in -> setup/dashboard; else -> signup
+    function hasCompletedSetup(userId){
+      try{
+        const raw = localStorage.getItem(`goalguard_profile_${userId}`);
+        if (!raw) return false;
+        const profile = JSON.parse(raw);
+
+        // Your setup page uses setupCompletedAt
+        if (profile?.setupCompletedAt) return true;
+
+        const hasBasics =
+          profile &&
+          typeof profile.currencyCode === "string" &&
+          Number.isFinite(Number(profile.incomeMonthly)) &&
+          Number.isFinite(Number(profile.expensesMonthly));
+
+        return !!hasBasics;
+      } catch {
+        return false;
+      }
+    }
+
+    function routeAfterAuth(session){
+      const user = session?.user;
+      if (!user?.id) {
+        window.location.href = "./signin.html";
+        return;
+      }
+      if (hasCompletedSetup(user.id)) window.location.href = "./dashboard.html";
+      else window.location.href = "./setup.html";
+    }
+
+    startSavingBtn?.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const { data } = await supabase.auth.getSession();
+      if (data?.session) routeAfterAuth(data.session);
+      else window.location.href = "./signup.html";
+    });
+  </script>
+</body>
+</html>

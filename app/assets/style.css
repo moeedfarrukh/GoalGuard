@@ -1,0 +1,1083 @@
+/* =========================
+   GoalGuard — style.css
+   (No hero card, mo-talk style)
+   ========================= */
+
+/* ===== Global page ===== */
+:root{
+  --mirage:#16232A;
+  --orange:#FF5B04;
+  --sea:#075056;
+  --sand:#E4EEF0;
+
+  /* ⭐ FIXED palette */
+  --bg1:#16232A;   /* Mirage */
+  --bg2:#0F1A20;   /* darker Mirage */
+
+  --textLight:#EAF4F7;
+  --muted:rgba(234,244,247,0.65);
+  --border:rgba(255,255,255,0.08);
+}
+
+/* Premium bar at very top */
+.top-premium-bar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  z-index: 9999;
+  background: linear-gradient(90deg, #060A14, #0A0F1C, #003049);
+}
+
+/* ===== NAV LAYOUT ===== */
+.gg-nav{
+   display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 28px;
+  border-radius:18px;
+  background: #0F1A20;
+  border:1px solid rgba(255,255,255,0.06);
+  max-width: 1460px;
+  margin: 0 auto;
+}
+
+/* Brand (GoalGuard badge) */
+.gg-brand{
+  color:var(--sand);
+  font-weight:900;
+  padding:8px 16px;
+  border-radius:14px;
+  background: rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+/* ===== Middle LINKS (not pills anymore) ===== */
+.gg-nav-mid{
+  display:flex;
+  gap: 26px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gg-link{
+  color: var(--muted);
+  font-weight: 700;
+  text-decoration:none;
+  position: relative;
+  padding-bottom: 4px;
+  transition: 0.25s ease;
+}
+
+/* Hover underline animation */
+.gg-link:after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:0;
+  height:2px;
+  background: var(--orange);
+  transition:0.25s ease;
+}
+
+.gg-link:hover{
+  color: var(--sand);
+}
+
+.gg-link:hover:after{
+  width:100%;
+}
+
+/* ===== Right side buttons ===== */
+.gg-btn{
+  padding:8px 16px;
+  border-radius:14px;
+  text-decoration:none;
+  font-weight:800;
+}
+
+.gg-btn.ghost{
+  color: var(--sand);
+  border:1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+}
+
+.gg-btn.primary{
+  background: var(--orange);
+  color:white;
+  border: none;
+}
+
+/* ⭐ FIXED background conflict */
+html, body,.stAPP{
+  background: transparent;
+  height: 100%;
+}
+
+body{
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: linear-gradient(180deg, var(--bg1), var(--bg2));
+  color: var(--textLight);
+  padding-top: 24px;
+}
+
+/* ===== Wrapper shell around page content ===== */
+.gg-shell{
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 80px 16px 16px; 
+}
+
+/* ===== Top Nav ===== */
+.gg-nav{
+  position: fixed;
+  top: 10px;
+  left: 0;
+  width: 100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 12px 28px;
+  background: rgba(22,35,42,0.85);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(14px);
+  z-index: 9998;
+}
+
+.gg-nav-left, .gg-nav-mid, .gg-nav-right{
+  display:flex;
+  gap: 12px;
+  align-items:center;
+}
+
+.gg-brand{
+  font-weight: 900;
+  color: var(--textLight);
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Nav buttons */
+.gg-btn{
+  font-weight: 800;
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: rgba(228,238,240,0.08);
+  border: 1px solid rgba(228,238,240,0.18);
+  color: var(--sand);
+}
+
+.gg-btn.primary{
+  background: rgba(7,80,86,0.18);
+  border:1px solid rgba(7,80,86,0.35);
+  color: var(--sand);
+}
+
+/* HERO */
+.gg-hero-clean{
+  text-align: center;
+  padding: 110px 20px 80px;
+}
+
+.gg-pill{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+  color: rgba(255,255,255,0.92);
+  font-weight: 900;
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+.gg-title{
+  margin: 22px 0 0;
+  font-size: 58px;
+  font-weight: 950;
+  letter-spacing: 0.5px;
+  color: var(--sand);
+}
+
+.gg-sub{
+  margin: 18px auto 0;
+  max-width: 760px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.gg-cta-wrap{
+  margin-top: 26px;
+  display:flex;
+  justify-content:center;
+}
+
+.gg-cta{
+  display:inline-block;
+  background: var(--orange);
+  color:white;
+  border:1px solid rgba(0,0,0,0.15);
+  font-weight:950;
+  border-radius:16px;
+  padding:14px 22px;
+  box-shadow:0 14px 40px rgba(255,91,4,0.35);
+}
+
+.gg-note{
+  margin-top: 14px;
+  color: rgba(255,255,255,0.72);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* Scroll Sections */
+.gg-section{
+  margin-top: 26px;
+  padding: 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(18,22,34,0.45);
+  backdrop-filter: blur(12px);
+}
+
+.gg-section h2{
+  margin: 0 0 14px 0;
+  color: var(--sand);
+  font-size: 22px;
+  font-weight: 950;
+}
+
+.gg-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.gg-card{
+  padding: 16px;
+  background: rgba(22,35,42,0.75);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+
+.gg-card h3{
+  margin: 0 0 8px 0;
+  color: var(--sand);
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.gg-card p{
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+  font-size: 13.5px;
+}
+
+@media (max-width: 980px){
+  .gg-grid{ grid-template-columns: 1fr; }
+  .gg-title{ font-size: 38px; }
+  .gg-hero-clean{ padding: 80px 14px 60px; }
+}
+
+ /*===== Hero spotlight glow (mo-talk style) ===== */
+.gg-hero-clean{
+  position: relative;
+  overflow: visible;
+}
+
+.gg-hero-clean:before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:30%;
+  transform: translate(-50%, -50%);
+  width: 900px;
+  height: 420px;
+  background: radial-gradient(circle,
+    rgba(255,91,4,0.18) 0%,
+    rgba(7,80,86,0.14) 35%,
+    rgba(0,0,0,0.00) 70%
+  );
+  filter: blur(18px);
+  z-index: -1;
+}
+/* =========================
+   Steps section (replaces How it works)
+   ========================= */
+
+.gg-steps{
+  padding: 28px 22px;
+}
+
+.gg-steps-head h2{
+  margin: 0;
+  font-size: 44px;
+  font-weight: 950;
+  letter-spacing: 0.2px;
+  color: var(--sand);
+}
+
+.gg-steps-sub{
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 16px;
+  max-width: 720px;
+}
+
+/* Row layout */
+.gg-steps-row{
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 18px;
+  align-items: center;
+}
+
+/* Card */
+.gg-step-card{
+  position: relative;
+  min-height: 240px;
+  padding: 22px;
+  border-radius: 22px;
+  background: rgba(0,0,0,0.20);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 24px 70px rgba(0,0,0,0.35);
+}
+
+.gg-step-card h3{
+  margin: 16px 0 8px 0;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--sand);
+}
+
+.gg-step-card p{
+  margin: 0;
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+/* Badge */
+.gg-step-badge{
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 950;
+  color: var(--sand);
+  background: rgba(228,238,240,0.08);
+  border: 1px solid rgba(228,238,240,0.16);
+}
+
+.gg-step-accent{
+  border-color: rgba(255,91,4,0.25);
+  box-shadow: 0 24px 80px rgba(255,91,4,0.12);
+}
+
+.gg-step-badge-accent{
+  background: rgba(255,91,4,0.18);
+  border: 1px solid rgba(255,91,4,0.28);
+}
+
+/* Arrow */
+.gg-step-arrow{
+  font-size: 28px;
+  color: rgba(228,238,240,0.35);
+  font-weight: 900;
+  transform: translateY(-6px);
+}
+
+/* Mini UI bits */
+.gg-step-mini{
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.gg-chip{
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.22);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(234,244,247,0.85);
+  font-weight: 800;
+  font-size: 12px;
+}
+
+/* Bot style list */
+.gg-step-mini-stack{
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gg-style-row{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(234,244,247,0.85);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.gg-style-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255,91,4,0.8);
+  box-shadow: 0 0 0 6px rgba(255,91,4,0.12);
+}
+
+/* Responsive */
+@media (max-width: 1100px){
+  .gg-steps-row{
+    grid-template-columns: 1fr;
+  }
+  .gg-step-arrow{
+    display: none;
+  }
+  .gg-steps-head h2{
+    font-size: 34px;
+  }
+}
+
+/* =========================
+   Hover glow (Step cards)
+   ========================= */
+
+.gg-step-card{
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease;
+  will-change: transform;
+}
+
+.gg-step-card:hover{
+  transform: translateY(-6px);
+  border-color: rgba(255,255,255,0.14);
+  box-shadow:
+    0 28px 80px rgba(0,0,0,0.48),
+    0 0 0 1px rgba(255,255,255,0.06) inset;
+  background: rgba(0,0,0,0.24);
+}
+
+/* Orange “accent” card extra glow */
+.gg-step-card.gg-step-accent:hover{
+  border-color: rgba(255,91,4,0.34);
+  box-shadow:
+    0 30px 90px rgba(0,0,0,0.50),
+    0 18px 70px rgba(255,91,4,0.16);
+}
+
+/* Make arrow subtly brighten when hovering near it (optional) */
+.gg-steps-row:hover .gg-step-arrow{
+  color: rgba(228,238,240,0.45);
+  transition: color 200ms ease;
+}
+
+/* =========================
+   Scroll reveal animation
+   ========================= */
+
+/* Initial hidden state */
+.gg-reveal{
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 650ms ease, transform 650ms ease;
+}
+
+/* Visible */
+.gg-reveal.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Slight stagger feels nicer */
+.gg-step-card.gg-reveal{
+  transition-delay: 0ms;
+}
+.gg-step-card.gg-reveal[data-delay="1"]{ transition-delay: 80ms; }
+.gg-step-card.gg-reveal[data-delay="2"]{ transition-delay: 160ms; }
+.gg-step-card.gg-reveal[data-delay="3"]{ transition-delay: 240ms; }
+
+/* =========================
+   FEATURES (mo-talk style)
+   ========================= */
+
+.gg-features{
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 90px 16px 20px;
+}
+
+.gg-features-head{
+  max-width: 720px;
+  margin: 0 0 26px 0;
+}
+
+.gg-features-title{
+  margin: 0;
+  font-size: 56px;
+  line-height: 1.02;
+  font-weight: 950;
+  color: var(--sand);
+  letter-spacing: 0.2px;
+}
+
+.gg-features-title .gg-dim{
+  color: rgba(228,238,240,0.60);
+}
+
+.gg-features-sub{
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.gg-features-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 26px;
+}
+
+/* Card base */
+.gg-feature-card{
+  border-radius: 22px;
+  padding: 22px;
+  background: rgba(10,14,22,0.55);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.55);
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+/* Colored top line */
+.gg-feature-border{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  opacity: 0.95;
+}
+
+.gg-feature-top{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.gg-feature-icon{
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+/* Titles & text */
+.gg-feature-h{
+  margin: 0;
+  font-size: 22px;
+  font-weight: 950;
+  color: var(--sand);
+}
+
+.gg-feature-p{
+  margin: 10px 0 0;
+  color: rgba(228,238,240,0.65);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 66px;
+}
+
+/* Mini panel inside card */
+.gg-feature-mini{
+  margin-top: 18px;
+  border-radius: 18px;
+  padding: 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+/* Color accents */
+.gg-green .gg-feature-border{ background: linear-gradient(90deg, rgba(59,240,189,0.0), rgba(59,240,189,0.9), rgba(59,240,189,0.0)); }
+.gg-purple .gg-feature-border{ background: linear-gradient(90deg, rgba(160,120,255,0.0), rgba(160,120,255,0.9), rgba(160,120,255,0.0)); }
+.gg-pink .gg-feature-border{ background: linear-gradient(90deg, rgba(255,92,178,0.0), rgba(255,92,178,0.9), rgba(255,92,178,0.0)); }
+
+/* Hover lift */
+.gg-feature-card:hover{
+  transform: translateY(-6px);
+  border-color: rgba(255,255,255,0.18);
+  box-shadow: 0 28px 100px rgba(0,0,0,0.65);
+}
+
+/* Mini visuals */
+.gg-mini-bars{
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  align-items: end;
+  height: 60px;
+}
+.gg-mini-bars span{
+  display:block;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.16);
+  height: 20px;
+}
+.gg-mini-bars span:nth-child(1){ height: 22px; }
+.gg-mini-bars span:nth-child(2){ height: 34px; }
+.gg-mini-bars span:nth-child(3){ height: 26px; }
+.gg-mini-bars span:nth-child(4){ height: 40px; }
+.gg-mini-bars span:nth-child(5){ height: 34px; }
+.gg-mini-bars span:nth-child(6){ height: 48px; }
+.gg-mini-bars span:nth-child(7){ height: 54px; }
+
+.gg-mini-note{
+  margin-top: 10px;
+  font-weight: 800;
+  color: rgba(228,238,240,0.75);
+  font-size: 13px;
+}
+
+/* Ring */
+.gg-mini-ring{
+  display:flex;
+  align-items:center;
+  gap: 14px;
+}
+.gg-ring{
+  width: 70px;
+  height: 70px;
+  border-radius: 999px;
+  display:grid;
+  place-items:center;
+  font-weight: 950;
+  font-size: 24px;
+  color: var(--sand);
+  border: 6px solid rgba(255,255,255,0.14);
+  box-shadow: inset 0 0 0 10px rgba(255,255,255,0.02);
+}
+.gg-ring span{
+  font-size: 13px;
+  margin-left: 2px;
+  color: rgba(228,238,240,0.7);
+}
+
+/* Wave */
+.gg-mini-wave{
+  flex: 1;
+  display:flex;
+  gap: 6px;
+  align-items:center;
+  justify-content:center;
+}
+.gg-mini-wave span{
+  width: 6px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.16);
+  height: 18px;
+}
+.gg-mini-wave span:nth-child(1){height: 16px;}
+.gg-mini-wave span:nth-child(2){height: 26px;}
+.gg-mini-wave span:nth-child(3){height: 34px;}
+.gg-mini-wave span:nth-child(4){height: 42px;}
+.gg-mini-wave span:nth-child(5){height: 42px;}
+.gg-mini-wave span:nth-child(6){height: 34px;}
+.gg-mini-wave span:nth-child(7){height: 26px;}
+.gg-mini-wave span:nth-child(8){height: 18px;}
+
+/* Chips */
+.gg-chip-row{
+  display:flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.gg-chip{
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 13px;
+  color: rgba(228,238,240,0.75);
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+}
+.gg-chip.accent{
+  color: #ffd6ea;
+  border-color: rgba(255,92,178,0.35);
+  background: rgba(255,92,178,0.12);
+}
+
+.gg-mini-big{
+  margin-top: 16px;
+  display:flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.gg-mini-num{
+  font-size: 34px;
+  font-weight: 950;
+  color: #ff7ac5;
+}
+.gg-mini-label{
+  color: rgba(228,238,240,0.65);
+  font-weight: 800;
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  .gg-features-title{ font-size: 40px; }
+  .gg-features-grid{ grid-template-columns: 1fr; }
+}
+
+/* =========================
+   Scroll reveal animation
+   ========================= */
+.gg-reveal{
+  opacity: 0;
+  transform: translateY(18px);
+  transition: 700ms ease;
+}
+
+.gg-reveal.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+.gg-reveal[data-delay="1"].is-visible{ transition-delay: 0.08s; }
+.gg-reveal[data-delay="2"].is-visible{ transition-delay: 0.16s; }
+.gg-reveal[data-delay="3"].is-visible{ transition-delay: 0.24s; }
+
+/* =========================
+   Goals Explorer (left rail + right panel)
+   ========================= */
+
+.gg-goals{
+  padding: 40px 0 10px;
+}
+
+.gg-goals-head{
+  max-width: 1100px;
+  margin: 0 auto 20px;
+  padding: 0 16px;
+}
+
+.gg-goals-title{
+  margin: 0;
+  font-size: 52px;
+  font-weight: 950;
+  letter-spacing: 0.2px;
+  color: var(--sand);
+}
+.gg-goals-title .gg-dim{
+  color: rgba(228,238,240,0.60);
+  font-weight: 900;
+}
+
+.gg-goals-sub{
+  margin: 12px 0 0;
+  max-width: 760px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.gg-goals-shell{
+  max-width: 1220px;
+  margin: 24px auto 0;
+  padding: 22px;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(10,14,20,0.28);
+  backdrop-filter: blur(10px);
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 18px;
+}
+
+.gg-rail{
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(0,0,0,0.22);
+  padding: 14px;
+}
+
+.gg-rail-label{
+  font-size: 12px;
+  letter-spacing: 1.2px;
+  font-weight: 900;
+  color: rgba(228,238,240,0.55);
+  margin: 6px 8px 14px;
+}
+
+.gg-rail-item{
+  width: 100%;
+  text-align: left;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  border-radius: 16px;
+  padding: 14px 14px;
+  margin-bottom: 12px;
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 14px;
+  cursor: pointer;
+  transition: 220ms ease;
+}
+
+.gg-rail-item:hover{
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.05);
+}
+
+.gg-rail-item.is-active{
+  background: linear-gradient(135deg, rgba(255,91,4,0.18), rgba(255,91,4,0.06));
+  border-color: rgba(255,91,4,0.35);
+}
+
+.gg-rail-main{ display:flex; flex-direction:column; gap: 6px; }
+.gg-rail-name{
+  color: var(--sand);
+  font-weight: 950;
+  font-size: 16px;
+}
+.gg-rail-meta{
+  color: rgba(228,238,240,0.55);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.gg-rail-check{
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
+  flex: 0 0 auto;
+}
+
+.gg-panel{
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(0,0,0,0.18);
+  padding: 18px;
+  min-height: 420px;
+}
+
+.gg-panel-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.gg-panel-title{
+  margin: 0;
+  color: var(--sand);
+  font-size: 28px;
+  font-weight: 950;
+}
+
+.gg-panel-sub{
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.55;
+  max-width: 720px;
+}
+
+.gg-panel-badge{
+  font-weight: 950;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
+  color: rgba(228,238,240,0.85);
+}
+
+.gg-panel-grid{
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.gg-goal-card{
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(22,35,42,0.52);
+  transition: 220ms ease;
+}
+
+.gg-goal-card:hover{
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.16);
+  background: rgba(22,35,42,0.66);
+}
+
+.gg-goal-card h4{
+  margin: 0 0 8px;
+  color: var(--sand);
+  font-weight: 950;
+  font-size: 15px;
+}
+
+.gg-goal-card p{
+  margin: 0;
+  color: rgba(228,238,240,0.62);
+  line-height: 1.5;
+  font-size: 13.5px;
+}
+
+.gg-panel-foot{
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  color: rgba(228,238,240,0.70);
+  font-size: 13.5px;
+  display:flex;
+  gap: 8px;
+  align-items:center;
+}
+
+.gg-foot-hint{
+  color: rgba(255,91,4,0.95);
+  font-weight: 950;
+}
+
+/* responsive */
+@media (max-width: 1060px){
+  .gg-goals-shell{
+    grid-template-columns: 1fr;
+  }
+  .gg-panel-grid{
+    grid-template-columns: 1fr;
+  }
+  .gg-goals-title{
+    font-size: 40px;
+  }
+}
+
+/* =========================
+   Final CTA Slide
+   ========================= */
+
+.gg-final{
+  padding: 120px 16px 120px;
+  text-align: center;
+}
+
+.gg-final-title{
+  margin: 0;
+  font-size: 56px;
+  font-weight: 950;
+  color: var(--sand);
+  letter-spacing: 0.2px;
+}
+
+.gg-final-sub{
+  margin: 14px auto 0;
+  max-width: 720px;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.gg-final-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+
+  background: var(--orange);   /* ← same orange as first slide */
+  color:white;
+  text-decoration:none;
+
+  padding:16px 26px;
+  border-radius:20px;
+  font-weight:900;
+  font-size:17px;
+
+  box-shadow:0 16px 50px rgba(255,91,4,0.35);
+  transition:0.25s ease;
+}
+
+.gg-final-btn:hover{
+  transform: translateY(-2px);
+  box-shadow:0 22px 60px rgba(255,91,4,0.45);
+}
+
+.gg-final-icon{
+  display:inline-flex;
+  width: 28px;
+  height: 28px;
+  align-items:center;
+  justify-content:center;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.10);
+}
+
+.gg-final-arrow{
+  font-size: 22px;
+  margin-left: 2px;
+  opacity: 0.95;
+}
+
+.gg-final-note{
+  margin-top: 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(228,238,240,0.55);
+}
+
+/* responsive */
+@media (max-width: 900px){
+  .gg-final{ padding: 90px 14px 90px; }
+  .gg-final-title{ font-size: 40px; }
+  .gg-final-sub{ font-size: 15.5px; }
+  .gg-final-btn{ font-size: 16px; padding: 16px 22px; }
+}
+
+/* ===== Full screen slide sections ===== */
+.gg-slide{
+  min-height: 100vh;        /* take full screen height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* vertical center */
+  align-items: center;
+  padding: 80px 16px;
+  box-sizing: border-box;
+}
+
+

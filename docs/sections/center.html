@@ -1,0 +1,202 @@
+<style>
+  .panelBody{ padding: 14px; }
+
+  .hero{
+    padding: 18px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+    border-radius: 18px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:-120px -120px auto -120px;
+    height: 260px;
+    background: radial-gradient(circle at 50% 40%, rgba(255,106,0,0.16), transparent 65%);
+    pointer-events:none;
+  }
+  .heroInner{ position:relative; z-index:1; }
+  .heroIcon{
+    width:44px;height:44px;border-radius:14px;
+    display:grid;place-items:center;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    margin-bottom: 10px;
+    font-size: 22px;
+  }
+  .heroTitle{ margin:0 0 6px 0; font-size: 26px; font-weight: 950; }
+  .heroSub{ margin:0; color: rgba(255,255,255,0.62); line-height: 1.55; max-width: 70ch; }
+
+  .sectionTitle{
+    margin: 18px 0 10px;
+    font-size: 13px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.70);
+    font-weight: 900;
+  }
+
+  .healthGrid{
+    display:grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  @media (max-width: 760px){ .healthGrid{ grid-template-columns: 1fr; } }
+
+  .healthCard{
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.03);
+    border-radius: 16px;
+    padding: 12px;
+  }
+  .healthTop{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+  .healthName{ margin:0; font-weight: 950; }
+  .healthNote{ margin:6px 0 0; color: rgba(255,255,255,0.62); font-size: 13px; line-height:1.45; }
+
+  .badge{
+    font-size: 12px;
+    font-weight: 950;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.03);
+    white-space: nowrap;
+  }
+  .badge.good{ background: rgba(25,195,125,0.18); border-color: rgba(25,195,125,0.25); }
+  .badge.bad{ background: rgba(255,80,80,0.16); border-color: rgba(255,80,80,0.25); }
+
+  .bar{
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.10);
+    overflow:hidden;
+    margin-top: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .fill{
+    height:100%;
+    width: 50%;
+    background: linear-gradient(135deg, #19c37d, rgba(25,195,125,0.55));
+  }
+  .fill.bad{
+    background: linear-gradient(135deg, rgba(255,80,80,1), rgba(255,80,80,0.55));
+  }
+</style>
+
+<div class="panelBody">
+  <div class="hero">
+    <div class="heroInner">
+      <div class="heroIcon">✨</div>
+      <h1 class="heroTitle">Welcome to GoalGuard</h1>
+      <p class="heroSub">
+        Your dashboard is now based on your setup goals, income and expenses.
+      </p>
+
+      <div class="sectionTitle">Health of your goals</div>
+      <div class="healthGrid" id="healthGrid"></div>
+
+      <div class="sectionTitle">Progress & insights</div>
+      <div style="border:1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.03); border-radius:16px; padding:12px;">
+        <div style="font-weight:950;">Insights</div>
+        <div style="color: rgba(255,255,255,0.62); font-size:13px; line-height:1.5; margin-top:6px;" id="insightsText"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { supabase } from "../supabaseClient.js";
+
+  function fmtMoney(currency, n){
+    const num = Number(n);
+    if (!Number.isFinite(num)) return "";
+    return new Intl.NumberFormat(undefined, { style:"currency", currency, maximumFractionDigits: 0 }).format(num);
+  }
+  function daysUntil(dateStr){
+    const d = new Date(dateStr + "T00:00:00");
+    const now = new Date();
+    return Math.ceil((d.getTime() - now.getTime()) / (1000*60*60*24));
+  }
+
+  async function fetchProfile(userId){
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", userId)
+      .single();
+    if (error) throw error;
+    return data;
+  }
+
+  function buildHealth(profile){
+    const goals = Array.isArray(profile.goals) ? profile.goals : [];
+    const currency = profile.currency || "AED";
+    const income = Number(profile.income_monthly) || 0;
+    const expense = Number(profile.expense_monthly) || 0;
+    const surplus = income - expense;
+
+    const grid = document.getElementById("healthGrid");
+    const insights = document.getElementById("insightsText");
+
+    if (!goals.length){
+      grid.innerHTML = `<div style="color: rgba(255,255,255,0.65);">No goals found. Add one on the left.</div>`;
+      insights.textContent = "Add at least one goal to get insights.";
+      return;
+    }
+
+    // health: compare required monthly vs surplus (simple but useful)
+    grid.innerHTML = goals.slice(0,4).map(g=>{
+      const due = g.deadline ? daysUntil(g.deadline) : null;
+      const monthsLeft = (due !== null) ? Math.max(1, Math.ceil(due / 30)) : 1;
+      const requiredMonthly = (Number(g.target) || 0) / monthsLeft;
+
+      const ok = surplus > 0 && surplus >= requiredMonthly;
+      const pct = Math.max(5, Math.min(100, ok ? 70 : 35)); // placeholder progress %
+
+      return `
+        <div class="healthCard">
+          <div class="healthTop">
+            <div>
+              <p class="healthName">${g.name || "Goal"}</p>
+              <p class="healthNote">
+                Target ${fmtMoney(currency, g.target)} • Need ~${fmtMoney(currency, requiredMonthly)}/mo
+              </p>
+            </div>
+            <span class="badge ${ok ? "good" : "bad"}">${ok ? "On Track" : "Lagging"}</span>
+          </div>
+          <div class="bar"><div class="fill ${ok ? "" : "bad"}" style="width:${pct}%"></div></div>
+        </div>
+      `;
+    }).join("");
+
+    // insights (basic math preview)
+    const primary = goals.find(x => x.type === "Primary") || goals[0];
+    const due = primary.deadline ? daysUntil(primary.deadline) : null;
+    const monthsLeft = (due !== null) ? Math.max(1, Math.ceil(due / 30)) : 1;
+    const req = (Number(primary.target) || 0) / monthsLeft;
+
+    if (surplus <= 0){
+      insights.textContent = `Your expenses are higher than your income. Reduce expenses or increase income to fund goals.`;
+    } else if (surplus >= req){
+      insights.textContent = `Your monthly surplus is about ${fmtMoney(currency, surplus)}. You look on track for “${primary.name}” if you keep your spending steady.`;
+    } else {
+      const monthsNeeded = Math.ceil((Number(primary.target) || 0) / Math.max(1, surplus));
+      insights.textContent = `Your monthly surplus is about ${fmtMoney(currency, surplus)}. To reach “${primary.name}” (${fmtMoney(currency, primary.target)}), you’ll likely need ~${monthsNeeded} months at this pace, so the current deadline may be too soon.`;
+    }
+  }
+
+  window.initCenter = async function initCenter(session, profile){
+    buildHealth(profile);
+
+    window.addEventListener("goalguard:profileUpdated", async ()=>{
+      try{
+        const fresh = await fetchProfile(session.user.id);
+        buildHealth(fresh);
+      }catch(e){
+        console.error(e);
+      }
+    });
+  };
+</script>

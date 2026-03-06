@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GoalGuard — Sign Up</title>
+
+  <style>
+    :root{
+      --bg0: #071216;
+      --bg1: #0a1f26;
+      --card: rgba(10, 18, 22, 0.86);
+      --stroke: rgba(255,255,255,0.10);
+      --muted: rgba(255,255,255,0.65);
+      --text: rgba(255,255,255,0.95);
+      --accent: #19c37d;
+      --cta: #ff6a00;
+      --cta2:#ff7f2a;
+      --shadow: 0 20px 60px rgba(0,0,0,0.55);
+      --radius: 22px;
+
+      --cardW: 420px;
+      --cardH: 760px;
+    }
+
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 50% 18%, rgba(25,195,125,0.10), transparent 55%),
+        radial-gradient(850px 520px at 52% 28%, rgba(255,106,0,0.10), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg0));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+
+    .shell{
+      width: min(100%, var(--cardW));
+      height: var(--cardH);
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px 26px;
+      position:relative;
+      overflow:hidden;
+      backdrop-filter: blur(14px);
+    }
+
+    .shell::before{
+      content:"";
+      position:absolute;
+      inset:-120px -120px auto -120px;
+      height: 280px;
+      background: radial-gradient(circle at 50% 40%, rgba(255,106,0,0.16), transparent 65%);
+      pointer-events:none;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      margin-top: 6px;
+      margin-bottom: 22px;
+      position:relative;
+      z-index:1;
+      letter-spacing: 0.28em;
+      font-weight:700;
+    }
+    .logoMark{
+      width:34px;
+      height:34px;
+      border-radius:10px;
+      background: linear-gradient(135deg, rgba(25,195,125,1), rgba(255,106,0,1));
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      color:#061116;
+      letter-spacing:0;
+    }
+    .brandName{ font-size:18px; opacity:0.95; }
+
+    h1{
+      margin: 0 0 6px 0;
+      font-size: 34px;
+      line-height: 1.1;
+      text-align:center;
+      position:relative;
+      z-index:1;
+    }
+    .sub{
+      margin: 0 0 22px 0;
+      color: var(--muted);
+      text-align:center;
+      font-size: 15px;
+      position:relative;
+      z-index:1;
+    }
+
+    .btn{
+      width:100%;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-size: 15px;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      transition: transform .08s ease, background .2s ease, border-color .2s ease;
+      position:relative;
+      z-index:1;
+    }
+    .btn:active{ transform: translateY(1px); }
+    .btn:hover{ background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.14); }
+
+    .divider{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin: 18px 0 14px;
+      color: rgba(255,255,255,0.50);
+      font-size: 13px;
+      position:relative;
+      z-index:1;
+    }
+    .divider::before, .divider::after{
+      content:"";
+      height:1px;
+      flex:1;
+      background: rgba(255,255,255,0.10);
+    }
+
+    .field{ margin-top: 14px; position:relative; z-index:1; }
+    .label{
+      display:block;
+      margin: 0 0 8px 2px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
+    }
+    .inputWrap{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+    }
+    input{
+      width:100%;
+      border:0;
+      outline:none;
+      background: transparent;
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .primary{
+      margin-top: 20px;
+      border: 0;
+      background: linear-gradient(135deg, var(--cta), var(--cta2));
+      color: #111;
+      font-weight: 800;
+      padding: 14px 14px;
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(255,106,0,0.18);
+    }
+
+    .bottom{
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      text-align:center;
+      color: rgba(255,255,255,0.70);
+      font-size: 14px;
+      position:relative;
+      z-index:1;
+    }
+    .link{
+      color: var(--accent);
+      text-decoration:none;
+      font-weight: 700;
+    }
+    .link:hover{ text-decoration: underline; }
+
+    .disabled{
+      opacity: .65;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="shell" role="main" aria-label="GoalGuard Sign Up">
+    <div class="brand">
+      <div class="logoMark">G</div>
+      <div class="brandName">GOALGUARD</div>
+    </div>
+
+    <h1>Create your account</h1>
+    <p class="sub">Start tracking goals and building savings momentum.</p>
+
+    <div class="divider">continue with email</div>
+
+    <form id="signupForm">
+      <div class="field">
+        <label class="label" for="name">Full name</label>
+        <div class="inputWrap">
+          <input id="name" type="text" placeholder="Your name" autocomplete="name" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label" for="email">Email</label>
+        <div class="inputWrap">
+          <input id="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label" for="password">Password</label>
+        <div class="inputWrap">
+          <input id="password" type="password" placeholder="Create a password" autocomplete="new-password" minlength="6" required />
+        </div>
+      </div>
+
+      <button class="btn primary" id="signupBtn" type="submit">Sign Up</button>
+    </form>
+
+    <div class="bottom">
+      Already have an account? <a class="link" href="./signin.html">Sign in</a>
+    </div>
+  </main>
+
+  <script type="module">
+    import { supabase } from "./supabaseClient.js";
+
+    // ✅ IMPORTANT: DO NOT auto-redirect on page load.
+    // User clicked "Sign up" so always show signup page.
+
+    const form = document.getElementById("signupForm");
+    const signupBtn = document.getElementById("signupBtn");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      signupBtn.textContent = "Creating account...";
+      signupBtn.classList.add("disabled");
+
+      const email = document.getElementById("email").value.replace(/\s+/g, "").toLowerCase();
+      const password = document.getElementById("password").value;
+      const fullName = document.getElementById("name").value.trim();
+
+      try {
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: fullName ? { full_name: fullName } : {}
+          }
+        });
+
+        console.log("SIGNUP DATA:", data);
+        console.log("SIGNUP ERROR:", error);
+
+        if (error) {
+          alert(error.message);
+          return;
+        }
+
+        // ✅ Your requirement: ALWAYS redirect to sign in after signup
+        window.location.href = "./signin.html";
+
+      } catch (err) {
+        console.error("❌ signup crashed:", err);
+        alert("Signup crashed — check console.");
+      } finally {
+        signupBtn.textContent = "Sign Up";
+        signupBtn.classList.remove("disabled");
+      }
+    });
+  </script>
+</body>
+</html>

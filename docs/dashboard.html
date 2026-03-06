@@ -1,0 +1,1328 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GoalGuard — Dashboard</title>
+
+  <style>
+    :root{
+      --bg0:#071216;
+      --bg1:#0a1f26;
+
+      --panel: rgba(10, 18, 22, 0.78);
+      --stroke: rgba(255,255,255,0.10);
+      --stroke2: rgba(255,255,255,0.14);
+
+      --text: rgba(255,255,255,0.95);
+      --muted: rgba(255,255,255,0.62);
+
+      --accent: #19c37d;
+      --cta: #ff6a00;
+      --cta2:#ff7f2a;
+
+      --shadow: 0 20px 60px rgba(0,0,0,0.55);
+      --radius: 18px;
+
+      --goodBg: rgba(25,195,125,0.18);
+      --badBg: rgba(255,80,80,0.16);
+
+      --good: rgba(25,195,125,1);
+      --bad: rgba(255,80,80,1);
+    }
+
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 700px at 50% 16%, rgba(25,195,125,0.10), transparent 55%),
+        radial-gradient(1100px 650px at 52% 28%, rgba(255,106,0,0.10), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg0));
+      overflow-x: hidden;
+    }
+
+    .app{
+      min-height:100vh;
+      display:grid;
+      grid-template-rows: 70px 1fr;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(6, 16, 20, 0.55);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      width: 100%;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      letter-spacing: 0.22em;
+      font-weight:800;
+      font-size: 14px;
+      opacity: 0.95;
+      user-select:none;
+      white-space: nowrap;
+    }
+    .logoMark{
+      width:34px;height:34px;border-radius:10px;
+      background: linear-gradient(135deg, rgba(25,195,125,1), rgba(255,106,0,1));
+      display:grid;place-items:center;
+      color:#061116;font-weight:900;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      letter-spacing:0;
+      flex: 0 0 auto;
+    }
+    .topActions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 0;
+    }
+    .pill{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 8px 10px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.04);
+      border-radius: 999px;
+      color: var(--text);
+      min-width: 0;
+    }
+    .avatar{
+      width:26px;height:26px;border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,106,0,0.6), rgba(25,195,125,0.55));
+      border: 1px solid rgba(255,255,255,0.14);
+      flex: 0 0 auto;
+    }
+    #userEmail{
+      max-width: 240px;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display:inline-block;
+      vertical-align: bottom;
+    }
+    .btn{
+      border: 1px solid var(--stroke2);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      cursor:pointer;
+      font-weight:800;
+      flex: 0 0 auto;
+    }
+    .btn:hover{ background: rgba(255,255,255,0.08); }
+    .btn.primary{
+      border:0;
+      color:#111;
+      background: linear-gradient(135deg, var(--cta), var(--cta2));
+      box-shadow: 0 16px 36px rgba(255,106,0,0.16);
+    }
+
+    .container{
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 290px minmax(0, 1fr) 360px;
+      gap: 16px;
+      width: 100%;
+      min-width: 0;
+    }
+    @media (max-width: 1020px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .panel{
+      background: var(--panel);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      overflow:hidden;
+      min-width: 0;
+    }
+    .panelHeader{
+      padding: 14px 14px 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      min-width: 0;
+    }
+    .panelTitle{
+      margin:0;
+      font-size: 13px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.70);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .panelBody{ padding: 14px; }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight:900;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      color: rgba(255,255,255,0.82);
+      white-space: nowrap;
+      user-select:none;
+      flex: 0 0 auto;
+    }
+    .dot{ width:8px;height:8px;border-radius:999px; background: var(--accent); }
+
+    .goalList{ display:flex; flex-direction:column; gap:10px; }
+    .goalItem{
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      border-radius: 14px;
+    }
+    .goalName{ font-weight:950; margin:0 0 4px 0; }
+    .goalMeta{ margin:0; color: var(--muted); font-size: 13px; line-height: 1.35; }
+    .goalFooter{
+      margin-top:10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .miniBadge{
+      font-size: 12px;
+      font-weight: 950;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      white-space: nowrap;
+    }
+    .miniBadge.primary{ border-color: rgba(25,195,125,0.20); background: rgba(25,195,125,0.12); }
+    .miniBadge.secondary{ border-color: rgba(255,180,0,0.20); background: rgba(255,180,0,0.12); }
+    .note{ font-size: 12px; color: rgba(255,255,255,0.70); line-height: 1.4; }
+
+    .goalTopRow{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      min-width:0;
+    }
+    .iconBtn{
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.85);
+      border-radius: 10px;
+      padding: 6px 10px;
+      cursor:pointer;
+      font-weight: 950;
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+    .iconBtn.danger{
+      border-color: rgba(255,80,80,0.25);
+      background: rgba(255,80,80,0.10);
+    }
+
+    .hero{
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border-radius: 18px;
+      position:relative;
+      overflow:hidden;
+      min-width: 0;
+    }
+    .heroInner{ position:relative; z-index:1; min-width:0; }
+    .heroIcon{
+      width:44px;height:44px;border-radius:14px;
+      display:grid;place-items:center;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+    .heroTitle{ margin:0 0 6px 0; font-size: 26px; font-weight: 950; }
+    .heroSub{ margin:0; color: var(--muted); line-height: 1.55; max-width: 70ch; }
+
+    .sectionTitle{
+      margin: 18px 0 10px;
+      font-size: 13px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.70);
+      font-weight: 900;
+    }
+
+    .healthGrid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      width: 100%;
+      min-width:0;
+    }
+    @media (max-width: 760px){ .healthGrid{ grid-template-columns: 1fr; } }
+    .healthCard{
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding: 12px;
+      min-width:0;
+    }
+    .healthTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      min-width:0;
+    }
+    .healthName{ margin:0; font-weight: 950; }
+    .healthNote{ margin:6px 0 0; color: var(--muted); font-size: 13px; line-height:1.45; }
+    .badge{
+      font-size: 12px;
+      font-weight: 950;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+    .badge.good{ background: rgba(25,195,125,0.18); border-color: rgba(25,195,125,0.25); }
+    .badge.bad{ background: rgba(255,80,80,0.16); border-color: rgba(255,80,80,0.25); }
+
+    .bar{
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.10);
+      overflow:hidden;
+      margin-top: 10px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .fill{
+      height:100%;
+      width: 50%;
+      background: linear-gradient(135deg, var(--accent), rgba(25,195,125,0.55));
+    }
+    .fill.bad{
+      background: linear-gradient(135deg, rgba(255,80,80,1), rgba(255,80,80,0.55));
+    }
+
+    .insightsCard{
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding: 12px;
+      min-width:0;
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      justify-content:space-between;
+    }
+    .insightsText{
+      margin:0;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.5;
+      font-size: 13px;
+      white-space: pre-wrap;
+    }
+
+    .chartCard{
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding: 12px;
+      margin-top: 12px;
+      overflow:hidden;
+    }
+    .chartHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 8px;
+    }
+    .chartName{ margin:0; font-weight: 950; }
+    .chartHint{ margin:0; color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .chartSvg{
+      width:100%;
+      height:160px;
+      display:block;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.10);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .tester{
+      margin-top: 12px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .testerRow{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      margin-top:10px;
+    }
+    .testerRow input{
+      flex:1;
+      min-width:0;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 10px;
+      outline:none;
+    }
+    .smallBtn{
+      border:0;
+      border-radius: 12px;
+      padding: 10px 12px;
+      cursor:pointer;
+      font-weight: 950;
+      color:#111;
+      background: linear-gradient(135deg, var(--cta), var(--cta2));
+      box-shadow: 0 16px 30px rgba(255,106,0,0.14);
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+    .smallBtn.secondary{
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow:none;
+    }
+
+    .stat{
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding: 12px;
+      min-width:0;
+    }
+    .statLabel{
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      font-weight: 900;
+      margin: 0 0 8px 0;
+    }
+    .statValue{ margin:0; font-size: 28px; font-weight: 950; }
+    .mini{ margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height:1.45; white-space: pre-wrap; }
+    .mutedDivider{ margin: 12px 0; height: 1px; background: rgba(255,255,255,0.08); }
+    .balanceRow{
+      display:flex;
+      gap:10px;
+      margin-top: 10px;
+      min-width:0;
+    }
+    .balanceRow input{
+      flex:1;
+      min-width:0;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 10px;
+      outline:none;
+    }
+
+    .editPanel{
+      margin-top: 10px;
+      display:none;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.02);
+      border-radius: 14px;
+      padding: 12px;
+    }
+    .editPanel.show{ display:block; }
+    .editGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    .editGrid input{
+      width:100%;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 10px;
+      outline:none;
+    }
+    .editRow{ display:flex; gap:10px; margin-top:10px; justify-content:flex-end; }
+
+    .modalBackdrop{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 9999;
+    }
+    .modalBackdrop.show{ display:flex; }
+    .modal{
+      width: 100%;
+      max-width: 520px;
+      background: rgba(10,18,22,0.92);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.65);
+      overflow: hidden;
+    }
+    .modalHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .modalBody{ padding: 14px; }
+    .field{ display:flex; flex-direction:column; gap:6px; margin-bottom: 12px; }
+    .fieldRow{ display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 520px){ .fieldRow{ grid-template-columns: 1fr; } }
+    .label{
+      font-size: 12px;
+      color: rgba(255,255,255,0.68);
+      letter-spacing: .06em;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .textInput{
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 10px;
+      outline: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logoMark">G</div>
+        GOALGUARD
+      </div>
+
+      <div class="topActions">
+        <div class="pill" title="Signed in user">
+          <div class="avatar"></div>
+          <div style="display:flex; flex-direction:column; line-height:1.05; min-width:0;">
+            <span style="font-weight:950; font-size:13px;" id="userName">User</span>
+            <span style="font-size:12px; color: rgba(255,255,255,0.65);" id="userEmail">...</span>
+          </div>
+        </div>
+        <button class="btn" id="logoutBtn" type="button">Logout</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="grid">
+        <!-- LEFT -->
+        <aside class="panel left">
+          <div class="panelHeader">
+            <h2 class="panelTitle">Goals</h2>
+            <div style="display:flex; gap:10px; align-items:center;">
+              <button class="btn" id="addGoalBtn" type="button">+ Add</button>
+              <span class="tag"><span class="dot"></span> Active</span>
+            </div>
+          </div>
+          <div class="panelBody">
+            <div class="goalList" id="goalsList"></div>
+            <p class="note" id="goalsCount" style="margin:10px 0 0;">—</p>
+          </div>
+        </aside>
+
+        <!-- CENTER -->
+        <main class="panel">
+          <div class="panelBody">
+            <div class="hero">
+              <div class="heroInner">
+                <div class="heroIcon">✨</div>
+                <h1 class="heroTitle">Welcome to GoalGuard</h1>
+                <p class="heroSub">Your dashboard is based on your setup goals, income and expenses.</p>
+
+                <div class="sectionTitle">Health of your goals</div>
+                <div class="healthGrid" id="healthGrid"></div>
+
+                <div class="sectionTitle">Progress & insights</div>
+                <div class="insightsCard">
+                  <div style="min-width:0;">
+                    <p style="margin:0; font-weight:950;">Insights</p>
+                    <p class="insightsText" id="insightsText">—</p>
+                  </div>
+                  <span class="badge good" id="overallBadge">—</span>
+                </div>
+
+                <div class="chartCard">
+                  <div class="chartHead">
+                    <p class="chartName">Savings trend</p>
+                    <p class="chartHint">Last 30 days (ledger-based)</p>
+                  </div>
+                  <svg class="chartSvg" viewBox="0 0 600 160" role="img" aria-label="Savings trend chart">
+                    <g opacity="0.30" stroke="rgba(255,255,255,0.14)">
+                      <line x1="40" y1="20" x2="580" y2="20"/>
+                      <line x1="40" y1="60" x2="580" y2="60"/>
+                      <line x1="40" y1="100" x2="580" y2="100"/>
+                      <line x1="40" y1="140" x2="580" y2="140"/>
+                    </g>
+                    <g stroke="rgba(255,255,255,0.20)">
+                      <line x1="40" y1="10" x2="40" y2="150"/>
+                      <line x1="40" y1="150" x2="580" y2="150"/>
+                    </g>
+                    <path id="trendFill" d="M40,150 L580,150 Z" fill="rgba(25,195,125,0.12)"></path>
+                    <path id="trendLine" d="M40,150 L580,150" fill="none" stroke="rgba(25,195,125,0.85)" stroke-width="4" stroke-linecap="round"></path>
+                    <g fill="rgba(255,255,255,0.60)" font-size="12" font-family="ui-sans-serif,system-ui">
+                      <text x="42" y="158">Day 1</text>
+                      <text x="520" y="158">Day 30</text>
+                    </g>
+                  </svg>
+                  <p class="mini" id="trendHint" style="margin-top:10px;">—</p>
+                </div>
+
+                <div class="tester">
+                  <p style="margin:0; font-weight:950;">Test a purchase (free local “AI mind”)</p>
+                  <p class="mini" style="margin-top:6px;">Example: “Watch for 400” — this uses your monthly surplus.</p>
+                  <div class="testerRow">
+                    <input id="purchaseInput" type="number" inputmode="decimal" placeholder="Purchase amount (e.g. 400)" />
+                    <button class="smallBtn" id="testPurchaseBtn" type="button">Check</button>
+                    <button class="smallBtn secondary" id="clearPurchaseBtn" type="button">Clear</button>
+                  </div>
+                  <p class="mini" id="purchaseResult" style="margin-top:10px;">—</p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- RIGHT -->
+        <aside class="panel right">
+          <div class="panelHeader">
+            <h2 class="panelTitle">Overview</h2>
+            <span class="tag"><span class="dot"></span> Live</span>
+          </div>
+
+          <div class="panelBody" style="display:grid; gap:12px;">
+            <div class="stat">
+              <p class="statLabel">Monthly snapshot</p>
+              <p class="statValue" id="surplusValue">—</p>
+              <p class="mini" id="snapshotText">—</p>
+
+              <div class="mutedDivider"></div>
+
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                <div>
+                  <p class="statLabel" style="margin:0;">Saved since start</p>
+                  <p class="mini" id="savedSinceStartText" style="margin-top:6px;">—</p>
+                </div>
+                <button class="btn" id="toggleEditBtn" type="button">Edit</button>
+              </div>
+
+              <div class="editPanel" id="editPanel">
+                <p class="mini" style="margin:0;">Update your monthly income/expenses (and starting balance).</p>
+                <div class="editGrid">
+                  <div>
+                    <p class="statLabel" style="margin:0 0 6px;">Income</p>
+                    <input id="editIncome" type="number" inputmode="decimal" placeholder="e.g. 15000" />
+                  </div>
+                  <div>
+                    <p class="statLabel" style="margin:0 0 6px;">Expenses</p>
+                    <input id="editExpenses" type="number" inputmode="decimal" placeholder="e.g. 8000" />
+                  </div>
+                  <div style="grid-column:1 / -1;">
+                    <p class="statLabel" style="margin:0 0 6px;">Starting balance</p>
+                    <input id="editStartingBal" type="number" inputmode="decimal" placeholder="e.g. 50000" />
+                  </div>
+                </div>
+                <div class="editRow">
+                  <button class="btn" id="cancelEditBtn" type="button">Cancel</button>
+                  <button class="btn primary" id="saveEditBtn" type="button">Save</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="stat">
+              <p class="statLabel">Current balance</p>
+              <p class="statValue" id="balanceValue">$0</p>
+              <p class="mini">Update your balance to get smarter recommendations.</p>
+
+              <div class="balanceRow">
+                <input id="balanceInput" type="number" inputmode="decimal" placeholder="e.g. 1200" />
+                <button class="smallBtn" id="saveBalanceBtn" type="button">Update</button>
+              </div>
+
+              <div class="mutedDivider"></div>
+              <p class="mini" style="margin:0;">Tip: Use your “available to spend” cash balance.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Goal Modal -->
+  <div class="modalBackdrop" id="goalModalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="goalModalTitle">
+      <div class="modalHead">
+        <h3 id="goalModalTitle" style="margin:0; font-weight:950;">Add a Goal</h3>
+        <button class="btn" id="closeGoalModalBtn" type="button">✕</button>
+      </div>
+
+      <div class="modalBody">
+        <div class="field">
+          <label class="label">Name</label>
+          <input class="textInput" id="goalNameInput" placeholder="e.g. Emergency Fund" />
+        </div>
+
+        <div class="fieldRow">
+          <div class="field">
+            <label class="label">Target</label>
+            <input class="textInput" id="goalTargetInput" type="number" inputmode="decimal" placeholder="2000" />
+          </div>
+          <div class="field">
+            <label class="label">Due date</label>
+            <input class="textInput" id="goalDueInput" type="date" />
+          </div>
+        </div>
+
+        <div class="fieldRow">
+          <div class="field">
+            <label class="label">Type</label>
+            <select class="textInput" id="goalTypeInput">
+              <option value="Primary">Primary</option>
+              <option value="Secondary" selected>Secondary</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="label">Weekly (optional)</label>
+            <input class="textInput" id="goalWeeklyInput" type="number" inputmode="decimal" placeholder="50" />
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:12px;">
+          <button class="btn" id="cancelGoalBtn" type="button">Cancel</button>
+          <button class="btn primary" id="saveGoalBtn" type="button">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { supabase } from "./supabaseClient.js";
+
+    // Safe imports (don’t break dashboard if a module path is wrong)
+    let evaluatePurchase = null;
+    let addLedgerEntry = null;
+    let summarizeLedger = null;
+    let buildDailyNetSeries = null;
+
+    try {
+      const m1 = await import("./logic/decisionEngine.js");
+      evaluatePurchase = m1.evaluatePurchase;
+    } catch (e) {
+      console.warn("decisionEngine.js not loaded:", e);
+    }
+
+    try {
+      const m2 = await import("./logic/ledger.js");
+      addLedgerEntry = m2.addLedgerEntry;
+      summarizeLedger = m2.summarizeLedger;
+      buildDailyNetSeries = m2.buildDailyNetSeries;
+    } catch (e) {
+      console.warn("ledger.js not loaded:", e);
+    }
+
+    const { data } = await supabase.auth.getSession();
+    const session = data?.session;
+
+    // ✅ Not logged in -> signin
+    if (!session) {
+      window.location.replace("./signin.html");
+      throw new Error("No session");
+    }
+
+    const USER_ID = session.user.id;
+
+    // keys
+    const GOALS_KEY   = `goalguard_goals_${USER_ID}`;
+    const PROFILE_KEY = `goalguard_profile_${USER_ID}`;
+    const BAL_KEY     = `goalguard_balance_${USER_ID}`;
+
+    // legacy migration
+    (function migrateLegacyKeysIfNeeded(){
+      const legacyGoals = localStorage.getItem("goalguard_goals");
+      if (!localStorage.getItem(GOALS_KEY) && legacyGoals) localStorage.setItem(GOALS_KEY, legacyGoals);
+
+      const legacyProfile = localStorage.getItem("goalguard_profile");
+      if (!localStorage.getItem(PROFILE_KEY) && legacyProfile) localStorage.setItem(PROFILE_KEY, legacyProfile);
+
+      const legacyBal = localStorage.getItem("goalguard_balance");
+      if (!localStorage.getItem(BAL_KEY) && legacyBal) localStorage.setItem(BAL_KEY, legacyBal);
+    })();
+
+    function loadProfile(){
+      const raw = localStorage.getItem(PROFILE_KEY);
+      if (!raw) return null;
+      try { return JSON.parse(raw); } catch { return null; }
+    }
+    function loadGoals(){
+      const raw = localStorage.getItem(GOALS_KEY);
+      if (!raw) return [];
+      try { return JSON.parse(raw) || []; } catch { return []; }
+    }
+
+    // ✅ ROUTING ENFORCEMENT (your desired flow)
+    // If profile missing/incomplete OR goals missing -> go setup
+    (function enforceSetupFlow(){
+      const p = loadProfile();
+      const goals = loadGoals();
+
+      const profileOk =
+        p &&
+        typeof p.currencyCode === "string" && p.currencyCode.length >= 3 &&
+        typeof p.agentStyle === "string" && p.agentStyle.length > 0 &&
+        Number.isFinite(Number(p.incomeMonthly)) &&
+        Number.isFinite(Number(p.expensesMonthly)) &&
+        (typeof p.setupCompletedAt === "string" && p.setupCompletedAt.length > 0);
+
+      const goalsOk = Array.isArray(goals) && goals.length > 0;
+
+      if (!profileOk || !goalsOk) {
+        window.location.replace("./setup.html");
+      }
+    })();
+
+    // user display
+    const email = session.user.email || "user";
+    document.getElementById("userEmail").textContent = email;
+    document.getElementById("userName").textContent = (email.split("@")[0] || "User");
+
+    // helpers
+    function clamp(n, a, b){ return Math.min(b, Math.max(a, n)); }
+    function formatMoney(n, currencyCode="USD"){
+      const num = Number(n);
+      if (!Number.isFinite(num)) return "—";
+      try{
+        return new Intl.NumberFormat(undefined, { style:"currency", currency: currencyCode, maximumFractionDigits: 0 }).format(num);
+      }catch{
+        return `${num.toLocaleString()} ${currencyCode}`;
+      }
+    }
+    function escapeHtml(s){
+      return String(s)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function saveGoals(goals){
+      localStorage.setItem(GOALS_KEY, JSON.stringify(goals));
+    }
+    function saveProfile(profile){
+      localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+    }
+
+    function getUnifiedProfile(){
+      const p = loadProfile() || {};
+      const goals = loadGoals();
+
+      const normalizedGoals = goals.map(g => ({
+        id: g.id,
+        name: g.name,
+        target: Number(g.target) || 0,
+        dueDate: g.dueDate || null,
+        type: g.type || "Secondary",
+        weekly: Number(g.weekly) || 0
+      }));
+
+      return {
+        currencyCode: p.currencyCode || "USD",
+        incomeMonthly: Number(p.incomeMonthly) || 0,
+        expensesMonthly: Number(p.expensesMonthly) || 0,
+        agentStyle: p.agentStyle || "Coach",
+        startingBalance: Number(p.startingBalance) || 0,
+        goals: normalizedGoals
+      };
+    }
+
+    // logout
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.replace("./index.html");
+    });
+
+    // balance
+    const balanceValueEl = document.getElementById("balanceValue");
+    const balanceInput = document.getElementById("balanceInput");
+
+    function getCurrentBalance(){
+      const saved = localStorage.getItem(BAL_KEY);
+      const v = saved ? Number(saved) : 0;
+      return Number.isFinite(v) ? v : 0;
+    }
+    function loadBalance(){
+      const prof = getUnifiedProfile();
+      balanceValueEl.textContent = formatMoney(getCurrentBalance(), prof.currencyCode);
+    }
+
+    document.getElementById("saveBalanceBtn").addEventListener("click", () => {
+      const v = Number(balanceInput.value);
+      if (!Number.isFinite(v) || v < 0) return alert("Please enter a valid balance.");
+      localStorage.setItem(BAL_KEY, String(v));
+      balanceInput.value = "";
+      refreshAll();
+    });
+
+    // LEFT goals render
+    const goalsListEl = document.getElementById("goalsList");
+    const goalsCountEl = document.getElementById("goalsCount");
+
+    function renderGoals(){
+      const goals = loadGoals();
+      const { currencyCode } = getUnifiedProfile();
+
+      goalsCountEl.textContent = `${goals.length} goal(s)`;
+
+      if (goals.length === 0) {
+        goalsListEl.innerHTML = `
+          <div class="goalItem">
+            <p style="margin:0; font-weight:950;">No goals yet</p>
+            <p class="goalMeta">Click “+ Add” to create your first goal.</p>
+          </div>
+        `;
+        return;
+      }
+
+      goalsListEl.innerHTML = goals.map(g => {
+        const badgeClass = g.type === "Primary" ? "primary" : "secondary";
+        const dueLabel = g.dueDate ? new Date(g.dueDate).toLocaleDateString() : "—";
+        return `
+          <div class="goalItem" data-id="${g.id}">
+            <div class="goalTopRow">
+              <div style="min-width:0;">
+                <p class="goalName">${escapeHtml(g.name)}</p>
+                <p class="goalMeta">Target: ${formatMoney(g.target, currencyCode)} • Due: ${escapeHtml(dueLabel)}</p>
+              </div>
+              <button class="iconBtn danger" data-action="remove" type="button">Remove</button>
+            </div>
+            <div class="goalFooter">
+              <span class="miniBadge ${badgeClass}">${escapeHtml(g.type)}</span>
+              <span class="note">${g.weekly ? `Weekly: ${formatMoney(g.weekly, currencyCode)}` : ""}</span>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      goalsListEl.querySelectorAll('[data-action="remove"]').forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          const card = e.currentTarget.closest(".goalItem");
+          const id = card?.dataset?.id;
+          if (!id) return;
+          if (!confirm("Remove this goal?")) return;
+          saveGoals(loadGoals().filter(x => x.id !== id));
+          refreshAll();
+        });
+      });
+    }
+
+    // Modal
+    const backdrop = document.getElementById("goalModalBackdrop");
+    const addGoalBtn = document.getElementById("addGoalBtn");
+    const closeGoalModalBtn = document.getElementById("closeGoalModalBtn");
+    const cancelGoalBtn = document.getElementById("cancelGoalBtn");
+    const saveGoalBtn = document.getElementById("saveGoalBtn");
+
+    const goalNameInput = document.getElementById("goalNameInput");
+    const goalTargetInput = document.getElementById("goalTargetInput");
+    const goalDueInput = document.getElementById("goalDueInput");
+    const goalWeeklyInput = document.getElementById("goalWeeklyInput");
+    const goalTypeInput = document.getElementById("goalTypeInput");
+
+    function openGoalModal(){
+      backdrop.classList.add("show");
+      backdrop.setAttribute("aria-hidden", "false");
+      setTimeout(() => goalNameInput.focus(), 0);
+    }
+    function closeGoalModal(){
+      backdrop.classList.remove("show");
+      backdrop.setAttribute("aria-hidden", "true");
+      goalNameInput.value = "";
+      goalTargetInput.value = "";
+      goalDueInput.value = "";
+      goalWeeklyInput.value = "";
+      goalTypeInput.value = "Secondary";
+    }
+
+    addGoalBtn.addEventListener("click", openGoalModal);
+    closeGoalModalBtn.addEventListener("click", closeGoalModal);
+    cancelGoalBtn.addEventListener("click", closeGoalModal);
+
+    backdrop.addEventListener("click", (e) => { if (e.target === backdrop) closeGoalModal(); });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && backdrop.classList.contains("show")) closeGoalModal();
+    });
+
+    saveGoalBtn.addEventListener("click", () => {
+      const name = goalNameInput.value.trim();
+      const target = Number(goalTargetInput.value);
+      const dueDate = goalDueInput.value;
+      const weekly = Number(goalWeeklyInput.value);
+      const type = goalTypeInput.value;
+
+      if (!name) return alert("Please enter a goal name.");
+      if (!Number.isFinite(target) || target <= 0) return alert("Please enter a valid target amount.");
+      if (!dueDate) return alert("Please choose a due date.");
+
+      const goals = loadGoals();
+      goals.unshift({
+        id: crypto.randomUUID(),
+        name,
+        target,
+        dueDate,
+        weekly: Number.isFinite(weekly) ? weekly : 0,
+        type,
+      });
+      saveGoals(goals);
+      closeGoalModal();
+      refreshAll();
+    });
+
+    // health + insights
+    const healthGridEl = document.getElementById("healthGrid");
+    const insightsTextEl = document.getElementById("insightsText");
+    const overallBadgeEl = document.getElementById("overallBadge");
+    const surplusValueEl = document.getElementById("surplusValue");
+    const snapshotTextEl = document.getElementById("snapshotText");
+    const savedSinceStartText = document.getElementById("savedSinceStartText");
+
+    function monthsBetweenDates(fromDate, toDate) {
+      const ms = toDate.getTime() - fromDate.getTime();
+      const days = ms / (1000 * 60 * 60 * 24);
+      return Math.max(0, Math.ceil(days / 30));
+    }
+
+    function computeGoalNeedPerMonth(goal){
+      const now = new Date();
+      const due = goal.dueDate ? new Date(goal.dueDate) : null;
+      const monthsLeft = due ? monthsBetweenDates(now, due) : 1;
+      const m = monthsLeft > 0 ? monthsLeft : 1;
+      const needPerMonth = (Number(goal.target) || 0) / m;
+      return { monthsLeft: m, needPerMonth };
+    }
+
+    function allocateSurplus(profile){
+      const goals = [...profile.goals];
+      goals.sort((a,b) => {
+        const aPri = a.type === "Primary" ? 0 : 1;
+        const bPri = b.type === "Primary" ? 0 : 1;
+        if (aPri !== bPri) return aPri - bPri;
+        const ad = a.dueDate ? new Date(a.dueDate).getTime() : Number.POSITIVE_INFINITY;
+        const bd = b.dueDate ? new Date(b.dueDate).getTime() : Number.POSITIVE_INFINITY;
+        return ad - bd;
+      });
+
+      let remaining = profile.incomeMonthly - profile.expensesMonthly;
+      remaining = Number.isFinite(remaining) ? remaining : 0;
+
+      const allocations = [];
+      for (const g of goals) {
+        const { needPerMonth } = computeGoalNeedPerMonth(g);
+        const allocated = Math.max(0, Math.min(remaining, needPerMonth));
+        remaining -= allocated;
+        allocations.push({ goal:g, needPerMonth, allocated, onTrack: allocated >= needPerMonth && needPerMonth > 0 });
+      }
+      return { surplus: profile.incomeMonthly - profile.expensesMonthly, remaining, allocations };
+    }
+
+    function renderHealthAndInsights(){
+      const profile = getUnifiedProfile();
+      const currency = profile.currencyCode;
+
+      const income = profile.incomeMonthly;
+      const expenses = profile.expensesMonthly;
+      const surplus = income - expenses;
+
+      surplusValueEl.textContent = surplus >= 0
+        ? `Surplus: ${formatMoney(surplus, currency)} / month`
+        : `Deficit: ${formatMoney(Math.abs(surplus), currency)} / month`;
+
+      snapshotTextEl.textContent =
+        `Income: ${formatMoney(income, currency)}\n` +
+        `Expenses: ${formatMoney(expenses, currency)}\n` +
+        `Surplus: ${formatMoney(surplus, currency)}`;
+
+      const currentBal = getCurrentBalance();
+      const savedSince = currentBal - (profile.startingBalance || 0);
+      savedSinceStartText.textContent =
+        `Start: ${formatMoney(profile.startingBalance || 0, currency)}\n` +
+        `Now: ${formatMoney(currentBal, currency)}\n` +
+        `Delta: ${formatMoney(savedSince, currency)}`;
+
+      const goals = profile.goals;
+      if (goals.length === 0) {
+        healthGridEl.innerHTML = `<div class="healthCard"><p style="margin:0; font-weight:950;">No goals yet</p><p class="healthNote">Add a goal on the left to see health + insights.</p></div>`;
+        insightsTextEl.textContent = "Add goals to unlock insights.";
+        overallBadgeEl.textContent = "—";
+        overallBadgeEl.className = "badge";
+        return;
+      }
+
+      if (!Number.isFinite(surplus) || surplus <= 0) {
+        overallBadgeEl.textContent = "At Risk";
+        overallBadgeEl.className = "badge bad";
+        insightsTextEl.textContent =
+          `You currently have no monthly surplus.\n` +
+          `Reduce expenses or increase income to make progress on goals.`;
+
+        healthGridEl.innerHTML = goals.map(g => {
+          const { needPerMonth } = computeGoalNeedPerMonth(g);
+          return `
+            <div class="healthCard">
+              <div class="healthTop">
+                <div>
+                  <p class="healthName">${escapeHtml(g.name)} <span style="opacity:.55; font-weight:900;">(${escapeHtml(g.type)})</span></p>
+                  <p class="healthNote">Need ~${formatMoney(needPerMonth, currency)}/mo to hit ${formatMoney(g.target, currency)}.</p>
+                </div>
+                <span class="badge bad">Needs Work</span>
+              </div>
+              <div class="bar"><div class="fill bad" style="width:28%"></div></div>
+            </div>
+          `;
+        }).join("");
+        return;
+      }
+
+      const alloc = allocateSurplus(profile);
+
+      healthGridEl.innerHTML = alloc.allocations.map(a => {
+        const onTrack = a.onTrack;
+        const badge = onTrack ? `<span class="badge good">On Track</span>` : `<span class="badge bad">Needs Work</span>`;
+        const fillClass = onTrack ? "fill" : "fill bad";
+        const ratio = a.needPerMonth > 0 ? clamp(a.allocated / a.needPerMonth, 0, 2) : 0;
+        const barPct = clamp(ratio * 60, 10, 95);
+        const note = `Allocated ${formatMoney(a.allocated, currency)}/mo (need ${formatMoney(a.needPerMonth, currency)}/mo).`;
+
+        return `
+          <div class="healthCard">
+            <div class="healthTop">
+              <div>
+                <p class="healthName">${escapeHtml(a.goal.name)} <span style="opacity:.55; font-weight:900;">(${escapeHtml(a.goal.type)})</span></p>
+                <p class="healthNote">${escapeHtml(note)}</p>
+              </div>
+              ${badge}
+            </div>
+            <div class="bar"><div class="${fillClass}" style="width:${barPct}%"></div></div>
+          </div>
+        `;
+      }).join("");
+
+      const badPrim = alloc.allocations.filter(a => a.goal.type === "Primary" && !a.onTrack);
+      const badSec  = alloc.allocations.filter(a => a.goal.type !== "Primary" && !a.onTrack);
+
+      if (badPrim.length > 0) {
+        overallBadgeEl.textContent = "At Risk";
+        overallBadgeEl.className = "badge bad";
+        insightsTextEl.textContent =
+          `Monthly surplus: ${formatMoney(surplus, currency)}.\n` +
+          `Some PRIMARY goals need more per month than you can allocate.\n` +
+          `Primary at risk: ${badPrim.map(x => `"${x.goal.name}"`).join(", ")}.\n` +
+          `Fix: increase income, reduce expenses, or extend the due date.`;
+        return;
+      }
+
+      if (badSec.length > 0) {
+        overallBadgeEl.textContent = "Mixed";
+        overallBadgeEl.className = "badge";
+        insightsTextEl.textContent =
+          `Monthly surplus: ${formatMoney(surplus, currency)}.\n` +
+          `Primary goals look okay, but some secondary goals may be delayed.\n` +
+          `Secondary at risk: ${badSec.map(x => `"${x.goal.name}"`).join(", ")}.`;
+        return;
+      }
+
+      overallBadgeEl.textContent = "On Track";
+      overallBadgeEl.className = "badge good";
+      insightsTextEl.textContent =
+        `Monthly surplus: ${formatMoney(surplus, currency)}.\n` +
+        `You’re on track for all goals if you keep this pace.`;
+    }
+
+    // chart
+    const trendLine = document.getElementById("trendLine");
+    const trendFill = document.getElementById("trendFill");
+    const trendHint = document.getElementById("trendHint");
+
+    function renderSavingsTrend(){
+      const profile = getUnifiedProfile();
+      const currency = profile.currencyCode;
+
+      if (!buildDailyNetSeries || !summarizeLedger) {
+        trendHint.textContent = "Ledger module not loaded yet (logic/ledger.js).";
+        return;
+      }
+
+      const series = buildDailyNetSeries(USER_ID, 30);
+      const vals = series.map(p => Number(p.cumNet) || 0);
+
+      const minV = Math.min(...vals);
+      const maxV = Math.max(...vals);
+      const span = Math.max(1, maxV - minV);
+
+      const x0 = 40, x1 = 580;
+      const y0 = 20, y1 = 150;
+
+      function xAt(i){ return x0 + (i * (x1 - x0) / Math.max(1, series.length - 1)); }
+      function yAt(v){
+        const t = (v - minV) / span;
+        return y1 - t * (y1 - y0);
+      }
+
+      let d = "";
+      for (let i = 0; i < series.length; i++) {
+        const x = xAt(i);
+        const y = yAt(vals[i]);
+        d += (i === 0 ? `M${x},${y}` : ` L${x},${y}`);
+      }
+
+      trendLine.setAttribute("d", d);
+      trendFill.setAttribute("d", `${d} L${x1},${y1} L${x0},${y1} Z`);
+
+      const sum = summarizeLedger(USER_ID);
+      trendHint.textContent =
+        `Ledger: ${sum.count} entries • Saved: ${formatMoney(sum.saved, currency)} • Spent: ${formatMoney(sum.spent, currency)} • Net: ${formatMoney(sum.net, currency)}.`;
+    }
+
+    // purchase tester
+    const purchaseInput = document.getElementById("purchaseInput");
+    const testPurchaseBtn = document.getElementById("testPurchaseBtn");
+    const clearPurchaseBtn = document.getElementById("clearPurchaseBtn");
+    const purchaseResult = document.getElementById("purchaseResult");
+
+    testPurchaseBtn.addEventListener("click", () => {
+      const v = Number(purchaseInput.value);
+      if (!Number.isFinite(v) || v <= 0) return (purchaseResult.textContent = "Enter a valid purchase amount.");
+
+      if (!evaluatePurchase) {
+        purchaseResult.textContent = "Decision engine not loaded (logic/decisionEngine.js).";
+        return;
+      }
+
+      const profile = getUnifiedProfile();
+      const result = evaluatePurchase({ price: v, profile });
+      purchaseResult.textContent = result.message || "—";
+
+      if (!addLedgerEntry) return;
+
+      const shouldLog = confirm("Log this as a SPEND in your ledger? (for charts + tracking)");
+      if (shouldLog) {
+        addLedgerEntry(USER_ID, {
+          type: "spend",
+          amount: v,
+          currencyCode: profile.currencyCode,
+          note: "Purchase test logged",
+          meta: { source: "purchaseTester" }
+        });
+        refreshAll();
+      }
+    });
+
+    clearPurchaseBtn.addEventListener("click", () => {
+      purchaseInput.value = "";
+      purchaseResult.textContent = "—";
+    });
+
+    // edit setup panel
+    const toggleEditBtn = document.getElementById("toggleEditBtn");
+    const editPanel = document.getElementById("editPanel");
+    const editIncome = document.getElementById("editIncome");
+    const editExpenses = document.getElementById("editExpenses");
+    const editStartingBal = document.getElementById("editStartingBal");
+    const cancelEditBtn = document.getElementById("cancelEditBtn");
+    const saveEditBtn = document.getElementById("saveEditBtn");
+
+    function openEdit(){
+      const p = loadProfile() || {};
+      editIncome.value = (Number(p.incomeMonthly) || "") + "";
+      editExpenses.value = (Number(p.expensesMonthly) || "") + "";
+      editStartingBal.value = (Number(p.startingBalance) || "") + "";
+      editPanel.classList.add("show");
+    }
+    function closeEdit(){ editPanel.classList.remove("show"); }
+
+    toggleEditBtn.addEventListener("click", () => {
+      if (editPanel.classList.contains("show")) closeEdit();
+      else openEdit();
+    });
+    cancelEditBtn.addEventListener("click", closeEdit);
+
+    saveEditBtn.addEventListener("click", () => {
+      const income = Number(editIncome.value);
+      const expenses = Number(editExpenses.value);
+      const startingBal = Number(editStartingBal.value);
+
+      if (!Number.isFinite(income) || income < 0) return alert("Enter a valid income.");
+      if (!Number.isFinite(expenses) || expenses < 0) return alert("Enter valid expenses.");
+      if (!Number.isFinite(startingBal) || startingBal < 0) return alert("Enter a valid starting balance.");
+
+      const p = loadProfile() || {};
+      p.incomeMonthly = income;
+      p.expensesMonthly = expenses;
+      p.startingBalance = startingBal;
+      // keep setupCompletedAt if it exists
+      if (!p.setupCompletedAt) p.setupCompletedAt = new Date().toISOString();
+      saveProfile(p);
+      closeEdit();
+      refreshAll();
+    });
+
+    function refreshAll(){
+      renderGoals();
+      renderHealthAndInsights();
+      loadBalance();
+      renderSavingsTrend();
+    }
+
+    refreshAll();
+  </script>
+</body>
+</html>
