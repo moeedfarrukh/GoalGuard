@@ -142,7 +142,7 @@
     .full-spends-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
 
     /* =========================================
-        NATIVE APP MOBILE UI OVERRIDES
+       NATIVE APP MOBILE UI
     ========================================= */
     .mobile-bottom-nav { display: none; }
 
@@ -154,7 +154,7 @@
       .app-container { 
         display: block; 
         padding: 0; 
-        height: calc(100vh - 130px); /* Adjust for header + nav height */
+        height: calc(100vh - 130px); /* Accurate for header + nav height */
         overflow-y: auto; 
         position: relative;
         -webkit-overflow-scrolling: touch;
@@ -169,14 +169,14 @@
         overflow: visible !important;
       }
       
-      /* Only show the active tab requested via switchTab */
+      /* Toggle Active Classes */
       #tab-goals.active, #tab-coach.active, #tab-home.active { 
         display: flex !important; 
         flex-direction: column;
         animation: fadeIn 0.3s ease-out;
       }
 
-      /* Native layout fixes for stacked mobile view */
+      /* Fix internal containers to expand natively inside the scroller */
       .panel { border: none; background: transparent; box-shadow: none; overflow: visible !important; height: auto !important; }
       .main-scroll { overflow: visible !important; height: auto !important; padding: 0 !important; }
       .chart-grid { grid-template-columns: 1fr; }
@@ -184,7 +184,6 @@
       .feature-grid-2x2 { grid-template-columns: 1fr 1fr; margin-bottom: 20px; }
       .stat-tile, .spends-box { background: var(--panel); }
 
-      /* The App Bottom Navigation Bar */
       .mobile-bottom-nav {
         display: flex;
         justify-content: space-around;
@@ -207,6 +206,7 @@
       .nav-item.active { color: var(--blue); }
       .nav-item.active svg { opacity: 1; stroke: var(--blue); }
 
+      /* Modals formatting */
       .modal-content { width: 92%; padding: 20px; }
       .query-terminal-modal { width: 95%; padding: 20px; max-height: 85vh; display: flex; flex-direction: column; }
       #allSpendsModal > div:last-child { flex-wrap: wrap; }
@@ -217,7 +217,7 @@
   </style>
 </head>
 
-<body class="home-view-active">
+<body>
   <div class="app-dimmer" id="appDimmer"></div>
 
   <div class="topbar">
@@ -233,7 +233,7 @@
     </div>
   </div>
 
-  <div class="app-container" id="mobileScrollArea">
+  <div class="app-container">
     
     <aside class="panel animate-item delay-1" id="tab-goals">
       <div style="padding: 10px 0 10px; display: flex; justify-content: space-between; align-items: baseline;">
@@ -428,13 +428,12 @@
         document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
         navElement.classList.add('active');
-        document.getElementById('mobileScrollArea').scrollTop = 0;
     };
 
     window.addEventListener('resize', () => {
         if(window.innerWidth > 992) {
             document.getElementById('tab-goals').classList.remove('active');
-            document.getElementById('tab-home').classList.add('active');
+            document.getElementById('tab-home').classList.remove('active');
             document.getElementById('tab-coach').classList.remove('active');
         } else {
             if(!document.getElementById('tab-home').classList.contains('active') &&
@@ -446,11 +445,7 @@
         }
     });
 
-    function getProfile() { 
-        try {
-            return JSON.parse(localStorage.getItem(PROFILE_KEY)) || {}; 
-        } catch(e) { return {}; }
-    }
+    function getProfile() { return JSON.parse(localStorage.getItem(PROFILE_KEY)) || {}; }
     
     function formatMoney(n) { 
         if(isNaN(n) || n === null || n === undefined) return "$0";
@@ -461,7 +456,6 @@
     function startGreetingCarousel(isSafe) {
         clearInterval(greetingInterval);
         const subtitleEl = document.getElementById("heroSubtitle");
-        if(!subtitleEl) return;
         const messages = isSafe ? [
             "We are currently running on track. We can buy everything on time.",
             "Do you want to buy something else? Let me plan it for you.",
@@ -505,174 +499,170 @@
           return localD.getMonth() === currentMonth && localD.getFullYear() === currentYear;
       });
 
-      const currentMonthLoggedTotal = currentMonthSpends.reduce((sum, s) => sum + Number(s.amount), 0);
-      const totalLoggedAllTime = loggedSpendsArray.reduce((sum, s) => sum + Number(s.amount), 0);
+      const currentMonthLoggedSpendsTotal = currentMonthSpends.reduce((sum, s) => sum + Number(s.amount), 0);
+      const totalLoggedSpendsAllTime = loggedSpendsArray.reduce((sum, s) => sum + Number(s.amount), 0);
       
       const pIncome = Number(profile.incomeMonthly) || 0;
       const pExpense = Number(profile.expensesMonthly) || 0;
       const startCap = Number(profile.startingBalance) || 0;
 
-      const monthlySurplus = pIncome - pExpense - currentMonthLoggedTotal;
-      const currentCap = startCap + (pIncome - pExpense) - totalLoggedAllTime;
+      const monthlySurplus = pIncome - pExpense - currentMonthLoggedSpendsTotal;
+      const currentCap = startCap + (pIncome - pExpense) - totalLoggedSpendsAllTime;
 
-      const titleEl = document.getElementById("heroGreetingTitle");
-      if(titleEl) titleEl.textContent = `Hello ${firstName}`;
+      document.getElementById("heroGreetingTitle").textContent = `Hello ${firstName}`;
       startGreetingCarousel(monthlySurplus > 0);
 
-      const goalListEl = document.getElementById("goalList");
-      if(goalListEl) {
-        goalListEl.innerHTML = goals.map((g, index) => {
+      document.getElementById("goalList").innerHTML = goals.map((g, index) => {
+        const color = lineColors[index % lineColors.length];
+        const icon = getIcon(g.name);
+
+        const totalTarget = goals.reduce((sum, g) => sum + g.target, 0) || 1;
+        const share = g.target / totalTarget;
+        const allocatedCap = currentCap * share;
+        const pct = g.target > 0 ? Math.min(100, (allocatedCap / g.target) * 100) : 0;
+
+        return `
+        <div class="goal-item hover-lift">
+          <button class="btn-remove-goal" onclick="removeGoal('${g.id}')">×</button>
+          <div style="display:flex; gap:14px; align-items:center; margin-bottom:14px;">
+              <div style="width:40px; height:40px; border-radius:10px; background:rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center; font-size:18px; border:1px solid rgba(255,255,255,0.05);">${icon}</div>
+              <div>
+                  <h4 style="margin:0 0 2px; font-size:15px; font-weight:700; color:#fff;">${g.name}</h4>
+                  <p style="margin:0; font-size:12px; color:var(--text-dim);">Target: ${g.dueDate || 'Ongoing'}</p>
+              </div>
+          </div>
+          <div style="height:4px; background:rgba(255,255,255,0.05); border-radius:4px; margin-bottom:12px; overflow:hidden;">
+              <div style="height:100%; width:${pct}%; background:${color}; box-shadow:0 0 8px ${color};"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:12px; color:var(--text-dim);">Total expense</span>
+              <span style="font-size:13px; font-weight:700; color:#fff;">${formatMoney(g.target)}</span>
+          </div>
+        </div>`;
+      }).join("");
+
+      document.getElementById("healthGrid").innerHTML = goals.slice(0,2).map((g, index) => {
+        const isSafe = monthlySurplus > 0;
+        const cColor = lineColors[index % lineColors.length];
+        const icon = getIcon(g.name);
+
+        return `
+        <div class="health-card hover-lift" style="display:flex; justify-content:space-between; align-items:center; padding: 18px 24px;">
+          <div style="display:flex; align-items:center; gap:14px;">
+            <div style="width:42px; height:42px; border-radius:10px; background:rgba(255,255,255,0.05); display:flex; align-items:center; justify-content:center; font-size:18px; border:1px solid rgba(255,255,255,0.05);">${icon}</div>
+            <div>
+              <h4 style="margin:0 0 4px; font-size:16px; font-weight:700; color:#fff;">${g.name}</h4>
+              <p style="margin:0; font-size:12px; color:var(--text-dim);">Target Goal</p>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <span style="font-size:12px; font-weight:800; display:block; margin-bottom:4px; color:${isSafe ? 'var(--mint)' : 'var(--orange)'};">${isSafe ? 'On Track' : 'At Risk'}</span>
+            <span style="font-size:20px; font-weight:800; color:#fff;">${formatMoney(g.target)}</span>
+          </div>
+        </div>`;
+      }).join("");
+
+      const svgWidth = 600, svgHeight = 180;
+      const xStart = 40, xEnd = 560, yTop = 30, yBottom = 160;
+      let svgContent = '';
+      
+      const highestValue = Math.max((currentCap + monthlySurplus * 6), ...goals.map(g => g.target), 30000) || 30000;
+      
+      document.getElementById("yAxisTop").textContent = "$" + Math.round(highestValue / 1000) + "k";
+      document.getElementById("yAxisMid").textContent = "$" + Math.round((highestValue * 0.66) / 1000) + "k";
+      document.getElementById("yAxisLow").textContent = "$" + Math.round((highestValue * 0.33) / 1000) + "k";
+
+      const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Aug"];
+      labels.forEach((text, i) => {
+          const x = xStart + (i * ((xEnd - xStart) / 6));
+          svgContent += `<text x="${x}" y="175" fill="var(--text-dim)" font-size="10" text-anchor="middle">${text}</text>`;
+      });
+
+      let dataPoints = [currentCap];
+      for(let i=1; i<=6; i++) dataPoints.push(currentCap + (monthlySurplus * i));
+      
+      let pathD = `M${xStart},${yBottom - ((dataPoints[0] / highestValue) * (yBottom - yTop))}`;
+      dataPoints.forEach((val, i) => {
+          if(i === 0) return;
+          const x = xStart + (i * ((xEnd - xStart) / 6));
+          const y = yBottom - ((val / highestValue) * (yBottom - yTop));
+          pathD += ` L${x},${y}`;
+          svgContent += `<circle cx="${x}" cy="${y}" r="3" fill="var(--bg)" stroke="var(--blue)" stroke-width="2"></circle>`;
+      });
+      svgContent += `<path d="${pathD}" fill="none" stroke="var(--blue)" stroke-width="3" stroke-linecap="round" filter="drop-shadow(0 2px 4px rgba(59,130,246,0.3))"></path>`;
+
+      goals.forEach((g, index) => {
           const color = lineColors[index % lineColors.length];
-          const icon = getIcon(g.name);
-          const totalTarget = goals.reduce((sum, g) => sum + g.target, 0) || 1;
+          const scaledY = yBottom - ((g.target / highestValue) * (yBottom - yTop));
+          if(scaledY > yTop && scaledY < yBottom) {
+              let curveD = `M ${xStart},${scaledY} Q ${xStart+100},${scaledY+10} ${xStart+200},${scaledY-10} T ${xStart+400},${scaledY-5} T ${xEnd},${scaledY-15}`;
+              svgContent += `<path d="${curveD}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"></path>`;
+          }
+      });
+      document.getElementById("velocityGraph").innerHTML = svgContent;
+
+      const totalTarget = goals.reduce((sum, g) => sum + g.target, 0) || 1;
+      let allocHtml = goals.map((g, index) => {
+          const color = lineColors[index % lineColors.length];
           const share = g.target / totalTarget;
           const allocatedCap = currentCap * share;
           const pct = g.target > 0 ? Math.min(100, (allocatedCap / g.target) * 100) : 0;
           return `
-          <div class="goal-item hover-lift">
-            <button class="btn-remove-goal" onclick="removeGoal('${g.id}')">×</button>
-            <div style="display:flex; gap:14px; align-items:center; margin-bottom:14px;">
-                <div style="width:40px; height:40px; border-radius:10px; background:rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center; font-size:18px; border:1px solid rgba(255,255,255,0.05);">${icon}</div>
-                <div>
-                    <h4 style="margin:0 0 2px; font-size:15px; font-weight:700; color:#fff;">${g.name}</h4>
-                    <p style="margin:0; font-size:12px; color:var(--text-dim);">Target: ${g.dueDate || 'Ongoing'}</p>
-                </div>
-            </div>
-            <div style="height:4px; background:rgba(255,255,255,0.05); border-radius:4px; margin-bottom:12px; overflow:hidden;">
-                <div style="height:100%; width:${pct}%; background:${color}; box-shadow:0 0 8px ${color};"></div>
-            </div>
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:12px; color:var(--text-dim);">Total expense</span>
-                <span style="font-size:13px; font-weight:700; color:#fff;">${formatMoney(g.target)}</span>
-            </div>
-          </div>`;
-        }).join("");
-      }
-
-      const healthGridEl = document.getElementById("healthGrid");
-      if(healthGridEl) {
-        healthGridEl.innerHTML = goals.slice(0,2).map((g, index) => {
-          const isSafe = monthlySurplus > 0;
-          return `
-          <div class="health-card hover-lift" style="display:flex; justify-content:space-between; align-items:center; padding: 18px 24px;">
-            <div style="display:flex; align-items:center; gap:14px;">
-              <div style="width:42px; height:42px; border-radius:10px; background:rgba(255,255,255,0.05); display:flex; align-items:center; justify-content:center; font-size:18px; border:1px solid rgba(255,255,255,0.05);">${getIcon(g.name)}</div>
-              <div>
-                <h4 style="margin:0 0 4px; font-size:16px; font-weight:700; color:#fff;">${g.name}</h4>
-                <p style="margin:0; font-size:12px; color:var(--text-dim);">Target Goal</p>
+          <div style="display:flex; justify-content:space-between; align-items:center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+              <div style="display:flex; align-items:center; gap:12px;">
+                  <div style="width:10px; height:10px; border-radius:50%; background:${color}; box-shadow:0 0 6px ${color};"></div>
+                  <span style="font-size:13px; color:#fff; font-weight:600;">${g.name} Allocation</span>
               </div>
-            </div>
-            <div style="text-align:right;">
-              <span style="font-size:12px; font-weight:800; display:block; margin-bottom:4px; color:${isSafe ? 'var(--mint)' : 'var(--orange)'};">${isSafe ? 'On Track' : 'At Risk'}</span>
-              <span style="font-size:20px; font-weight:800; color:#fff;">${formatMoney(g.target)}</span>
-            </div>
+              <span style="font-size:13px; color:var(--text-dim); font-weight:600;">${pct.toFixed(2)}%</span>
           </div>`;
-        }).join("");
-      }
+      }).join("");
 
-      const velocityGraphEl = document.getElementById("velocityGraph");
-      if(velocityGraphEl) {
-        const highestValue = Math.max((currentCap + monthlySurplus * 6), ...goals.map(g => g.target), 30000) || 30000;
-        const yTopEl = document.getElementById("yAxisTop");
-        const yMidEl = document.getElementById("yAxisMid");
-        const yLowEl = document.getElementById("yAxisLow");
-        if(yTopEl) yTopEl.textContent = "$" + Math.round(highestValue / 1000) + "k";
-        if(yMidEl) yMidEl.textContent = "$" + Math.round((highestValue * 0.66) / 1000) + "k";
-        if(yLowEl) yLowEl.textContent = "$" + Math.round((highestValue * 0.33) / 1000) + "k";
-
-        const xStart = 40, xEnd = 560, yTop = 30, yBottom = 160;
-        let svgContent = '';
-        const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Aug"];
-        labels.forEach((text, i) => {
-            const x = xStart + (i * ((xEnd - xStart) / 6));
-            svgContent += `<text x="${x}" y="175" fill="var(--text-dim)" font-size="10" text-anchor="middle">${text}</text>`;
-        });
-        let dataPoints = [currentCap];
-        for(let i=1; i<=6; i++) dataPoints.push(currentCap + (monthlySurplus * i));
-        let pathD = `M${xStart},${yBottom - ((dataPoints[0] / highestValue) * (yBottom - yTop))}`;
-        dataPoints.forEach((val, i) => {
-            if(i === 0) return;
-            const x = xStart + (i * ((xEnd - xStart) / 6));
-            const y = yBottom - ((val / highestValue) * (yBottom - yTop));
-            pathD += ` L${x},${y}`;
-            svgContent += `<circle cx="${x}" cy="${y}" r="3" fill="var(--bg)" stroke="var(--blue)" stroke-width="2"></circle>`;
-        });
-        svgContent += `<path d="${pathD}" fill="none" stroke="var(--blue)" stroke-width="3" stroke-linecap="round" filter="drop-shadow(0 2px 4px rgba(59,130,246,0.3))"></path>`;
-        goals.forEach((g, index) => {
-            const color = lineColors[index % lineColors.length];
-            const scaledY = yBottom - ((g.target / highestValue) * (yBottom - yTop));
-            if(scaledY > yTop && scaledY < yBottom) {
-                let curveD = `M ${xStart},${scaledY} Q ${xStart+100},${scaledY+10} ${xStart+200},${scaledY-10} T ${xStart+400},${scaledY-5} T ${xEnd},${scaledY-15}`;
-                svgContent += `<path d="${curveD}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"></path>`;
-            }
-        });
-        velocityGraphEl.innerHTML = svgContent;
-      }
-
-      const allocationListEl = document.getElementById("allocationList");
-      if(allocationListEl) {
-        const totalTarget = goals.reduce((sum, g) => sum + g.target, 0) || 1;
-        let allocHtml = goals.map((g, index) => {
-            const color = lineColors[index % lineColors.length];
-            const share = g.target / totalTarget;
-            const allocatedCap = currentCap * share;
-            const pct = g.target > 0 ? Math.min(100, (allocatedCap / g.target) * 100) : 0;
-            return `
-            <div style="display:flex; justify-content:space-between; align-items:center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                <div style="display:flex; align-items:center; gap:12px;">
-                    <div style="width:10px; height:10px; border-radius:50%; background:${color}; box-shadow:0 0 6px ${color};"></div>
-                    <span style="font-size:13px; color:#fff; font-weight:600;">${g.name} Allocation</span>
-                </div>
-                <span style="font-size:13px; color:var(--text-dim); font-weight:600;">${pct.toFixed(2)}%</span>
-            </div>`;
-        }).join("");
-        allocationListEl.innerHTML = allocHtml;
-      }
+      const totalPct = Math.min(100, (currentCap / totalTarget) * 100);
+      allocHtml += `
+          <div style="display:flex; justify-content:space-between; align-items:center; padding: 16px 0 0; margin-top: 6px;">
+              <div style="display:flex; align-items:center; gap:12px;">
+                  <div style="width:10px; height:10px; border-radius:50%; background:var(--text-dim);"></div>
+                  <span style="font-size:13px; color:#fff; font-weight:600;">Total Balance Coverage</span>
+              </div>
+              <span style="font-size:13px; color:var(--text-dim); font-weight:600;">${totalPct.toFixed(2)}%</span>
+          </div>`;
+      document.getElementById("allocationList").innerHTML = allocHtml;
 
       const recentSpendsList = document.getElementById("recentSpendsList");
-      if(recentSpendsList) {
-        if (loggedSpendsArray.length === 0) {
-            recentSpendsList.innerHTML = `<div style="font-size:12px; color:var(--text-dim); text-align:center; padding: 10px 0;">No recent spends.</div>`;
-        } else {
-            const displaySpends = [...loggedSpendsArray].reverse().slice(0, 2);
-            recentSpendsList.innerHTML = displaySpends.map(s => {
-                let dateStr = "Unknown Date";
-                if(s.date) {
-                    const d = new Date(s.date);
-                    dateStr = new Date(d.getTime() + Math.abs(d.getTimezoneOffset()*60000)).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-                }
-                return `
-                <div class="spend-item">
-                  <div class="spend-left">
-                    <div class="spend-icon">${getIcon(s.desc)}</div>
-                    <div class="spend-details">
-                        <span class="spend-desc">${s.desc || 'Expense'}</span>
-                        <span class="spend-date">${dateStr}</span>
-                    </div>
+      if (loggedSpendsArray.length === 0) {
+          recentSpendsList.innerHTML = `<div style="font-size:12px; color:var(--text-dim); text-align:center; padding: 10px 0;">No recent spends.</div>`;
+      } else {
+          const displaySpends = [...loggedSpendsArray].reverse().slice(0, 2);
+          recentSpendsList.innerHTML = displaySpends.map(s => {
+              let dateStr = "Unknown Date";
+              if(s.date) {
+                  const d = new Date(s.date);
+                  dateStr = new Date(d.getTime() + Math.abs(d.getTimezoneOffset()*60000)).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+              }
+
+              return `
+              <div class="spend-item">
+                <div class="spend-left">
+                  <div class="spend-icon">${getIcon(s.desc)}</div>
+                  <div class="spend-details">
+                      <span class="spend-desc">${s.desc || 'Expense'}</span>
+                      <span class="spend-date">${dateStr}</span>
                   </div>
-                  <span class="spend-amount" style="color:var(--pink);">-${formatMoney(s.amount)}</span>
-                </div>`;
-            }).join("");
-        }
+                </div>
+                <span class="spend-amount" style="color:var(--pink);">-${formatMoney(s.amount)}</span>
+              </div>`;
+          }).join("");
       }
 
-      const bigSavingsEl = document.getElementById("bigCurrentSavings");
-      const valIncomeEl = document.getElementById("valIncome");
-      const valExpensesEl = document.getElementById("valExpenses");
-      const valLoggedSpendsEl = document.getElementById("valLoggedSpends");
-      const surplusValueEl = document.getElementById("surplusValue");
-      const proj1El = document.getElementById("proj1");
-      const proj3El = document.getElementById("proj3");
-      const proj6El = document.getElementById("proj6");
+      document.getElementById("bigCurrentSavings").textContent = formatMoney(currentCap);
+      document.getElementById("valIncome").textContent = formatMoney(pIncome);
+      document.getElementById("valExpenses").textContent = formatMoney(pExpense);
+      document.getElementById("valLoggedSpends").textContent = formatMoney(currentMonthLoggedSpendsTotal);
+      document.getElementById("surplusValue").textContent = formatMoney(monthlySurplus);
 
-      if(bigSavingsEl) bigSavingsEl.textContent = formatMoney(currentCap);
-      if(valIncomeEl) valIncomeEl.textContent = formatMoney(pIncome);
-      if(valExpensesEl) valExpensesEl.textContent = formatMoney(pExpense);
-      if(valLoggedSpendsEl) valLoggedSpendsEl.textContent = formatMoney(currentMonthLoggedTotal);
-      if(surplusValueEl) surplusValueEl.textContent = formatMoney(monthlySurplus);
-      if(proj1El) proj1El.textContent = formatMoney(currentCap + monthlySurplus);
-      if(proj3El) proj3El.textContent = formatMoney(currentCap + (monthlySurplus * 3));
-      if(proj6El) proj6El.textContent = formatMoney(currentCap + (monthlySurplus * 6));
+      document.getElementById("proj1").textContent = formatMoney(currentCap + monthlySurplus);
+      document.getElementById("proj3").textContent = formatMoney(currentCap + (monthlySurplus * 3));
+      document.getElementById("proj6").textContent = formatMoney(currentCap + (monthlySurplus * 6));
     }
 
     window.openAllSpendsModal = function() {
@@ -680,42 +670,43 @@
         document.getElementById("allSpendsModal").classList.add("active");
         renderFullSpendsList();
     }
+    
     window.closeAllSpendsModal = function() {
         document.getElementById("allSpendsModal").classList.remove("active");
         document.getElementById("appDimmer").classList.remove("active");
     }
+
     window.renderFullSpendsList = function() {
         const spends = JSON.parse(localStorage.getItem(SPENDS_KEY)) || [];
         const listEl = document.getElementById("fullSpendsList");
-        if(listEl) {
-            if(spends.length === 0) {
-                listEl.innerHTML = `<div style="text-align:center; color:var(--text-dim); margin-top: 20px;">No spends logged yet.</div>`;
-                return;
-            }
-            const reversedSpends = [...spends].reverse();
-            listEl.innerHTML = reversedSpends.map((s, reversedIndex) => {
-                const originalIndex = spends.length - 1 - reversedIndex;
-                let dateStr = "Unknown Date";
-                if(s.date) {
-                    const d = new Date(s.date);
-                    dateStr = new Date(d.getTime() + Math.abs(d.getTimezoneOffset()*60000)).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-                }
-                return `
-                <div class="spend-item" style="background: rgba(255,255,255,0.02); padding: 12px 16px; border-radius: 10px; border: 1px solid var(--stroke);">
-                  <div class="spend-left">
-                    <div class="spend-icon">${getIcon(s.desc)}</div>
-                    <div class="spend-details">
-                        <span class="spend-desc">${s.desc || 'Expense'}</span>
-                        <span class="spend-date">${dateStr}</span>
-                    </div>
-                  </div>
-                  <div style="display:flex; align-items:center; gap: 14px;">
-                    <span class="spend-amount" style="color:var(--pink);">-${formatMoney(s.amount)}</span>
-                    <button class="btn-stealth" style="color: #f87171; padding: 4px 8px; font-size:16px;" onclick="deleteSpend(${originalIndex})">×</button>
-                  </div>
-                </div>`;
-            }).join("");
+        if(spends.length === 0) {
+            listEl.innerHTML = `<div style="text-align:center; color:var(--text-dim); margin-top: 20px;">No spends logged yet.</div>`;
+            return;
         }
+        
+        const reversedSpends = [...spends].reverse();
+        listEl.innerHTML = reversedSpends.map((s, reversedIndex) => {
+            const originalIndex = spends.length - 1 - reversedIndex;
+            let dateStr = "Unknown Date";
+            if(s.date) {
+                const d = new Date(s.date);
+                dateStr = new Date(d.getTime() + Math.abs(d.getTimezoneOffset()*60000)).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+            }
+            return `
+            <div class="spend-item" style="background: rgba(255,255,255,0.02); padding: 12px 16px; border-radius: 10px; border: 1px solid var(--stroke);">
+              <div class="spend-left">
+                <div class="spend-icon">${getIcon(s.desc)}</div>
+                <div class="spend-details">
+                    <span class="spend-desc">${s.desc || 'Expense'}</span>
+                    <span class="spend-date">${dateStr}</span>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap: 14px;">
+                <span class="spend-amount" style="color:var(--pink);">-${formatMoney(s.amount)}</span>
+                <button class="btn-stealth" style="color: #f87171; padding: 4px 8px; font-size:16px;" onclick="deleteSpend(${originalIndex})">×</button>
+              </div>
+            </div>`;
+        }).join("");
     }
 
     window.deleteSpend = function(index) {
@@ -725,6 +716,7 @@
         renderFullSpendsList();
         refresh();
     }
+
     window.quickLogSpend = function() {
         const amt = Number(document.getElementById("quickLogAmount").value);
         const desc = document.getElementById("quickLogDesc").value;
@@ -740,6 +732,7 @@
             refresh();
         }
     }
+
     window.openGoalModal = function() { 
         document.getElementById("mGoalName").value = "";
         document.getElementById("mGoalTarget").value = "";
@@ -747,25 +740,32 @@
         document.getElementById("appDimmer").classList.add("active"); 
         document.getElementById("goalModal").classList.add("active"); 
     }
+
     window.saveNewGoal = function() {
         const nameVal = document.getElementById("mGoalName").value.trim();
         const targetVal = Number(document.getElementById("mGoalTarget").value);
         const dateVal = document.getElementById("mGoalDate").value;
+
         if (nameVal && targetVal > 0) {
             const goals = JSON.parse(localStorage.getItem(GOALS_KEY)) || [];
             goals.push({ id: Date.now().toString(), name: nameVal, target: targetVal, dueDate: dateVal });
             localStorage.setItem(GOALS_KEY, JSON.stringify(goals));
+            
             document.getElementById("goalModal").classList.remove("active"); 
             document.getElementById("appDimmer").classList.remove("active"); 
             refresh();
-        } else { alert("Please enter a valid Goal Name and Target Amount."); }
+        } else {
+            alert("Please enter a valid Goal Name and Target Amount.");
+        }
     };
+
     window.removeGoal = function(id) {
         let goals = JSON.parse(localStorage.getItem(GOALS_KEY)) || [];
         goals = goals.filter(g => g.id !== id);
         localStorage.setItem(GOALS_KEY, JSON.stringify(goals));
         refresh();
     }
+
     window.openCashFlowModal = function() {
         const p = getProfile();
         document.getElementById("editIncome").value = p.incomeMonthly || 0;
@@ -773,6 +773,7 @@
         document.getElementById("appDimmer").classList.add("active"); 
         document.getElementById("cashFlowModal").classList.add("active");
     }
+
     window.saveCashFlow = function() {
         let p = getProfile();
         p.incomeMonthly = Number(document.getElementById("editIncome").value); 
@@ -782,31 +783,40 @@
         document.getElementById("appDimmer").classList.remove("active"); 
         refresh();
     }
+
     window.logout = function() {
         supabase.auth.signOut().then(() => window.location.replace("./index.html"));
     }
+
+    const appDimmer = document.getElementById("appDimmer");
+    const qTerminal = document.getElementById("queryTerminal");
+    
     window.openSearch = function() { 
-        document.getElementById("appDimmer").classList.add("active"); 
-        document.getElementById("queryTerminal").classList.add("active"); 
+        appDimmer.classList.add("active"); 
+        qTerminal.classList.add("active"); 
         document.getElementById("queryInput").focus(); 
     }
-    document.getElementById("appDimmer").addEventListener("click", () => { 
+    
+    appDimmer.addEventListener("click", () => { 
         document.querySelectorAll('.modal-overlay, .query-terminal-modal').forEach(el => el.classList.remove('active')); 
-        document.getElementById("appDimmer").classList.remove("active"); 
+        appDimmer.classList.remove("active"); 
     });
-    window.clearChat = function() { document.getElementById("chatHistory").innerHTML = `<div class="chat-msg chat-bot">System active. Ask me about balance or goals.</div>`; }
+    
+    window.clearChat = function() { document.getElementById("chatHistory").innerHTML = `<div class="chat-msg chat-bot">System active. Ask me about your balance, surplus, or goal targets.</div>`; }
     
     window.handleQuery = function() {
       const qInput = document.getElementById("queryInput");
       const queryText = qInput.value.trim();
       const query = queryText.toLowerCase();
       if (!query) return;
+
       const chatHistory = document.getElementById("chatHistory");
       chatHistory.innerHTML += `<div class="chat-msg chat-user">${queryText}</div>`;
       
       const p = getProfile();
       const goals = JSON.parse(localStorage.getItem(GOALS_KEY)) || [];
       const loggedSpendsArray = JSON.parse(localStorage.getItem(SPENDS_KEY)) || [];
+
       const currentMonthSpends = loggedSpendsArray.filter(s => {
           if(!s.date) return false;
           const localD = new Date(new Date(s.date).getTime() + Math.abs(new Date(s.date).getTimezoneOffset()*60000));
@@ -814,39 +824,86 @@
       });
       const monthLoggedTotal = currentMonthSpends.reduce((sum, s) => sum + Number(s.amount), 0);
       const allTimeLoggedTotal = loggedSpendsArray.reduce((sum, s) => sum + Number(s.amount), 0);
+      
       const income = Number(p.incomeMonthly) || 0;
       const fixedExp = Number(p.expensesMonthly) || 0;
       const startCap = Number(p.startingBalance) || 0;
+
       const surplus = income - fixedExp - monthLoggedTotal;
       const currentCap = startCap + (income - fixedExp) - allTimeLoggedTotal;
       
-      let response = "I monitor your data. Try asking about your 'surplus' or 'balance'.";
+      let response = "I monitor your data. Try asking about your 'surplus', 'current savings', or 'Can I afford a $500 item?'.";
+
       const moneyMatch = query.match(/(?:^|\s)\$?(\d+(?:,\d{3})*(?:\.\d+)?)\$?(?=$|\s|[.,?!])/); 
       const amountAsked = moneyMatch ? parseFloat(moneyMatch[1].replace(/,/g, '')) : null;
 
-      if (query.includes("surplus") || query.includes("leftover")) {
-          response = `Your current monthly surplus is <b>${formatMoney(surplus)}</b>.`;
-      } else if (query.includes("capital") || query.includes("balance") || query.includes("savings")) {
-          response = `Your current total liquid savings stand at <b>${formatMoney(currentCap)}</b>.`;
-      } else if (query.includes("afford") && amountAsked) {
-          if (amountAsked <= surplus) response = `Yes, you can afford ${formatMoney(amountAsked)} within your monthly surplus.`;
-          else if (amountAsked <= currentCap) response = `You have the capital, but this purchase will delay your goals.`;
-          else response = `No, you are short by ${formatMoney(amountAsked - currentCap)}.`;
+      if (query.includes("impact") || query.includes("affect") || query.includes("delay")) {
+          if (surplus > 0) {
+              response = `If the item costs less than your monthly surplus of <b>${formatMoney(surplus)}</b>, nothing will happen and you can buy it. If it costs more, it will dip into your capital and <b>delay your goals</b>.`;
+          } else {
+              response = `Your surplus is currently zero or negative. Any purchase right now will dip into your capital and <b>delay your goals</b>.`;
+          }
       }
+      else if ((query.includes("afford") || query.includes("buy") || query.includes("purchase")) && amountAsked) {
+          if (amountAsked <= currentCap) {
+              if (amountAsked <= surplus) {
+                  response = `Yes, you can buy this for ${formatMoney(amountAsked)}. It is within your monthly surplus, so <b>nothing will happen to your goals</b>.`;
+              } else {
+                  response = `You have the ${formatMoney(currentCap)} capital to buy this, but because it exceeds your monthly surplus, <b>it will delay your goals</b>.`;
+              }
+          } else {
+              const diff = amountAsked - currentCap;
+              if (surplus > 0) {
+                  const months = Math.ceil(diff / surplus);
+                  response = `No. You are <b>${formatMoney(diff)}</b> short. You need approx. <b>${months} more month(s)</b> to afford this.`;
+              } else {
+                  response = `No. You are <b>${formatMoney(diff)}</b> short, and without a positive surplus, you cannot currently save for it.`;
+              }
+          }
+      }
+      else if ((query.includes("afford") || query.includes("buy") || query.includes("purchase")) && !amountAsked) {
+          response = `Please specify an amount (e.g., "Can I buy a $500 watch?"). Generally, staying under your ${formatMoney(surplus)} surplus means nothing will happen to your goals.`;
+      }
+      else if (query.includes("surplus") || query.includes("leftover") || query.includes("left")) {
+          response = `Your current monthly surplus is <b>${formatMoney(surplus)}</b> after all logged spends and fixed expenses.`;
+      } 
+      else if (query.includes("capital") || query.includes("balance") || query.includes("savings") || query.includes("money")) {
+          response = `Your current total liquid savings stand at <b>${formatMoney(currentCap)}</b>.`;
+      }
+      else if (query.includes("goal") || query.includes("target")) {
+          if (goals.length === 0) {
+              response = "You haven't set any active goals yet.";
+          } else {
+              const totalTarget = goals.reduce((sum, g) => sum + g.target, 0);
+              const coverage = ((currentCap / totalTarget) * 100).toFixed(1);
+              response = `You have <b>${goals.length}</b> active goals. Your current savings cover <b>${coverage}%</b> of your combined targets.`;
+          }
+      }
+      else if (query.includes("income") || query.includes("expense")) {
+          response = `Your profile shows a base monthly income of ${formatMoney(income)} and fixed expenses of ${formatMoney(fixedExp)}.`;
+      }
+      else {
+          let foundGoal = false;
+          goals.forEach(g => {
+              if (query.includes(g.name.toLowerCase())) {
+                  foundGoal = true;
+                  const totalTarget = goals.reduce((sum, g) => sum + g.target, 0) || 1;
+                  const share = g.target / totalTarget;
+                  const allocated = currentCap * share;
+                  const pct = ((allocated / g.target) * 100).toFixed(1);
+                  response = `For your <b>${g.name}</b> goal, you have <b>${formatMoney(allocated)}</b> allocated (${pct}% of target).`;
+              }
+          });
+      }
+
       setTimeout(() => { 
-          chatHistory.innerHTML += `<div class="chat-msg chat-bot">${response}</div>`; 
+          chatHistory.innerHTML += `<div class="chat-msg chat-bot" style="color: #e2e8f0;">${response}</div>`; 
           chatHistory.scrollTop = chatHistory.scrollHeight; 
       }, 300);
+
       qInput.value = "";
     }
 
-    // ENSURE HOME TAB IS ACTIVE ON MOBILE LOAD
-    window.onload = function() {
-        if(window.innerWidth <= 992) {
-            switchTab('tab-home', document.querySelectorAll('.nav-item')[1]);
-        }
-        refresh();
-    };
     setTimeout(refresh, 100);
   </script>
 </body>
