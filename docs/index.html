@@ -3,347 +3,393 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GoalGuard</title>
+  <title>GoalGuard — AI-Powered Smart Savings Mentor</title>
   <link rel="icon" href="./favicon.png" type="image/png">
-
-  <!-- Bootstrap (optional) -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-  <!-- CSS in same folder (docs/) -->
   <link rel="stylesheet" href="./style.css" />
+
+  <style>
+    /* Custom CSS Logo Styles injected for the landing page */
+    .brand-icon {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 3px solid #FF5B04; /* Matches var(--orange) */
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 14px; color: #fff;
+    }
+    .brand-text { font-weight: 800; font-size: 16px; letter-spacing: 0.15em; text-transform: uppercase; }
+    .gg-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; user-select: none; }
+  </style>
 </head>
 
 <body>
-  <!-- NAV -->
   <nav class="gg-nav">
     <div class="gg-nav-inner">
-      <a class="gg-brand" href="#top">GoalGuard</a>
-
+      <a class="gg-brand" href="#top">
+        <div class="brand-icon">G</div>
+        <div class="brand-text">
+            <span style="color: #3b82f6;">GOAL</span> <span style="color: #FF5B04;">GUARD</span>
+        </div>
+      </a>
       <div class="gg-nav-links">
         <a class="gg-link" href="#how">How it works</a>
         <a class="gg-link" href="#features">Features</a>
         <a class="gg-link" href="#goals">Demo</a>
       </div>
-
       <div class="gg-nav-actions">
-        <button type="button" class="gg-btn gg-btn-ghost" id="navSignInBtn">
-          Sign In
-        </button>
-        <button type="button" class="gg-btn gg-btn-solid" id="navSignUpBtn">
-          Sign Up
-        </button>
+        <button type="button" class="gg-btn gg-btn-ghost" id="navSignInBtn">Sign In</button>
+        <button type="button" class="gg-btn gg-btn-solid" id="navSignUpBtn">Sign Up</button>
       </div>
     </div>
   </nav>
 
-  <!-- Main scroll/snap container -->
   <main id="top" class="gg-snap">
 
-    <!-- HERO -->
-    <section class="gg-snap-section">
-      <div class="gg-container gg-hero-clean">
-
-        <h1 class="gg-title">NEW ERA OF SMART SAVINGS</h1>
-
-        <p class="gg-sub">
+    <section class="gg-snap-section gg-hero-section">
+      <div class="gg-hero-glow"></div>
+      <div class="gg-container gg-hero-content">
+        <div class="gg-pill gg-reveal">
+          <span class="gg-pill-icon">✨</span>
+          <span>AI-Powered Smart Savings</span>
+        </div>
+        <h1 class="gg-title gg-reveal" data-delay="1">New Era of Smart Savings</h1>
+        <p class="gg-sub gg-reveal" data-delay="2">
           Master real finance decisions with a coach that listens, refines, and adapts to you.<br />
-          Like having a trusted money mentor in your pocket — ready whenever you need clarity.
+          Like having a trusted money mentor in your pocket — <b>ready whenever you need clarity.</b>
         </p>
-
-        <div class="gg-cta-wrap">
-          <a class="gg-cta" href="#start">Start saving for free →</a>
+        <div class="gg-cta-wrap gg-reveal" data-delay="3">
+          <a class="gg-cta-orange" id="startSavingBtn" href="#">
+            Start Saving Now <span>→</span>
+          </a>
         </div>
-
-        <div class="gg-note">No card required • Free tool • Cancel anytime</div>
+        <div class="gg-note gg-reveal" data-delay="4">No card required • Free trial • Cancel anytime</div>
       </div>
     </section>
 
-    <!-- HOW IT WORKS -->
     <section id="how" class="gg-snap-section">
-      <div class="gg-container gg-section gg-steps">
-        <div class="gg-steps-head gg-reveal" data-delay="0">
-          <h2>Faster. Smarter.</h2>
-          <div class="gg-steps-sub">Set up your finance guardrails in minutes — then chat like WhatsApp.</div>
-        </div>
+      <div class="gg-container">
+        <div class="s2-wrapper gg-reveal">
+          <div class="s2-left">
+            <h2 class="s2-title">Faster. Smarter. Live Guidance.</h2>
+            <p class="s2-sub">Your finance guardrails are set. Real-time chat with your mentor is active.</p>
+            
+            <div class="s2-cards-row">
+              <div class="s2-card dark">
+                <div class="s2-card-title">📋 Active Goals</div>
+                <div class="s2-goal-item">
+                  <div class="s2-goal-text"><span>Emergency Fund</span><span>$2,500 / $5,000</span></div>
+                  <div class="s2-slider"><div class="fill" style="width: 50%;"></div><div class="handle" style="left: 50%;"></div></div>
+                </div>
+                <div class="s2-goal-item">
+                  <div class="s2-goal-text"><span>Vacation Fund</span><span>$500 / $2,000</span></div>
+                  <div class="s2-slider"><div class="fill" style="width: 25%;"></div><div class="handle" style="left: 25%;"></div></div>
+                </div>
+              </div>
+              <div class="s2-card light">
+                <div class="s2-card-title dark-text">🔑 Calculated Safe Spend</div>
+                <div class="s2-big-orange">$115 / day</div>
+                <p class="s2-note">Truly safe daily spending.</p>
+              </div>
+            </div>
 
-        <div class="gg-steps-row">
-          <div class="gg-step-card gg-reveal" data-delay="1">
-            <div class="gg-step-badge">1</div>
-            <h3>Set your goals</h3>
-            <p>Add <b>Primary</b> and <b>Secondary</b> goals so GoalGuard knows what to protect.</p>
-            <div class="gg-step-mini">
-              <span class="gg-chip">Primary</span>
-              <span class="gg-chip">Secondary</span>
+            <div class="s2-engine">
+              <div class="s2-engine-title">GoalGuard Protection Engine Real-time</div>
+              <div class="s2-engine-flow">
+                <div class="s2-flow-step"><div class="s2-step-box">1</div><div class="s2-step-icon">📋</div><div class="s2-step-label">Your Goals</div></div>
+                <div class="s2-flow-arrow">→</div>
+                <div class="s2-flow-step"><div class="s2-step-box">2</div><div class="s2-step-icon">📊</div><div class="s2-step-label">Finance Data</div></div>
+                <div class="s2-flow-arrow">→</div>
+                <div class="s2-flow-final">🔒 Truly Safe Spend:<br><span>$115/day</span></div>
+              </div>
             </div>
           </div>
 
-          <div class="gg-step-arrow">→</div>
-
-          <div class="gg-step-card gg-reveal" data-delay="2">
-            <div class="gg-step-badge">2</div>
-            <h3>Set your income & liabilities</h3>
-            <p>Add salary, fixed bills, and living costs — we calculate what’s truly safe to spend.</p>
-            <div class="gg-step-mini">
-              <span class="gg-chip">Salary</span>
-              <span class="gg-chip">Bills</span>
-              <span class="gg-chip">Living</span>
-            </div>
-          </div>
-
-          <div class="gg-step-arrow">→</div>
-
-          <div class="gg-step-card gg-step-accent gg-reveal" data-delay="3">
-            <div class="gg-step-badge gg-step-badge-accent">3</div>
-            <h3>Select the bot style</h3>
-            <p>Pick how you want the coach to talk: strict, friendly, or balanced.</p>
-
-            <div class="gg-step-mini gg-step-mini-stack">
-              <div class="gg-style-row"><span class="gg-style-dot"></span><span>Strict</span></div>
-              <div class="gg-style-row"><span class="gg-style-dot"></span><span>Friendly</span></div>
-              <div class="gg-style-row"><span class="gg-style-dot"></span><span>Balanced</span></div>
+          <div class="s2-right">
+            <div class="s2-chat-box">
+              <div class="s2-chat-head">
+                <div class="s2-chat-bot-info">🤖 GoalGuard Coach <span class="orange">(Friendly)</span></div>
+                <div class="s2-chat-dropdown">Friendly (Active) ▾</div>
+              </div>
+              <div class="s2-chat-body">
+                <div class="s2-bubble bot">Welcome, Alex! I'm here to help you stay on track.<br>Any big spend decisions today?</div>
+                <div class="s2-bubble user">Thinking about buying that coffee machine, $150.</div>
+                <div class="s2-bubble bot">Based on your current data, that puts your Vacation<br>goal behind schedule. Can we delay?</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- FEATURES -->
     <section id="features" class="gg-snap-section">
-      <div class="gg-container gg-features">
-        <div class="gg-features-head gg-reveal">
-          <h2 class="gg-features-title">
-            Spend smarter with<br />
-            <span class="gg-dim">intelligent feedback</span>
-          </h2>
-          <p class="gg-features-sub">
-            GoalGuard doesn’t just track — it analyzes, protects, and guides your decisions toward your goals.
-          </p>
-        </div>
-
-        <div class="gg-features-grid">
-          <div class="gg-feature-card gg-reveal gg-green" data-delay="1">
-            <div class="gg-feature-top">
-              <div class="gg-feature-icon">📈</div>
-              <div class="gg-feature-border"></div>
+      <div class="gg-container">
+        <div class="s3-wrapper gg-reveal">
+          <div class="s3-card">
+            <div class="s3-grid-bg"></div>
+            <div class="s3-head">
+              <h3>Savings Tracker</h3>
+              <p>GoalGuard protects primary goals while<br>visualizing monthly progress.</p>
             </div>
-            <h3 class="gg-feature-h">Track your savings</h3>
-            <p class="gg-feature-p">
-              See what’s safe to spend after protecting primary goals — with clear monthly progress.
-            </p>
-            <div class="gg-feature-mini">
-              <div class="gg-mini-bars">
-                <span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span>
+            <div class="s3-tracker-graph">
+              <div class="s3-tooltip">Dec 13, 2021<br><span class="dim">• Historical: 5,979</span><br>• Data: <span class="teal">$3,979</span></div>
+              <svg viewBox="0 0 300 150" class="s3-svg-graph">
+                <defs><linearGradient id="trackerGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--teal)" stop-opacity="0.3"/><stop offset="100%" stop-color="var(--teal)" stop-opacity="0"/></linearGradient></defs>
+                <path d="M0 120 C 50 110, 100 110, 150 80 S 250 40, 300 60 L 300 150 L 0 150 Z" fill="url(#trackerGrad)"/>
+                <path d="M0 120 C 50 110, 100 110, 150 80 S 250 40, 300 60" fill="none" stroke="var(--teal)" stroke-width="3"/>
+                <circle cx="220" cy="53" r="5" fill="var(--teal)" stroke="#fff" stroke-width="2"/>
+              </svg>
+              <div class="s3-axis"><span>Jan</span><span>Sep</span><span>Nov</span><span>Dec</span><span>Jan</span></div>
+            </div>
+            <div class="s3-tracker-footer">
+              <div class="s3-donut">
+                <svg viewBox="0 0 36 36"><path class="bg" d="M18 2 a16 16 0 0 1 0 32 a16 16 0 0 1 0 -32"/><path class="fill" d="M18 2 a16 16 0 0 1 0 32 a16 16 0 0 1 0 -32" stroke-dasharray="92, 100"/></svg>
+                <div class="s3-donut-txt">92%</div>
               </div>
-              <div class="gg-mini-note">↑ 23% this week</div>
-            </div>
-          </div>
-
-          <div class="gg-feature-card gg-reveal gg-purple" data-delay="2">
-            <div class="gg-feature-top">
-              <div class="gg-feature-icon">🎯</div>
-              <div class="gg-feature-border"></div>
-            </div>
-            <h3 class="gg-feature-h">Set new goals that support existing goals</h3>
-            <p class="gg-feature-p">
-              Add secondary goals without breaking your primary plan — get timelines and tradeoffs instantly.
-            </p>
-            <div class="gg-feature-mini">
-              <div class="gg-mini-ring">
-                <div class="gg-ring">92<span>%</span></div>
-              </div>
-              <div class="gg-mini-wave">
-                <span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span>
+              <div class="s3-stats">
+                <div class="label">Total savings target</div>
+                <div class="val">$11,100</div>
+                <div class="badge">↑ 23% this week</div>
               </div>
             </div>
           </div>
 
-          <div class="gg-feature-card gg-reveal gg-pink" data-delay="3">
-            <div class="gg-feature-top">
-              <div class="gg-feature-icon">🛡️</div>
-              <div class="gg-feature-border"></div>
+          <div class="s3-card">
+            <div class="s3-grid-bg"></div>
+            <div class="s3-head">
+              <h3>Goal Dependency Network</h3>
+              <p>GoalGuard instantly calculates timelines and tradeoffs for<br>secondary goals without breaking primary plan.</p>
             </div>
-            <h3 class="gg-feature-h">Smart purchase guard</h3>
-            <p class="gg-feature-p">
-              Ask “Can I buy this?” and GoalGuard will tell you the impact on goals before you spend.
-            </p>
-            <div class="gg-feature-mini">
-              <div class="gg-chip-row">
-                <span class="gg-chip">House Fund</span>
-                <span class="gg-chip accent">PS5</span>
-                <span class="gg-chip">Trip</span>
-                <span class="gg-chip accent">Rent</span>
+            <div class="s3-network-viz">
+              <div class="net-left">
+                <div class="net-ring-node"><div class="val">92%</div><div class="lbl">complete</div></div>
               </div>
+              <div class="net-center">
+                <div class="net-main-node"><span class="tag">New</span> <strong>New Home</strong><div class="lbl">91% complete</div></div>
+              </div>
+              <div class="net-right">
+                <div class="net-stack">
+                  <div class="net-item"><div class="net-item-top"><span class="tag">New</span> <strong>House Fund</strong></div><div class="net-item-sub">15% allocated</div><div class="net-item-bar"><div class="fill" style="width: 15%;"></div></div></div>
+                  <div class="net-item active"><div class="net-item-top"><span class="tag dim">Existing goals</span> <strong>Japan Trip</strong></div><div class="net-item-sub">80% allocated</div><div class="net-item-bar"><div class="fill" style="width: 80%;"></div></div></div>
+                  <div class="net-item"><div class="net-item-top"><span class="tag dim">Existing goals</span> <strong>Emergency Fund</strong></div><div class="net-item-sub">55% allocated</div><div class="net-item-bar"><div class="fill" style="width: 55%;"></div></div></div>
+                  <div class="net-item"><div class="net-item-top"><span class="tag">New</span> <strong>PSS Fund</strong></div><div class="net-item-sub">8% allocated</div><div class="net-item-bar"><div class="fill" style="width: 8%;"></div></div></div>
+                </div>
+              </div>
+              <svg class="net-lines" viewBox="0 0 400 300">
+                <path d="M100 150 C 150 150, 150 60, 260 60" stroke="var(--purple)" stroke-width="2" fill="none" opacity="0.4"/>
+                <path d="M100 150 C 150 150, 150 140, 260 140" stroke="var(--purple)" stroke-width="2" fill="none" filter="drop-shadow(0 0 4px var(--purple))"/>
+                <path d="M100 150 C 150 150, 150 210, 260 210" stroke="var(--purple)" stroke-width="2" fill="none" opacity="0.4"/>
+                <path d="M100 150 C 150 150, 150 270, 260 270" stroke="var(--purple)" stroke-width="2" fill="none" opacity="0.2"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="s3-card">
+            <div class="s3-head"><h3>Smart Purchase Guard</h3></div>
+            <div class="s3-guard-content">
+              <div class="guard-input">Ask GoalGuard: Can I buy... <span class="guard-user-bubble">A PS5?</span></div>
+              <div class="guard-bot-box">
+                <div class="guard-bot-head"><span class="shield">🛡️</span> <strong>GoalGuard says:</strong></div>
+                <div class="guard-bot-txt">Impact analysis complete.<br>Purchasing now will delay your<br><span class="purple">Japan Trip</span> goal by 3 months.</div>
+                <div class="guard-bot-suggest">Suggested action: increase<br>monthly Japan Trip contribution<br>by $50 for 6 months.</div>
+              </div>
+              <div class="guard-tags"><span>House Fund</span><span>PS5</span><span>Trip</span><span>Rent</span></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- GOALS -->
-    <section id="goals" class="gg-goals gg-snap-section">
-      <div class="gg-container gg-goals">
-        <div class="gg-goals-head gg-reveal">
-          <h2 class="gg-goals-title">Goals <span class="gg-dim">Explorer</span></h2>
-          <p class="gg-goals-sub">
-            Left: goals you’ve selected. Right: common goals people usually pick.
-          </p>
+    <section id="goals" class="gg-snap-section">
+      <div class="gg-container">
+        <div class="s4-header gg-reveal">
+          <h2 class="s4-title">Goals Explorer</h2>
+          <p class="s4-sub">Left: goals you've selected. Right: common goals people usually pick.</p>
         </div>
-
-        <div class="gg-goals-shell gg-goals-shell-v2">
-          <aside class="gg-rail">
-            <div class="gg-rail-label">YOUR GOALS</div>
-
-            <button class="gg-rail-item is-active" type="button">
-              <div class="gg-rail-main">
-                <div class="gg-rail-name">House Fund</div>
-                <div class="gg-rail-meta">Primary • Monthly</div>
-              </div>
-              <div class="gg-rail-check">✓</div>
-            </button>
-
-            <button class="gg-rail-item" type="button">
-              <div class="gg-rail-main">
-                <div class="gg-rail-name">Emergency Fund</div>
-                <div class="gg-rail-meta">Primary • Safety</div>
-              </div>
-              <div class="gg-rail-check">✓</div>
-            </button>
-
-            <button class="gg-rail-item" type="button">
-              <div class="gg-rail-main">
-                <div class="gg-rail-name">Trip</div>
-                <div class="gg-rail-meta">Secondary • Flexible</div>
-              </div>
-              <div class="gg-rail-check">✓</div>
-            </button>
-
-            <button class="gg-rail-add" type="button">+ Add a goal</button>
+        
+        <div class="s4-shell gg-reveal" data-delay="1">
+          <svg class="s4-connection-svg" preserveAspectRatio="none">
+            <path d="M 330,320 C 350,320 350,110 390,110" />
+            <circle cx="330" cy="320" r="4" class="s4-dot" />
+          </svg>
+          <aside class="s4-left">
+            <div class="s4-label">YOUR GOALS</div>
+            <div class="s4-rail-items">
+                <div class="s4-item orange-active">
+                  <div class="s4-item-text"><strong>House Fund</strong><span>Primary • Monthly</span></div>
+                  <div class="s4-check orange-check">✓</div>
+                </div>
+                <div class="s4-item">
+                  <div class="s4-item-text"><strong>Emergency Fund</strong><span>Primary • Safety</span></div>
+                  <div class="s4-check">✓</div>
+                </div>
+                <div class="s4-item">
+                  <div class="s4-item-text"><strong>Trip</strong><span>Secondary • Flexible</span></div>
+                  <div class="s4-check">✓</div>
+                </div>
+                <div class="s4-item green-active" id="left-down-payment">
+                  <div class="s4-item-text"><strong>Down payment</strong><span>Primary • Investment</span></div>
+                  <div class="s4-check green-check">✓</div>
+                </div>
+            </div>
+            <button class="s4-add-btn">+ Add a goal</button>
           </aside>
-
-          <div class="gg-panel">
-            <div class="gg-panel-top">
-              <div>
-                <h3 class="gg-panel-title">Common goals</h3>
-                <p class="gg-panel-sub">Popular choices — pick any to add later (static for now).</p>
-              </div>
-              <div class="gg-panel-badge">SUGGESTED</div>
+          <div class="s4-right">
+            <div class="s4-right-head">
+                <div>
+                    <h3 class="s4-right-title">Common goals</h3>
+                    <p class="s4-right-sub">Popular choices - pick any to add later (static for now).</p>
+                </div>
+                <div class="s4-badge">SUGGESTED</div>
             </div>
-
-            <div class="gg-common-grid">
-              <div class="gg-common-card"><div class="gg-common-icon">🏠</div><div class="gg-common-text">Down payment</div></div>
-              <div class="gg-common-card"><div class="gg-common-icon">🚗</div><div class="gg-common-text">Car fund</div></div>
-              <div class="gg-common-card"><div class="gg-common-icon">🎓</div><div class="gg-common-text">Education</div></div>
-              <div class="gg-common-card"><div class="gg-common-icon">💳</div><div class="gg-common-text">Pay off debt</div></div>
-              <div class="gg-common-card"><div class="gg-common-icon">✈️</div><div class="gg-common-text">Travel</div></div>
-              <div class="gg-common-card"><div class="gg-common-icon">🧾</div><div class="gg-common-text">Bills buffer</div></div>
-              <div class="gg-common-card"><div class="gg-common-icon">📦</div><div class="gg-common-text">Business fund</div></div>
-              <div class="gg-common-card"><div class="gg-common-icon">🛡️</div><div class="gg-common-text">Insurance reserve</div></div>
-              <div class="gg-common-card"><div class="gg-common-icon">📈</div><div class="gg-common-text">Investing</div></div>
+            
+            <div class="s4-grid">
+                <div class="s4-grid-card green-active" id="right-down-payment">
+                    <div class="s4-card-content">🏠 Down payment</div>
+                    <div class="s4-check-small">✓</div>
+                </div>
+                <div class="s4-grid-card">🚗 Car fund</div>
+                <div class="s4-grid-card">🎓 Education</div>
+                <div class="s4-grid-card">💳 Pay off debt</div>
+                <div class="s4-grid-card">✈️ Travel</div>
+                <div class="s4-grid-card">🧾 Bills buffer</div>
+                <div class="s4-grid-card">📦 Business fund</div>
+                <div class="s4-grid-card">🛡️ Insurance reserve</div>
+                <div class="s4-grid-card">📈 Investing</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- FINAL CTA -->
-    <section id="start" class="gg-snap-section">
-      <div class="gg-container gg-final">
-        <h2 class="gg-final-title">Ready to start saving smarter?</h2>
+    <section id="start" class="gg-snap-section s5-section">
+      <svg class="s5-bg-lines" viewBox="0 0 1000 400" preserveAspectRatio="none">
+        <path d="M0 200 C 200 200, 300 100, 500 100" stroke="rgba(255,255,255,0.05)" stroke-width="2" fill="none" />
+        <path d="M500 100 C 700 100, 800 150, 1000 150" stroke="rgba(255,255,255,0.05)" stroke-width="2" fill="none" />
+      </svg>
 
-        <p class="gg-final-sub">
-          Get a finance coach that protects your goals and improves your decisions — in minutes.
-        </p>
+      <div class="gg-container">
+        <div class="s5-wrapper gg-reveal">
+          
+          <div class="s5-card s5-left-panel">
+            <h3 class="s5-card-h3">Your Goal Progress</h3>
+            <div class="s5-prog-box green-box">
+              <div class="s5-prog-top"><span class="lbl">🚗 <strong>New Car</strong></span><span class="status">(✓ Back on Track)</span></div>
+              <div class="s5-prog-bar"><div class="fill" style="width: 90%;"></div></div>
+              <div class="s5-prog-bot">90%</div>
+            </div>
+            <div class="s5-prog-box blue-box">
+              <div class="s5-prog-top"><span class="lbl">🏠 <strong>Home Deposit</strong></span><span class="status">$15,000 / $25,000</span></div>
+              <div class="s5-prog-bar"><div class="fill" style="width: 60%;"></div></div>
+              <div class="s5-prog-bot">60%</div>
+            </div>
+            <div class="s5-prog-box purple-box">
+              <div class="s5-prog-top"><span class="lbl">🏝️ <strong>Vacation</strong></span><span class="status">$1,200 / $4,000</span></div>
+              <div class="s5-prog-bar"><div class="fill" style="width: 30%;"></div></div>
+              <div class="s5-prog-bot">30%</div>
+            </div>
+          </div>
 
-        <a class="gg-final-btn" id="startSavingBtn" href="#">
-          Start saving for free <span class="gg-final-arrow">→</span>
-        </a>
+          <div class="s5-center-panel">
+            <div class="s5-mini-nodes">
+              <div class="s5-node"><span>New Car</span><span>$150 - $200</span><div class="bar"><div class="f" style="width:70%"></div></div></div>
+              <div class="s5-node"><span>New Car</span><span>$20</span><div class="bar"><div class="f" style="width:10%"></div></div></div>
+              <div class="s5-node"><span>Home Deposit</span><span>$50 - $100</span><div class="bar"><div class="f" style="width:40%"></div></div></div>
+            </div>
+            <h2 class="s5-title">Ready to start saving smarter?</h2>
+            <p class="s5-sub">Get a finance coach that protects your goals and improves your decisions — in minutes.</p>
+            <a href="#" class="s5-btn-orange" id="startSavingBtnFinal">Start saving for free →</a>
+            <div class="s5-note">No card required • Cancel anytime</div>
+          </div>
 
-        <div class="gg-final-note">No card required • Cancel anytime</div>
+          <div class="s5-card s5-right-panel">
+            <div class="s5-chat-top">
+              <div class="s5-brand-group">
+                <div class="s5-big-g">G</div>
+                <div class="s5-brand-txt"><strong>GoalGuard</strong><br><span>AI Coach</span></div>
+              </div>
+              <div class="s5-bot-avatar">🤖</div>
+            </div>
+            <div class="s5-chat-flow">
+              <div class="s5-msg user"><div class="avatar">👤</div><div class="bbl">Thinking of buying that espresso machine. It's $150.</div></div>
+              <div class="s5-msg bot">
+                <div class="avatar">🤖</div>
+                <div class="bbl outline">
+                  <div class="bbl-head"><strong>Goal impact analysis</strong> <span class="bdg red">Goal Impact</span></div>
+                  Goal impact analysis: Purchases over $100 require approval. This would reduce your monthly contribution by 15%. Recommend waiting.
+                </div>
+              </div>
+              <div class="s5-msg user"><div class="avatar">👤</div><div class="bbl">Okay, I'll pass for now.</div></div>
+              <div class="s5-msg bot">
+                <div class="avatar">🤖</div>
+                <div class="bbl outline">
+                  <div class="bbl-head"><strong>Coach</strong> <span class="bdg green">Goal Impact</span></div>
+                  Smart move. Contribution protected! Your 'New Car' goal is now back on track.
+                </div>
+              </div>
+            </div>
+            <div class="s5-chat-input">
+              <span>Ask Coach...</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
 
   </main>
 
-  <!-- Reveal animation -->
   <script>
     (function(){
       const els = document.querySelectorAll('.gg-reveal');
-      if (!('IntersectionObserver' in window)) {
-        els.forEach(el => el.classList.add('is-visible'));
-        return;
-      }
       const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            io.unobserve(entry.target);
-          }
-        });
+        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); io.unobserve(entry.target); } });
       }, { threshold: 0.12 });
-
       els.forEach(el => io.observe(el));
     })();
   </script>
 
-  <!-- ✅ Correct routing logic -->
   <script type="module">
     import { supabase } from "./supabaseClient.js";
-
-    // Buttons
+    
     const navSignInBtn = document.getElementById("navSignInBtn");
     const navSignUpBtn = document.getElementById("navSignUpBtn");
     const startSavingBtn = document.getElementById("startSavingBtn");
+    const startSavingBtnFinal = document.getElementById("startSavingBtnFinal");
 
-    // ✅ REQUIRED BY YOU:
-    // Always open the pages first. Routing happens AFTER login on signin page.
-    navSignInBtn?.addEventListener("click", () => {
-      window.location.href = "./signin.html";
-    });
+    // Top links go straight to signin/signup
+    navSignInBtn?.addEventListener("click", () => { window.location.href = "./signin.html"; });
+    navSignUpBtn?.addEventListener("click", () => { window.location.href = "./signup.html"; }); 
 
-    navSignUpBtn?.addEventListener("click", () => {
-      window.location.href = "./signup.html";
-    });
-
-    // CTA: if logged in -> setup/dashboard; else -> signup
     function hasCompletedSetup(userId){
-      try{
+      try {
         const raw = localStorage.getItem(`goalguard_profile_${userId}`);
         if (!raw) return false;
         const profile = JSON.parse(raw);
-
-        // Your setup page uses setupCompletedAt
-        if (profile?.setupCompletedAt) return true;
-
-        const hasBasics =
-          profile &&
-          typeof profile.currencyCode === "string" &&
-          Number.isFinite(Number(profile.incomeMonthly)) &&
-          Number.isFinite(Number(profile.expensesMonthly));
-
-        return !!hasBasics;
-      } catch {
-        return false;
-      }
+        return !!(profile?.setupCompletedAt || (profile && typeof profile.currencyCode === "string" && Number.isFinite(Number(profile.incomeMonthly))));
+      } catch { return false; }
     }
 
     function routeAfterAuth(session){
       const user = session?.user;
-      if (!user?.id) {
-        window.location.href = "./signin.html";
-        return;
-      }
+      if (!user?.id) { window.location.href = "./signin.html"; return; }
       if (hasCompletedSetup(user.id)) window.location.href = "./dashboard.html";
       else window.location.href = "./setup.html";
     }
 
-    startSavingBtn?.addEventListener("click", async (e) => {
+    const handleStartSavingClick = async (e) => {
       e.preventDefault();
       const { data } = await supabase.auth.getSession();
-      if (data?.session) routeAfterAuth(data.session);
-      else window.location.href = "./signup.html";
-    });
+      if (data?.session) {
+        routeAfterAuth(data.session);
+      } else {
+        window.location.href = "./signin.html";
+      }
+    };
+
+    startSavingBtn?.addEventListener("click", handleStartSavingClick);
+    startSavingBtnFinal?.addEventListener("click", handleStartSavingClick);
   </script>
 </body>
 </html>

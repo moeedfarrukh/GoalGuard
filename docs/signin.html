@@ -1,358 +1,319 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GoalGuard — Sign In</title>
-
+  <title>Sign In - GoalGuard</title>
+  <link rel="icon" href="./favicon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg0: #071216;
-      --bg1: #0a1f26;
-      --card: rgba(10, 18, 22, 0.86);
-      --stroke: rgba(255,255,255,0.10);
-      --muted: rgba(255,255,255,0.65);
-      --text: rgba(255,255,255,0.95);
-      --accent: #19c37d;
-      --cta: #ff6a00;
-      --cta2:#ff7f2a;
-      --shadow: 0 20px 60px rgba(0,0,0,0.55);
-      --radius: 22px;
-
-      --cardW: 420px;
-      --cardH: 760px;
+    :root {
+      --bg: #0D1117;
+      --card: #161B22;
+      --input-bg: rgba(255, 255, 255, 0.15); 
+      --border: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(255, 255, 255, 0.4);
+      --text: #E6EDF3;
+      --text-dim: #8B949E;
+      --orange: #FF5B04; 
+      --brand-blue: #3b82f6; 
     }
 
-    *{box-sizing:border-box;}
-    html,body{height:100%;}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      color:var(--text);
-      background:
-        radial-gradient(900px 500px at 50% 18%, rgba(25,195,125,0.10), transparent 55%),
-        radial-gradient(850px 520px at 52% 28%, rgba(255,106,0,0.10), transparent 60%),
-        linear-gradient(180deg, var(--bg1), var(--bg0));
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-    }
+    * { box-sizing: border-box; }
 
-    .shell{
-      width: min(100%, var(--cardW));
-      height: var(--cardH);
-      background: var(--card);
-      border: 1px solid var(--stroke);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 28px 26px;
-      position:relative;
-      overflow:hidden;
-      backdrop-filter: blur(14px);
-    }
-
-    .shell::before{
-      content:"";
-      position:absolute;
-      inset:-120px -120px auto -120px;
-      height: 280px;
-      background: radial-gradient(circle at 50% 40%, rgba(255,106,0,0.16), transparent 65%);
-      pointer-events:none;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      margin-top: 6px;
-      margin-bottom: 22px;
-      position:relative;
-      z-index:1;
-      letter-spacing: 0.28em;
-      font-weight:700;
-    }
-    .logoMark{
-      width:34px;
-      height:34px;
-      border-radius:10px;
-      background: linear-gradient(135deg, rgba(25,195,125,1), rgba(255,106,0,1));
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-      display:grid;
-      place-items:center;
-      font-weight:900;
-      color:#061116;
-      letter-spacing:0;
-    }
-    .brandName{ font-size:18px; opacity:0.95; }
-
-    h1{
-      margin: 0 0 6px 0;
-      font-size: 44px;
-      line-height: 1.1;
-      text-align:center;
-      position:relative;
-      z-index:1;
-    }
-    .sub{
-      margin: 0 0 22px 0;
-      color: var(--muted);
-      text-align:center;
-      font-size: 15px;
-      position:relative;
-      z-index:1;
-    }
-
-    .btn{
-      width:100%;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.04);
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg);
       color: var(--text);
-      border-radius: 14px;
-      padding: 13px 14px;
-      font-size: 15px;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      transition: transform .08s ease, background .2s ease, border-color .2s ease;
-      position:relative;
-      z-index:1;
-    }
-    .btn:active{ transform: translateY(1px); }
-    .btn:hover{ background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.14); }
-
-    .googleG{
-      width:18px;
-      height:18px;
-      border-radius:4px;
-      background: conic-gradient(from 180deg, #34A853, #FBBC05, #EA4335, #4285F4, #34A853);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    .divider{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin: 18px 0 14px;
-      color: rgba(255,255,255,0.50);
-      font-size: 13px;
-      position:relative;
-      z-index:1;
-    }
-    .divider::before, .divider::after{
-      content:"";
-      height:1px;
-      flex:1;
-      background: rgba(255,255,255,0.10);
-    }
-
-    .field{ margin-top: 14px; position:relative; z-index:1; }
-    .label{
-      display:block;
-      margin: 0 0 8px 2px;
-      font-size: 13px;
-      color: rgba(255,255,255,0.75);
-    }
-    .inputWrap{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.03);
-    }
-    .iconBox{
-      width:22px;
-      height:22px;
-      display:grid;
-      place-items:center;
-      opacity:0.75;
-      flex:0 0 auto;
-    }
-    input{
-      width:100%;
-      border:0;
-      outline:none;
-      background: transparent;
-      color: var(--text);
-      font-size: 15px;
-    }
-    input::placeholder{ color: rgba(255,255,255,0.35); }
-
-    .eye{
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.05);
-      color: var(--text);
-      border-radius: 12px;
-      padding: 8px 10px;
-      cursor:pointer;
-      flex:0 0 auto;
-    }
-
-    .primary{
-      margin-top: 20px;
-      border: 0;
-      background: linear-gradient(135deg, var(--cta), var(--cta2));
-      color: #111;
-      font-weight: 800;
-      padding: 14px 14px;
-      border-radius: 14px;
-      box-shadow: 0 18px 40px rgba(255,106,0,0.18);
-    }
-    .primary:hover{ filter: brightness(1.02); }
-
-    .bottom{
-      margin-top: 18px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      text-align:center;
-      color: rgba(255,255,255,0.70);
-      font-size: 14px;
-      position:relative;
-      z-index:1;
-    }
-    .link{
-      color: var(--accent);
-      text-decoration:none;
-      font-weight: 700;
-    }
-    .link:hover{ text-decoration: underline; }
-
-    .disabled{
-      opacity: .65;
+    .bg-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 60%);
+      z-index: 0;
       pointer-events: none;
+    }
+
+    .auth-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 420px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+    }
+
+    .auth-header { text-align: center; margin-bottom: 32px; }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+    }
+
+    .brand-icon {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--orange);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .auth-title { font-size: 32px; font-weight: 800; margin: 0 0 8px; }
+    .auth-subtitle { font-size: 13px; color: var(--text-dim); margin: 0; }
+
+    .btn-google {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 14px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 24px 0;
+      color: var(--text-dim);
+      font-size: 11px;
+    }
+
+    .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--border); }
+    .divider:not(:empty)::before { margin-right: 15px; }
+    .divider:not(:empty)::after { margin-left: 15px; }
+
+    .input-group { margin-bottom: 20px; position: relative; }
+    .input-label { display: block; font-size: 12px; color: #ffffff; margin-bottom: 8px; font-weight: 600; }
+    .input-wrapper { position: relative; }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.7); 
+      width: 16px;
+      height: 16px;
+      pointer-events: none;
+    }
+
+    .input-field {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 14px 14px 40px;
+      color: #ffffff; 
+      font-family: inherit;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .input-field:focus { outline: none; border-color: var(--border-focus); background: rgba(255, 255, 255, 0.2); }
+
+    .icon-eye {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ffffff;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      opacity: 0.6;
+    }
+
+    .forgot-password { color: #ffffff; font-size: 11px; float: right; margin-top: -10px; margin-bottom: 10px; display: block; text-decoration: none; }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--orange); 
+      color: #fff;
+      border: none;
+      border-radius: 99px; 
+      padding: 18px 48px; 
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: transform 0.2s;
+    }
+
+    .btn-submit:hover { transform: translateY(-2px); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .auth-footer { text-align: center; margin-top: 24px; font-size: 12px; color: var(--text-dim); }
+    .auth-footer a { color: #ffffff; text-decoration: none; font-weight: 700; }
+
+    #error-msg {
+      color: #f87171;
+      font-size: 12px;
+      text-align: center;
+      margin-top: 15px;
+      display: none;
     }
   </style>
 </head>
-
 <body>
-  <main class="shell" role="main" aria-label="GoalGuard Sign In">
-    <div class="brand">
-      <div class="logoMark">G</div>
-      <div class="brandName">GOALGUARD</div>
+
+  <div class="bg-glow"></div>
+
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="brand-logo">
+        <div class="brand-icon">G</div>
+        <span style="color:var(--brand-blue)">GOAL</span><span style="color:var(--orange)">GUARD</span>
+      </div>
+      <h1 class="auth-title">Welcome back</h1>
+      <p class="auth-subtitle">Sign in to continue building smarter savings habits.</p>
     </div>
 
-    <h1>Welcome back</h1>
-    <p class="sub">Sign in to continue building smarter savings habits.</p>
-
-    <button class="btn" id="googleSigninBtn" type="button">
-      <span class="googleG" aria-hidden="true"></span>
+    <button class="btn-google" type="button">
+      <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+      </svg>
       Continue with Google
     </button>
 
     <div class="divider">or continue with email</div>
 
-    <form id="loginForm">
-      <div class="field">
-        <label class="label" for="email">Email</label>
-        <div class="inputWrap">
-          <div class="iconBox" aria-hidden="true">✉️</div>
-          <input id="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+    <form id="signInForm">
+      <div class="input-group">
+        <label class="input-label">Email Address</label>
+        <div class="input-wrapper">
+          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <input type="email" id="email" class="input-field" placeholder="you@example.com" required>
         </div>
       </div>
 
-      <div class="field">
-        <label class="label" for="password">Password</label>
-        <div class="inputWrap">
-          <div class="iconBox" aria-hidden="true">🔒</div>
-          <input id="password" type="password" placeholder="Enter your password" autocomplete="current-password" required />
-          <button class="eye" id="togglePwBtn" type="button" aria-label="Toggle password visibility">👁️</button>
+      <div class="input-group">
+        <label class="input-label">Password</label>
+        <div class="input-wrapper">
+          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <input type="password" id="password" class="input-field" placeholder="Enter your password" required>
+          <svg class="icon-eye" id="togglePassword" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
         </div>
       </div>
+        
+      <a href="#" class="forgot-password">Forgot password?</a>
 
-      <button class="btn primary" id="signinBtn" type="submit">Sign In</button>
+      <button type="submit" id="submitBtn" class="btn-submit">Sign In <span>→</span></button>
+      <div id="error-msg"></div>
     </form>
 
-    <div class="bottom">
-      Don’t have an account? <a class="link" href="./signup.html">Sign up</a>
+    <div class="auth-footer">
+      Don't have an account? <a href="./signup.html">Sign up</a>
     </div>
-  </main>
+  </div>
 
   <script type="module">
     import { supabase } from "./supabaseClient.js";
+    
+    const signInForm = document.getElementById("signInForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const errorMsg = document.getElementById("error-msg");
 
-    // ✅ Setup complete = profile.setupCompletedAt exists AND goals exist
-    function hasCompletedSetup(userId){
-      try{
-        const profileKey = `goalguard_profile_${userId}`;
-        const goalsKey   = `goalguard_goals_${userId}`;
-
-        const profileRaw = localStorage.getItem(profileKey);
-        const goalsRaw   = localStorage.getItem(goalsKey);
-
-        const profile = profileRaw ? JSON.parse(profileRaw) : null;
-        const goals   = goalsRaw ? JSON.parse(goalsRaw) : [];
-
-        return !!(profile?.setupCompletedAt && Array.isArray(goals) && goals.length > 0);
-      } catch (e){
-        console.warn("hasCompletedSetup() parse error:", e);
-        return false;
-      }
-    }
-
-    function routeAfterAuth(session){
-      const userId = session?.user?.id;
-      if (!userId) return;
-
-      if (hasCompletedSetup(userId)) {
-        window.location.href = "./dashboard.html";
-      } else {
-        window.location.href = "./setup.html";
-      }
-    }
-
-    // ✅ IMPORTANT: Keep sign-in page visible always.
-    // DO NOT auto-redirect on load based on an existing session.
-    // (This matches your requirement: clicking Sign In should show this page.)
-    //
-    // If later you want auto-redirect when user manually visits signin.html,
-    // you can uncomment this block:
-    //
-    // const { data: sessionData } = await supabase.auth.getSession();
-    // if (sessionData?.session) routeAfterAuth(sessionData.session);
-
-    // Google sign in placeholder
-    document.getElementById("googleSigninBtn").addEventListener("click", () => {
-      alert("Google sign-in not added yet. Use email sign-in for now.");
-    });
-
-    // Toggle password
-    const pwInput = document.getElementById("password");
-    document.getElementById("togglePwBtn").addEventListener("click", () => {
-      pwInput.type = (pwInput.type === "password") ? "text" : "password";
-    });
-
-    const form = document.getElementById("loginForm");
-    const signinBtn = document.getElementById("signinBtn");
-
-    form.addEventListener("submit", async (e) => {
+    signInForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+      errorMsg.style.display = "none";
+      submitBtn.disabled = true;
+      submitBtn.innerText = "Signing in...";
 
-      signinBtn.textContent = "Signing in...";
-      signinBtn.classList.add("disabled");
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
 
-      const email = document.getElementById("email").value.trim().toLowerCase();
-      const password = pwInput.value;
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
 
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+          errorMsg.innerText = error.message;
+          errorMsg.style.display = "block";
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = "Sign In <span>→</span>";
+          return;
+        }
 
-      console.log("SIGNIN DATA:", data);
-      console.log("SIGNIN ERROR:", error);
+        // --- SUCCESSFUL LOGIN: ROUTING LOGIC ---
+        const user = data.user;
+        const profileKey = `goalguard_profile_${user.id}`;
+        const rawProfile = localStorage.getItem(profileKey);
 
-      signinBtn.textContent = "Sign In";
-      signinBtn.classList.remove("disabled");
+        if (rawProfile) {
+          const profileData = JSON.parse(rawProfile);
+          // If setup is complete, go to Dashboard
+          if (profileData.setupCompletedAt) {
+            window.location.href = "./dashboard.html";
+          } else {
+            window.location.href = "./setup.html";
+          }
+        } else {
+          // No profile found locally, send to Setup
+          window.location.href = "./setup.html";
+        }
 
-      // ❌ Do NOT redirect to signup on error
-      if (error) {
-        alert(error.message);
-        return;
+      } catch (err) {
+        errorMsg.innerText = "An unexpected error occurred.";
+        errorMsg.style.display = "block";
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = "Sign In <span>→</span>";
       }
-
-      // ✅ success → setup/dashboard
-      routeAfterAuth(data?.session);
+    });
+      
+    // Password visibility toggle
+    const toggleBtn = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    toggleBtn?.addEventListener('click', () => {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        toggleBtn.style.opacity = type === 'password' ? '0.6' : '1';
     });
   </script>
 </body>
