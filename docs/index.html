@@ -21,9 +21,7 @@
     <div class="gg-nav-inner">
       <a class="gg-brand" href="#top">
         <div class="brand-icon">G</div>
-        <div class="brand-text">
-            <span style="color: #3b82f6;">GOAL</span> <span style="color: #FF5B04;">GUARD</span>
-        </div>
+        <div class="brand-text"><span style="color: #3b82f6;">GOAL</span> <span style="color: #FF5B04;">GUARD</span></div>
       </a>
       <div class="gg-nav-links">
         <a class="gg-link" href="#how">How it works</a>
@@ -52,9 +50,7 @@
           Like having a trusted money mentor in your pocket — <b>ready whenever you need clarity.</b>
         </p>
         <div class="gg-cta-wrap gg-reveal" data-delay="3">
-          <a class="gg-cta-orange" id="startSavingBtn" href="#">
-            Start Saving Now <span>→</span>
-          </a>
+          <a class="gg-cta-orange" id="startSavingBtn" href="#">Start Saving Now <span>→</span></a>
         </div>
         <div class="gg-note gg-reveal" data-delay="4">No card required • Free trial • Cancel anytime</div>
       </div>
@@ -333,6 +329,10 @@
 
   </main>
 
+  <div class="mobile-sticky-cta">
+    <a class="gg-cta-orange" href="#" id="mobileStartBtn">Start Saving Now <span>→</span></a>
+  </div>
+
   <script>
     (function(){
       const els = document.querySelectorAll('.gg-reveal');
@@ -350,6 +350,7 @@
     const navSignUpBtn = document.getElementById("navSignUpBtn");
     const startSavingBtn = document.getElementById("startSavingBtn");
     const startSavingBtnFinal = document.getElementById("startSavingBtnFinal");
+    const mobileStartBtn = document.getElementById("mobileStartBtn");
 
     navSignInBtn?.addEventListener("click", () => { window.location.href = "./signin.html"; });
     navSignUpBtn?.addEventListener("click", () => { window.location.href = "./signup.html"; }); 
@@ -382,6 +383,7 @@
 
     startSavingBtn?.addEventListener("click", handleStartSavingClick);
     startSavingBtnFinal?.addEventListener("click", handleStartSavingClick);
+    mobileStartBtn?.addEventListener("click", handleStartSavingClick);
   </script>
 </body>
 </html>

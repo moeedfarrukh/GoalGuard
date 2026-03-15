@@ -37,40 +37,23 @@
     .animate-item { animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
     .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; } .delay-3 { animation-delay: 0.3s; }
 
-    .topbar {
-      height: 64px; display: flex; align-items: center; justify-content: space-between;
-      padding: 0 40px; background: rgba(13, 17, 23, 0.9); backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--stroke); flex-shrink: 0; z-index: 100;
-    }
-    
+    .topbar { height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: rgba(13, 17, 23, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--stroke); flex-shrink: 0; z-index: 100; }
     .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; transition: transform 0.2s; user-select: none; }
     .brand:hover { transform: scale(1.02); }
     .brand-icon { width: 28px; height: 28px; border-radius: 50%; border: 3px solid var(--orange); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color: #fff; }
     .brand-text { font-weight: 800; font-size: 16px; letter-spacing: 0.15em; }
 
-    .app-container {
-      flex: 1; max-width: 1650px; width: 100%; margin: 0 auto; padding: 20px 30px;
-      display: grid; grid-template-columns: 300px 1fr 340px; gap: 24px; min-height: 0;
-    }
-
-    .panel { 
-      background: var(--panel); border: 1px solid var(--stroke); border-radius: 14px; 
-      display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-    }
+    .app-container { flex: 1; max-width: 1650px; width: 100%; margin: 0 auto; padding: 20px 30px; display: grid; grid-template-columns: 300px 1fr 340px; gap: 24px; min-height: 0; }
+    .panel { background: var(--panel); border: 1px solid var(--stroke); border-radius: 14px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
     
     .main-scroll { flex: 1; overflow-y: auto; scrollbar-width: none; padding-bottom: 8px; padding-top: 4px; }
     .main-scroll::-webkit-scrollbar { display: none; }
-
     .hover-lift { transition: all 0.2s ease-out; }
     .hover-lift:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); border-color: rgba(255,255,255,0.15); }
 
     .section-title { font-size: 14px; font-weight: 800; color: #fff; margin: 0 0 12px 0; }
 
-    .goal-item {
-      padding: 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--stroke);
-      border-radius: 10px; margin-bottom: 10px; border-left: 4px solid var(--blue);
-      position: relative; transition: all 0.2s ease; cursor: pointer;
-    }
+    .goal-item { padding: 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--stroke); border-radius: 10px; margin-bottom: 10px; border-left: 4px solid var(--blue); position: relative; transition: all 0.2s ease; cursor: pointer; }
     .goal-item:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.2); border-left-color: var(--mint); transform: translateX(4px); }
     .goal-item h4 { margin: 0 0 4px; font-size: 14px; font-weight: 700; color: #fff; }
     .goal-item p { margin: 0; font-size: 12px; color: var(--text-dim); }
@@ -85,20 +68,10 @@
     .chart-box { background: var(--panel); border: 1px solid var(--stroke); border-radius: 14px; padding: 20px 24px; display: flex; flex-direction: column; flex: 1; min-height: 250px;}
     .chart-svg { width: 100%; height: 180px; display: block; margin-top: auto; filter: drop-shadow(0 0 6px rgba(59,130,246,0.3)); }
 
-    .search-trigger {
-      background: rgba(255,255,255,0.02); border: 1px solid var(--stroke); border-radius: 10px; 
-      padding: 16px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer; 
-      color: var(--text-dim); font-size: 14px; font-weight: 600; transition: all 0.2s; 
-      flex-shrink: 0; margin-top: 24px; margin-bottom: 20px; 
-    }
+    .search-trigger { background: rgba(255,255,255,0.02); border: 1px solid var(--stroke); border-radius: 10px; padding: 16px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--text-dim); font-size: 14px; font-weight: 600; transition: all 0.2s; flex-shrink: 0; margin-top: 24px; margin-bottom: 20px; }
     .search-trigger:hover { border-color: var(--blue); color: #fff; background: rgba(59, 130, 246, 0.05); transform: translateY(-2px); }
 
-    .premium-savings {
-      background: #010409; border-radius: 12px; padding: 16px 20px; text-align: center; margin-bottom: 12px;
-      border: 1px solid var(--stroke); position: relative; overflow: hidden;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3); display: flex; flex-direction: column; justify-content: center;
-      flex-shrink: 0; min-height: 90px;
-    }
+    .premium-savings { background: #010409; border-radius: 12px; padding: 16px 20px; text-align: center; margin-bottom: 12px; border: 1px solid var(--stroke); position: relative; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.3); display: flex; flex-direction: column; justify-content: center; flex-shrink: 0; min-height: 90px; }
     .premium-savings::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--mint), var(--blue)); }
     .premium-savings span { font-size: 10px; font-weight: 800; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; display:block;}
     .premium-savings h2 { font-size: 32px; font-weight: 900; margin: 0; color: #fff; line-height: 1.1; display:block;}
@@ -169,30 +142,72 @@
     .full-spends-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
 
     /* =========================================
-       MOBILE RESPONSIVENESS (Screens under 992px)
+       NATIVE APP MOBILE UI
     ========================================= */
+    .mobile-bottom-nav { display: none; }
+
     @media (max-width: 992px) {
-      /* UNLOCK desktop body restrictions */
-      body { height: auto; min-height: 100vh; overflow-y: auto; display: block; } 
+      body { height: 100vh; overflow: hidden; background: var(--bg); }
       
-      .topbar { padding: 10px 20px; height: auto; min-height: 64px; flex-wrap: wrap; gap: 10px;}
-      .app-container { display: flex; flex-direction: column; padding: 16px; gap: 20px; height: auto; }
+      .topbar { padding: 10px 20px; height: 60px; border-bottom: 1px solid var(--stroke); }
+      .topbar .btn-orange { display: none; } 
       
-      /* Make all panels stretch full width and drop their fixed height */
-      aside.panel, main, aside:last-child { flex: none; width: 100%; height: auto; min-height: unset; overflow: visible; }
-      .main-scroll { overflow-y: visible; padding-right: 0; }
+      .app-container { 
+        display: block; 
+        padding: 0; 
+        height: calc(100vh - 130px); 
+        position: relative;
+      }
       
-      .health-grid { flex-direction: column; gap: 12px; }
-      .chart-grid { grid-template-columns: 1fr; gap: 20px; }
-      .feature-grid-2x2 { grid-template-columns: 1fr 1fr; }
-      
+      #tab-goals, #tab-home, #tab-coach { 
+        display: none; 
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        overflow-y: auto;
+        padding: 20px;
+        background: var(--bg);
+      }
+      #tab-goals.active, #tab-home.active, #tab-coach.active { 
+        display: flex; 
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      .panel { border: none; background: transparent; box-shadow: none; }
+      .chart-grid { grid-template-columns: 1fr; }
+      .health-grid { flex-direction: column; }
+      .feature-grid-2x2 { grid-template-columns: 1fr 1fr; margin-bottom: 20px; }
+      .stat-tile, .spends-box { background: var(--panel); }
+
+      .mobile-bottom-nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: fixed;
+        bottom: 0; left: 0; width: 100%;
+        height: 70px;
+        background: rgba(22, 27, 34, 0.95);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid var(--stroke);
+        z-index: 1000;
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+      .nav-item {
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 4px; color: var(--text-dim); flex: 1; height: 100%; cursor: pointer; transition: 0.2s;
+      }
+      .nav-item svg { width: 22px; height: 22px; opacity: 0.7; }
+      .nav-item span { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; }
+      .nav-item.active { color: var(--blue); }
+      .nav-item.active svg { opacity: 1; stroke: var(--blue); }
+
       .modal-content { width: 92%; padding: 20px; }
       .query-terminal-modal { width: 95%; padding: 20px; max-height: 85vh; display: flex; flex-direction: column; }
       .chat-history { flex: 1; min-height: 150px; }
-      
       #allSpendsModal > div:last-child { flex-wrap: wrap; }
       #quickLogDesc { flex: 100% !important; }
     }
+
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
   </style>
 </head>
 
@@ -213,15 +228,15 @@
   </div>
 
   <div class="app-container">
-    <aside class="panel animate-item delay-1">
-      <div style="padding: 20px 24px 10px; display: flex; justify-content: space-between; align-items: baseline;">
+    <aside class="panel animate-item delay-1" id="tab-goals">
+      <div style="padding: 10px 0 10px; display: flex; justify-content: space-between; align-items: baseline;">
         <h2 style="font-size:16px; font-weight:800; margin:0; color:#fff;">Active Goals</h2>
         <button class="btn-stealth" onclick="openGoalModal()" style="border-color:var(--orange); color:var(--orange);">+ ADD</button>
       </div>
-      <div class="main-scroll" style="padding:10px 24px;" id="goalList"></div>
+      <div class="main-scroll" style="padding-top:10px;" id="goalList"></div>
     </aside>
 
-    <main style="display:flex; flex-direction:column; min-height:0; position: relative;">
+    <main style="display:flex; flex-direction:column; min-height:0; position: relative;" id="tab-home" class="active">
       <div class="main-scroll animate-item delay-2" style="display:flex; flex-direction:column; padding-right: 4px;">
         <div style="margin-bottom: 24px;">
           <h1 id="heroGreetingTitle" style="margin: 0 0 6px; font-size: 30px; font-weight: 800; letter-spacing: -0.5px;">Hello User</h1>
@@ -254,14 +269,14 @@
           </div>
         </div>
 
-        <div class="search-trigger animate-item delay-3" onclick="openSearch()" style="margin-top: 16px; margin-bottom: 20px;">
+        <div class="search-trigger animate-item delay-3 mobile-hide" onclick="openSearch()" style="margin-top: 16px; margin-bottom: 20px;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           Click to open Command & Query Interface...
         </div>
       </div>
     </main>
 
-    <aside style="display:flex; flex-direction:column; min-height:0;" class="animate-item delay-3">
+    <aside style="display:flex; flex-direction:column; min-height:0;" class="animate-item delay-3" id="tab-coach">
       <div class="main-scroll" style="padding-right: 5px; display:flex; flex-direction:column;">
         
         <div class="premium-savings hover-lift">
@@ -284,6 +299,11 @@
           </div>
         </div>
 
+        <div class="search-trigger" onclick="openSearch()" style="margin-top: 10px; margin-bottom: 20px; justify-content:center; border-color:var(--blue); color:var(--blue);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          Ask AI Coach
+        </div>
+
         <div class="spends-box hover-lift">
           <div class="spends-header">
             <h3 class="spends-title">Logged Spends</h3>
@@ -301,26 +321,29 @@
         </div>
 
         <div class="feature-grid-2x2">
-            <div class="feature-box hover-lift">
-              <div class="anim-bg trading-bg"><div class="t-bar" style="height:30%"></div><div class="t-bar" style="height:60%"></div><div class="t-bar" style="height:40%"></div><div class="t-bar" style="height:90%"></div></div>
-              <div class="feature-content"><svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg><h2>Trading</h2><span class="badge">SOON</span></div>
-            </div>
-            <div class="feature-box hover-lift">
-              <div class="anim-bg whatsapp-bg"></div>
-              <div class="feature-content"><svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="var(--whatsapp)" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg><h2>WhatsApp</h2><span class="badge">SOON</span></div>
-            </div>
-            <div class="feature-box hover-lift">
-              <div class="anim-bg crypto-bg"></div>
-              <div class="feature-content"><svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.5 9h5.51a2.5 2.5 0 0 1 0 5H11"></path><path d="M11 14h4a2.5 2.5 0 0 1 0 5h-5.5"></path><line x1="13" y1="2.5" x2="13" y2="9"></line><line x1="13" y1="19" x2="13" y2="21.5"></line></svg><h2>Crypto</h2><span class="badge">SOON</span></div>
-            </div>
-            <div class="feature-box hover-lift">
-              <div class="anim-bg auto-bg"></div>
-              <div class="feature-content"><svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg><h2>Auto-Invest</h2><span class="badge">SOON</span></div>
-            </div>
+            <div class="feature-box hover-lift"><div class="anim-bg trading-bg"><div class="t-bar" style="height:30%"></div><div class="t-bar" style="height:60%"></div><div class="t-bar" style="height:40%"></div><div class="t-bar" style="height:90%"></div></div><div class="feature-content"><svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg><h2>Trading</h2><span class="badge">SOON</span></div></div>
+            <div class="feature-box hover-lift"><div class="anim-bg whatsapp-bg"></div><div class="feature-content"><svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="var(--whatsapp)" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg><h2>WhatsApp</h2><span class="badge">SOON</span></div></div>
+            <div class="feature-box hover-lift"><div class="anim-bg crypto-bg"></div><div class="feature-content"><svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.5 9h5.51a2.5 2.5 0 0 1 0 5H11"></path><path d="M11 14h4a2.5 2.5 0 0 1 0 5h-5.5"></path><line x1="13" y1="2.5" x2="13" y2="9"></line><line x1="13" y1="19" x2="13" y2="21.5"></line></svg><h2>Crypto</h2><span class="badge">SOON</span></div></div>
+            <div class="feature-box hover-lift"><div class="anim-bg auto-bg"></div><div class="feature-content"><svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg><h2>Auto-Invest</h2><span class="badge">SOON</span></div></div>
         </div>
       </div>
     </aside>
   </div>
+
+  <nav class="mobile-bottom-nav">
+    <div class="nav-item" onclick="switchTab('tab-goals', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+      <span>Goals</span>
+    </div>
+    <div class="nav-item active" onclick="switchTab('tab-home', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <span>Home</span>
+    </div>
+    <div class="nav-item" onclick="switchTab('tab-coach', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+      <span>Coach</span>
+    </div>
+  </nav>
 
   <div class="query-terminal-modal" id="queryTerminal">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
@@ -393,6 +416,33 @@
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
     document.getElementById('currentMonthLabel').textContent = "- " + now.toLocaleString('default', { month: 'short' }).toUpperCase();
+
+    // MOBILE TAB SWITCHING LOGIC
+    window.switchTab = function(tabId, navElement) {
+        if (window.innerWidth > 992) return; 
+        
+        document.getElementById('tab-goals').classList.remove('active');
+        document.getElementById('tab-home').classList.remove('active');
+        document.getElementById('tab-coach').classList.remove('active');
+        
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        navElement.classList.add('active');
+    };
+
+    window.addEventListener('resize', () => {
+        if(window.innerWidth > 992) {
+            document.getElementById('tab-goals').style.display = '';
+            document.getElementById('tab-home').style.display = '';
+            document.getElementById('tab-coach').style.display = '';
+            document.querySelectorAll('.mobile-hide').forEach(el => el.style.display = '');
+        } else {
+            document.getElementById('tab-goals').style.display = '';
+            document.getElementById('tab-home').style.display = '';
+            document.getElementById('tab-coach').style.display = '';
+        }
+    });
 
     function getProfile() { return JSON.parse(localStorage.getItem(PROFILE_KEY)) || {}; }
     
