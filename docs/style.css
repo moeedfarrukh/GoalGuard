@@ -236,79 +236,82 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
 .gg-reveal.is-visible { opacity: 1; transform: translateY(0); }
 
 /* =========================================
-   LANDING PAGE NATIVE MOBILE APP UI
+   NATIVE MOBILE APP UI (REDESIGNED)
 ========================================= */
 .mobile-sticky-cta { display: none; }
 
 @media (max-width: 1024px) {
-  /* 1. Base Reset & Screen Unlock */
-  body { overflow: auto; padding-bottom: 90px; } /* Leave space for bottom CTA */
+  /* Base Reset & Screen Unlock */
+  body { overflow: auto; padding-bottom: 90px; background: #000; } 
   .gg-snap { height: auto; overflow-y: visible; scroll-snap-type: none; }
-  .gg-snap-section { height: auto; padding: 40px 0; min-height: unset; }
-  
-  /* 2. Navigation Fixes */
-  .gg-nav { position: relative; }
-  .gg-nav-inner { flex-direction: row; flex-wrap: wrap; gap: 15px; padding: 15px 20px; }
-  .gg-nav-links { display: none; } /* Hide links on mobile for space */
-  .gg-nav-actions { width: 100%; display: flex; gap: 10px; justify-content: center; }
-  .gg-nav-actions .gg-btn { flex: 1; text-align: center; }
+  .gg-snap-section { height: auto; padding: 60px 20px; min-height: unset; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
-  /* 3. Hero Section Fixes */
+  /* Sleek Mobile Nav (App Header) */
+  .gg-nav { position: fixed; background: rgba(10, 10, 10, 0.95); border-bottom: none; }
+  .gg-nav-inner { flex-direction: row; justify-content: space-between; padding: 12px 20px; align-items: center; }
+  .brand-text { font-size: 14px; }
+  .brand-icon { width: 24px; height: 24px; font-size: 12px; }
+  .gg-nav-links { display: none; } 
+  .gg-nav-actions { width: auto; justify-content: flex-end; }
+  .gg-nav-actions #navSignUpBtn { display: none; } 
+  .gg-nav-actions #navSignInBtn { height: 32px; font-size: 12px; padding: 0 14px; border-color: rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); }
+
+  /* Mobile Hero (App Style) */
+  .gg-hero-section { padding-top: 120px !important; text-align: left; }
+  .gg-hero-content { text-align: left; padding: 0; }
   .gg-hero-glow { display: none; }
-  .gg-title { font-size: 2.2rem; line-height: 1.2; margin-top: 10px; }
-  .gg-sub { font-size: 1rem; }
-  .gg-cta-wrap { display: none; } /* Hide Hero CTA to avoid double-buttons */
+  .gg-pill { margin-bottom: 16px; background: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.3); color: var(--blue); }
+  .gg-title { font-size: 38px; line-height: 1.1; margin-bottom: 16px; letter-spacing: -1px; }
+  .gg-sub { font-size: 16px; color: var(--text-dim); line-height: 1.5; margin-bottom: 0; }
+  .gg-cta-wrap { display: none !important; } /* REMOVES DOUBLE BUTTON */
+  .gg-note { display: none; } 
 
-  /* 4. Global Card & Grid Adjustments */
-  .s2-card, .s3-card, .s4-shell, .s5-card { padding: 20px; border-radius: 16px; }
-  .s2-wrapper, .s3-wrapper, .s4-shell, .s5-wrapper { grid-template-columns: 1fr; gap: 24px; }
+  /* Flatten and Card-ify Sections */
+  .s2-wrapper, .s3-wrapper, .s4-shell, .s5-wrapper { display: flex; flex-direction: column; gap: 20px; }
+  
+  .s2-title, .s3-head h3, .s4-title, .s5-title { font-size: 28px; line-height: 1.2; }
+  .s2-sub, .s3-head p, .s4-sub, .s5-sub { font-size: 14px; margin-bottom: 20px; }
 
-  /* 5. Section 2 (Live Guidance) */
-  .s2-title { font-size: 28px; }
-  .s2-cards-row { flex-direction: column; display: flex; gap: 16px; }
-  .s2-engine-flow { flex-direction: column; gap: 12px; }
-  .s2-flow-arrow { transform: rotate(90deg); margin: 5px auto; }
-  .s2-chat-head { flex-direction: column; align-items: flex-start; gap: 12px; }
-  .s2-bubble { max-width: 95%; }
+  /* Mobile App Cards */
+  .s2-card, .s3-card, .s5-card { padding: 20px; border-radius: 20px; background: #11151A; border: 1px solid rgba(255,255,255,0.05); }
+  
+  .s2-cards-row { display: flex; flex-direction: column; gap: 12px; }
+  .s2-engine { padding: 20px; border-radius: 20px; }
+  .s2-engine-flow { flex-direction: column; align-items: stretch; gap: 10px;}
+  .s2-flow-step { display: flex; align-items: center; gap: 12px; text-align: left; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 12px;}
+  .s2-step-box { margin: 0; }
+  .s2-step-icon { margin: 0; }
+  .s2-flow-arrow { display: none; }
 
-  /* 6. Section 3 (Features) */
-  .s3-head h3 { font-size: 20px; }
-  .s3-tooltip { position: relative; margin-bottom: 15px; background: transparent; border: none; padding: 0; }
-  .s3-tracker-footer { flex-direction: column; align-items: flex-start; gap: 12px; }
-  .s3-network-viz { flex-direction: column; gap: 20px; display: flex; }
-  .net-lines { display: none; } 
-  .net-center, .net-right { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; width: 100%; }
-  .net-ring-node { margin: 0 auto; }
-  .guard-input { flex-direction: column; align-items: flex-start; gap: 10px; }
-  .guard-bot-head { flex-direction: column; align-items: flex-start; }
-  .guard-tags { flex-wrap: wrap; }
+  .s2-right { border-radius: 20px; }
+  
+  .s3-network-viz { display: flex; flex-direction: column; gap: 16px; }
+  .s3-tooltip { position: relative; margin-bottom: 15px; background: transparent; border: none; padding: 0; } /* FIXES OVERLAPPING CHART TEXT */
+  .net-lines { display: none; }
+  .net-center, .net-right { padding: 0; border: none; }
+  .net-ring-node { display: none; }
+  .net-main-node { width: 100%; text-align: left; display: flex; justify-content: space-between; align-items: center; }
 
-  /* 7. Section 4 (Explorer) */
-  .s4-title { font-size: 28px; }
+  .s4-shell { padding: 0; background: transparent; border: none; min-height: auto; gap: 20px; }
   .s4-connection-svg { display: none; }
-  .s4-left, .s4-right { width: 100%; min-width: unset; border: none; padding: 0; }
-  .s4-right { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; margin-top: 10px; }
-  .s4-grid { grid-template-columns: 1fr; } /* Stack tags to stop cutoff */
+  .s4-left, .s4-right { padding: 0; border: none; }
+  .s4-right { border-top: 1px solid var(--border); padding-top: 20px; }
+  .s4-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
 
-  /* 8. Section 5 (Start) */
-  .s5-title { font-size: 32px; }
-  .s5-bg-lines, .s5-mini-nodes { display: none; } 
-  .s5-center-panel { padding: 30px 10px; text-align: center; }
-  .s5-right-panel { height: auto; min-height: 400px; }
-  .s5-msg .bbl { max-width: 100%; }
-  .s5-chat-flow { overflow-y: visible; }
+  .s5-center-panel .s5-btn-orange { display: none !important; } /* REMOVES DOUBLE BUTTON */
+  .s5-note { display: none; }
+  .s5-right-panel { height: 400px; }
 
-  /* 9. App-style fixed bottom button */
+  /* Sticky Mobile CTA (Single Button at Bottom) */
   .mobile-sticky-cta {
-    display: flex;
-    position: fixed;
-    bottom: 0; left: 0; width: 100%;
-    padding: 15px 20px;
-    padding-bottom: calc(15px + env(safe-area-inset-bottom)); /* iOS safe area */
-    background: rgba(13, 17, 23, 0.95);
-    backdrop-filter: blur(10px);
-    border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; align-items: center;
+    position: fixed; bottom: 0; left: 0; width: 100%;
+    padding: 15px 20px; padding-bottom: calc(15px + env(safe-area-inset-bottom));
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255,255,255,0.08);
     z-index: 1000;
   }
-  .mobile-sticky-cta .gg-cta-orange { width: 100%; font-size: 16px; padding: 14px; box-shadow: none; margin: 0; }
+  .mobile-sticky-cta .gg-cta-orange { width: 100%; font-size: 16px; padding: 16px; margin: 0; border-radius: 14px; }
+  .mobile-sticky-cta .disclaimer { font-size: 10px; color: var(--text-dim); margin-top: 8px; }
 }
