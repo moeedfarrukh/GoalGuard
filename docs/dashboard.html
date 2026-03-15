@@ -87,7 +87,7 @@
     .spend-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
     .spend-item:last-child { margin-bottom: 0; }
     .spend-left { display: flex; align-items: center; gap: 12px; }
-    .spend-icon { width: 28px; height: 28px; border-radius: 8px; display: center; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); font-size: 13px; border: 1px solid rgba(255,255,255,0.05);}
+    .spend-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); font-size: 13px; border: 1px solid rgba(255,255,255,0.05);}
     .spend-details { display: flex; flex-direction: column; }
     .spend-desc { font-size: 13px; font-weight: 600; color: #fff; line-height: 1.1; margin-bottom: 2px;}
     .spend-date { font-size: 10px; color: var(--text-dim); line-height: 1.1; }
@@ -142,7 +142,7 @@
     .full-spends-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
 
     /* =========================================
-       NATIVE APP MOBILE UI
+        NATIVE APP MOBILE UI
     ========================================= */
     .mobile-bottom-nav { display: none; }
 
@@ -151,6 +151,7 @@
       .topbar { padding: 10px 20px; height: 60px; border-bottom: 1px solid var(--stroke); }
       .topbar .btn-orange { display: block; padding: 8px 12px; font-size: 10px; } 
       
+      /* UNLOCK THE MOBILE SCROLLING AREA */
       .app-container { 
         display: block; 
         padding: 0; 
@@ -167,16 +168,19 @@
         height: auto !important; 
         min-height: 100%;
         overflow: visible !important;
+        /* SAFETY: Ensure content doesn't hide due to animation opacity mismatch */
+        opacity: 1 !important;
+        transform: none !important;
       }
       
-      /* Toggle Active Classes */
+      /* Switch on the tab requested */
       #tab-goals.active, #tab-coach.active, #tab-home.active { 
         display: flex !important; 
         flex-direction: column;
-        animation: fadeIn 0.3s ease-out;
+        animation: none !important; /* Disable fade on mobile to stop disappearing content */
       }
 
-      /* Fix internal containers to expand natively inside the scroller */
+      /* Native layout fixes for stacked mobile view */
       .panel { border: none; background: transparent; box-shadow: none; overflow: visible !important; height: auto !important; }
       .main-scroll { overflow: visible !important; height: auto !important; padding: 0 !important; }
       .chart-grid { grid-template-columns: 1fr; }
@@ -184,6 +188,7 @@
       .feature-grid-2x2 { grid-template-columns: 1fr 1fr; margin-bottom: 20px; }
       .stat-tile, .spends-box { background: var(--panel); }
 
+      /* The App Navigation Bar */
       .mobile-bottom-nav {
         display: flex;
         justify-content: space-around;
@@ -206,7 +211,6 @@
       .nav-item.active { color: var(--blue); }
       .nav-item.active svg { opacity: 1; stroke: var(--blue); }
 
-      /* Modals formatting */
       .modal-content { width: 92%; padding: 20px; }
       .query-terminal-modal { width: 95%; padding: 20px; max-height: 85vh; display: flex; flex-direction: column; }
       #allSpendsModal > div:last-child { flex-wrap: wrap; }
@@ -217,7 +221,7 @@
   </style>
 </head>
 
-<body>
+<body class="home-view-active">
   <div class="app-dimmer" id="appDimmer"></div>
 
   <div class="topbar">
@@ -233,7 +237,7 @@
     </div>
   </div>
 
-  <div class="app-container">
+  <div class="app-container" id="mobileScrollArea">
     
     <aside class="panel animate-item delay-1" id="tab-goals">
       <div style="padding: 10px 0 10px; display: flex; justify-content: space-between; align-items: baseline;">
@@ -419,15 +423,19 @@
     const currentYear = now.getFullYear();
     document.getElementById('currentMonthLabel').textContent = "- " + now.toLocaleString('default', { month: 'short' }).toUpperCase();
 
-    // MOBILE TAB SWITCHING LOGIC
+    // 1. MOBILE TAB SWITCHING LOGIC (SURGERY FIX)
     window.switchTab = function(tabId, navElement) {
         if (window.innerWidth > 992) return; 
+        
         document.getElementById('tab-goals').classList.remove('active');
         document.getElementById('tab-home').classList.remove('active');
         document.getElementById('tab-coach').classList.remove('active');
+        
         document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        
         document.getElementById(tabId).classList.add('active');
         navElement.classList.add('active');
+        document.getElementById('mobileScrollArea').scrollTop = 0;
     };
 
     window.addEventListener('resize', () => {
@@ -436,6 +444,7 @@
             document.getElementById('tab-home').classList.remove('active');
             document.getElementById('tab-coach').classList.remove('active');
         } else {
+            // Restore default mobile tab if none are active after resize
             if(!document.getElementById('tab-home').classList.contains('active') &&
                !document.getElementById('tab-goals').classList.contains('active') &&
                !document.getElementById('tab-coach').classList.contains('active')) {
@@ -445,6 +454,7 @@
         }
     });
 
+    // 2. CORE LOGIC FUNCTIONS (910+ LINE INTEGRITY)
     function getProfile() { return JSON.parse(localStorage.getItem(PROFILE_KEY)) || {}; }
     
     function formatMoney(n) { 
@@ -903,6 +913,14 @@
 
       qInput.value = "";
     }
+
+    // 4. LOAD INITIALIZER
+    window.onload = function() {
+        if(window.innerWidth <= 992) {
+            switchTab('tab-home', document.querySelectorAll('.nav-item')[1]);
+        }
+        refresh();
+    };
 
     setTimeout(refresh, 100);
   </script>
