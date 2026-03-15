@@ -12,7 +12,3 @@ A financial tool that helps you make smart spending choices.
 - CSS
 - Python (backend)
 
-## How to run
-1. Clone repo
-2. Run backend
-3. Open index.html
