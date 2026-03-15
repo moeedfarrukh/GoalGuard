@@ -172,19 +172,24 @@
        MOBILE RESPONSIVENESS (Screens under 992px)
     ========================================= */
     @media (max-width: 992px) {
-      body { height: auto; overflow-y: auto; }
-      .topbar { padding: 0 20px; }
-      .app-container { display: flex; flex-direction: column; padding: 16px; gap: 20px; }
-      aside.panel, main, aside:last-child { flex: none; width: 100%; }
+      /* UNLOCK desktop body restrictions */
+      body { height: auto; min-height: 100vh; overflow-y: auto; display: block; } 
+      
+      .topbar { padding: 10px 20px; height: auto; min-height: 64px; flex-wrap: wrap; gap: 10px;}
+      .app-container { display: flex; flex-direction: column; padding: 16px; gap: 20px; height: auto; }
+      
+      /* Make all panels stretch full width and drop their fixed height */
+      aside.panel, main, aside:last-child { flex: none; width: 100%; height: auto; min-height: unset; overflow: visible; }
       .main-scroll { overflow-y: visible; padding-right: 0; }
+      
       .health-grid { flex-direction: column; gap: 12px; }
       .chart-grid { grid-template-columns: 1fr; gap: 20px; }
       .feature-grid-2x2 { grid-template-columns: 1fr 1fr; }
+      
       .modal-content { width: 92%; padding: 20px; }
       .query-terminal-modal { width: 95%; padding: 20px; max-height: 85vh; display: flex; flex-direction: column; }
       .chat-history { flex: 1; min-height: 150px; }
       
-      /* Make Quick Log inputs wrap nicely on mobile */
       #allSpendsModal > div:last-child { flex-wrap: wrap; }
       #quickLogDesc { flex: 100% !important; }
     }

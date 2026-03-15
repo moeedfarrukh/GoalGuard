@@ -29,7 +29,7 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       display: flex;
       height: 100vh;
-      overflow: hidden;
+      overflow: hidden; /* This locks desktop view perfectly */
     }
 
     @keyframes slideInRight { 0% { opacity: 0; transform: translateX(20px); } 100% { opacity: 1; transform: translateX(0); } }
@@ -209,13 +209,16 @@
     .btn-add:hover { border-color: var(--blue); color: var(--blue); background: rgba(59, 130, 246, 0.05); }
 
     /* =========================================
-       MOBILE RESPONSIVENESS (Screens under 900px)
+       MOBILE RESPONSIVENESS
     ========================================= */
     @media (max-width: 900px) {
-      body { flex-direction: column; overflow-y: auto; }
-      .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--stroke); padding: 30px 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); z-index: 20; }
+      /* Unlock the body height to let the user scroll down */
+      body { flex-direction: column; overflow-y: auto; height: auto; min-height: 100vh; }
+      
+      .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--stroke); padding: 30px 20px; box-shadow: none; z-index: 20; flex: none; height: auto; }
       .brand { margin-bottom: 30px; }
-      .main-content { padding: 30px 20px; overflow-y: visible; }
+      .main-content { width: 100%; padding: 30px 20px; overflow-y: visible; flex: none; }
+      
       .grid-2 { grid-template-columns: 1fr; gap: 16px; }
       .persona-grid { grid-template-columns: 1fr; }
       .goal-row { grid-template-columns: 1fr 1fr; gap: 10px; padding: 16px; }
@@ -321,11 +324,8 @@
         <div class="section-header">3. Primary Objectives</div>
         <div class="goal-list" id="goalList">
           <div class="goal-row">
-            <select class="goal-priority">
-              <option value="Primary">Primary</option>
-              <option value="Secondary">Secondary</option>
-            </select>
-            <input type="text" class="goal-name" placeholder="Objective (e.g. House)" required>
+            <select class="goal-priority"><option value="Primary">Primary</option><option value="Secondary" selected>Secondary</option></select>
+            <input type="text" class="goal-name" placeholder="Objective Name" required>
             <input type="number" class="goal-target" placeholder="Target ($)" required>
             <input type="number" class="goal-monthly" placeholder="Alloc/Mo ($)" required>
             <input type="date" class="goal-date" required>

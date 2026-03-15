@@ -1,5 +1,5 @@
 /* ============================================================
-   GOALGUARD MASTER STYLE (FULL RESTORATION)
+   GOALGUARD MASTER STYLE (FULL RESTORATION & MOBILE FIXED)
    ============================================================ */
 
 :root {
@@ -23,7 +23,6 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
 .gg-nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: rgba(13,17,23,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
 .gg-nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; }
 
-/* Updated .gg-brand to include the new logo watermark styling */
 .gg-brand { 
   font-weight: 800; 
   font-size: 20px; 
@@ -46,7 +45,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
   transform: translate(-50%, -50%);
   width: 150%; 
   height: 250%; 
-  background-image: url('./logo-bg.jpg'); /* Make sure your image is named this! */
+  background-image: url('./logo-bg.jpg'); 
   background-size: cover;
   background-position: center;
   opacity: 0.15; 
@@ -72,13 +71,12 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
 .gg-snap::-webkit-scrollbar { display: none; }
 .gg-snap-section { height: 100vh; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: center; position: relative; }
 
-/* 3. HERO (Orange CTA Button without icon box) */
+/* 3. HERO */
 .gg-hero-glow { position: absolute; top: 20%; right: -5%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(74,181,185,0.15) 0%, transparent 70%); }
 .gg-hero-content { text-align: center; z-index: 2; }
 .gg-pill { display: inline-flex; gap: 8px; padding: 8px 16px; background: rgba(74,181,185,0.1); border: 1px solid rgba(74,181,185,0.3); border-radius: 99px; color: var(--teal); font-size: 13px; font-weight: 700; margin-bottom: 24px; }
 .gg-title { font-size: clamp(40px, 6vw, 76px); font-weight: 800; margin-bottom: 24px; }
 
-/* Shared styles for both Start Saving buttons (Hero and Final CTA) */
 .gg-cta-orange, .s5-btn-orange { 
   display: inline-flex; 
   align-items: center;
@@ -97,9 +95,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
 .gg-cta-orange:hover, .s5-btn-orange:hover { transform: translateY(-4px); }
 .gg-note { margin-top: 16px; font-size: 12px; color: var(--text-dim); }
 
-/* =========================================================
-   SLIDE 2: LIVE GUIDANCE
-   ========================================================= */
+/* SLIDE 2: LIVE GUIDANCE */
 .s2-wrapper { display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; }
 .s2-left { display: flex; flex-direction: column; }
 .s2-title { font-size: 40px; font-weight: 800; margin: 0 0 10px; }
@@ -141,9 +137,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
 .s2-bubble.bot { background: #22272E; align-self: flex-start; }
 .s2-bubble.user { background: #2D333B; align-self: flex-end; }
 
-/* =========================================================
-   SLIDE 3: HI-FIDELITY DASHBOARD
-   ========================================================= */
+/* SLIDE 3: HI-FIDELITY DASHBOARD */
 .s3-wrapper { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 24px; }
 .s3-card { background: #12151A; border: 1px solid var(--border); border-radius: 24px; padding: 32px; min-height: 540px; display: flex; flex-direction: column; position: relative; overflow: hidden; }
 .s3-grid-bg { position: absolute; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 30px 30px; opacity: 0.1; z-index: 0; pointer-events: none; }
@@ -151,7 +145,6 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
 .s3-head h3 { font-size: 22px; font-weight: 800; margin: 0 0 8px; }
 .s3-head p { font-size: 13px; color: var(--text-dim); margin: 0; line-height: 1.5; }
 
-/* S3 Col 1: Tracker */
 .s3-tracker-graph { position: relative; flex: 1; margin-bottom: 20px; z-index: 2; }
 .s3-tooltip { position: absolute; top: 0; right: 0; background: #1C2128; border: 1px solid var(--border); padding: 10px; border-radius: 8px; font-size: 11px; line-height: 1.5; font-weight: 600; }
 .s3-tooltip .dim { color: var(--text-dim); }
@@ -168,7 +161,6 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
 .s3-stats .val { font-size: 24px; font-weight: 800; color: #fff; margin: 4px 0; }
 .s3-stats .badge { background: rgba(34, 197, 94, 0.1); color: #22c55e; padding: 4px 10px; border-radius: 99px; font-size: 11px; font-weight: 800; display: inline-block; }
 
-/* S3 Col 2: Network */
 .s3-network-viz { position: relative; flex: 1; display: grid; grid-template-columns: 100px 1fr 140px; align-items: center; z-index: 2; }
 .net-ring-node { width: 90px; height: 90px; border-radius: 50%; border: 4px solid var(--purple); box-shadow: 0 0 25px rgba(160, 120, 255, 0.3); background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 3; }
 .net-ring-node .val { font-size: 22px; font-weight: 800; }
@@ -187,7 +179,6 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
 .net-item-bar .fill { height: 100%; background: var(--teal); }
 .net-lines { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
 
-/* S3 Col 3: Smart Guard */
 .s3-guard-content { display: flex; flex-direction: column; gap: 16px; flex: 1; z-index: 2; position: relative; }
 .guard-input { background: #000; border: 1px solid var(--border); padding: 14px; border-radius: 12px; font-size: 13px; color: var(--text-dim); display: flex; justify-content: space-between; align-items: center; }
 .guard-user-bubble { background: #2D333B; padding: 6px 12px; border-radius: 8px; color: #fff; font-weight: 700; }
@@ -200,10 +191,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
 .guard-tags { display: flex; gap: 8px; margin-top: auto; }
 .guard-tags span { background: #000; border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; }
 
-
-/* =========================================================
-   SLIDE 4: GOALS EXPLORER
-   ========================================================= */
+/* SLIDE 4: GOALS EXPLORER */
 .s4-header { margin-bottom: 30px; }
 .s4-title { font-size: 42px; font-weight: 800; margin: 0 0 8px; color: #fff; }
 .s4-sub { color: var(--text-dim); font-size: 15px; margin: 0; }
@@ -238,17 +226,13 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
 .s4-check-small { color: var(--mint); font-size: 14px; }
 
 
-/* =========================================================
-   SLIDE 5: FINAL CTA
-   ========================================================= */
+/* SLIDE 5: FINAL CTA */
 .s5-section { position: relative; }
 .s5-bg-lines { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.3; }
 .s5-wrapper { display: grid; grid-template-columns: 340px 1fr 340px; gap: 40px; align-items: center; position: relative; z-index: 1; }
 
-/* S5 Card Base */
 .s5-card { background: rgba(20, 24, 30, 0.75); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; padding: 28px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
 
-/* Left Progress Card */
 .s5-card-h3 { font-size: 20px; font-weight: 800; margin: 0 0 24px; }
 .s5-prog-box { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 18px; margin-bottom: 16px; }
 .s5-prog-box.green-box { border-color: rgba(74, 222, 128, 0.4); background: rgba(74, 222, 128, 0.05); box-shadow: 0 0 20px rgba(74, 222, 128, 0.1); }
@@ -266,7 +250,6 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
 .purple-box .fill { height: 100%; background: var(--purple); }
 .s5-prog-bot { text-align: right; font-size: 11px; color: var(--text-dim); font-weight: 700; }
 
-/* Center Content */
 .s5-center-panel { text-align: center; }
 .s5-mini-nodes { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 40px; opacity: 0.6; }
 .s5-node { background: #1C2128; border: 1px solid var(--border); padding: 8px 12px; border-radius: 8px; font-size: 11px; display: flex; flex-direction: column; width: 160px; }
@@ -277,7 +260,6 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
 .s5-title { font-size: 48px; font-weight: 800; line-height: 1.1; margin: 0 0 20px; }
 .s5-sub { color: var(--text-dim); font-size: 16px; max-width: 400px; margin: 0 auto 30px; line-height: 1.6; }
 
-/* Right Chat Card */
 .s5-right-panel { display: flex; flex-direction: column; height: 500px; padding: 20px; }
 .s5-chat-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
 .s5-brand-group { display: flex; align-items: center; gap: 12px; }
@@ -300,19 +282,19 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
 .s5-chat-input { display: flex; justify-content: space-between; align-items: center; background: #000; border: 1px solid var(--border); border-radius: 12px; padding: 14px 20px; color: var(--text-dim); font-size: 14px; font-weight: 600; }
 .s5-chat-input svg { opacity: 0.5; }
 
-/* Reveal Animations */
 .gg-reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .gg-reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-@media (max-width: 1024px) {
-  .s2-wrapper, .s3-wrapper, .s4-shell, .s5-wrapper { grid-template-columns: 1fr; }
-  .s4-connection-svg, .s5-bg-lines, .s5-mini-nodes { display: none; }
-  .gg-snap-section { height: auto; padding: 100px 0; }
-}
 /* =========================================
    LANDING PAGE MOBILE RESPONSIVENESS
 ========================================= */
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
+  /* Turn off screen locking */
+  body { overflow: auto; }
+  .gg-snap { height: auto; overflow-y: visible; scroll-snap-type: none; }
+  .gg-snap-section { height: auto; padding: 100px 0; }
+  .gg-nav { position: relative; } /* Un-fixes the nav bar so it doesn't overlap content */
+
   /* Navigation */
   .gg-nav-inner { flex-direction: column; gap: 15px; padding: 10px 20px; }
   .gg-nav-links { flex-wrap: wrap; justify-content: center; }
@@ -320,31 +302,32 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
   .gg-nav-actions .gg-btn { flex: 1; text-align: center; }
 
   /* Hero Section */
+  .gg-hero-glow { display: none; }
   .gg-title { font-size: 2.5rem; line-height: 1.2; }
   .gg-sub { font-size: 1rem; }
 
-  /* Section 2 (How it works) */
-  .s2-wrapper { flex-direction: column; }
+  /* Grids to single column */
+  .s2-wrapper, .s3-wrapper, .s4-shell, .s5-wrapper { grid-template-columns: 1fr; gap: 40px; }
+
+  /* Section 2 */
   .s2-cards-row { flex-direction: column; }
   .s2-engine-flow { flex-direction: column; gap: 10px; }
   .s2-flow-arrow { transform: rotate(90deg); margin: 10px 0; }
-  .s2-right { width: 100%; margin-top: 30px; }
+  .s2-right { width: 100%; }
 
-  /* Section 3 (Features) */
-  .s3-wrapper { flex-direction: column; }
+  /* Section 3 */
   .s3-network-viz { flex-direction: column; gap: 20px; }
-  .net-lines { display: none; } /* Hide complex SVG lines on small screens */
+  .net-lines { display: none; } 
   .net-center, .net-right { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
   
-  /* Section 4 (Explorer) */
-  .s4-shell { flex-direction: column; }
+  /* Section 4 */
   .s4-connection-svg { display: none; }
-  .s4-left, .s4-right { width: 100%; min-width: unset; border: none; }
+  .s4-left, .s4-right { width: 100%; min-width: unset; border: none; padding-left: 0;}
   .s4-right { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; }
+  .s4-grid { grid-template-columns: 1fr 1fr; } /* 2 columns for tags on mobile */
 
-  /* Section 5 (Start) */
-  .s5-wrapper { flex-direction: column; }
+  /* Section 5 */
+  .s5-bg-lines, .s5-mini-nodes { display: none; } 
   .s5-card { width: 100%; min-width: unset; }
   .s5-center-panel { padding: 40px 10px; text-align: center; }
-  .s5-mini-nodes { display: none; } /* Hide mini nodes for cleaner mobile UI */
 }
