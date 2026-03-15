@@ -235,6 +235,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
 .gg-reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .gg-reveal.is-visible { opacity: 1; transform: translateY(0); }
 
+
 /* =========================================
    NATIVE MOBILE APP UI (REDESIGNED)
 ========================================= */
@@ -252,9 +253,11 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
   .brand-text { font-size: 14px; }
   .brand-icon { width: 24px; height: 24px; font-size: 12px; }
   .gg-nav-links { display: none; } 
-  .gg-nav-actions { width: auto; justify-content: flex-end; }
-  .gg-nav-actions #navSignUpBtn { display: none; } 
-  .gg-nav-actions #navSignInBtn { height: 32px; font-size: 12px; padding: 0 14px; border-color: rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); }
+  
+  /* FIXED: Brought back Sign In & Sign Up buttons for mobile */
+  .gg-nav-actions { width: auto; justify-content: flex-end; display: flex; gap: 8px; }
+  .gg-nav-actions #navSignUpBtn { display: inline-flex; align-items: center; height: 32px; font-size: 12px; padding: 0 14px; } 
+  .gg-nav-actions #navSignInBtn { display: inline-flex; align-items: center; height: 32px; font-size: 12px; padding: 0 14px; border-color: rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); }
 
   /* Mobile Hero */
   .gg-hero-section { padding-top: 120px !important; text-align: left; }
@@ -263,8 +266,10 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
   .gg-pill { margin-bottom: 16px; background: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.3); color: var(--blue); }
   .gg-title { font-size: 38px; line-height: 1.1; margin-bottom: 16px; letter-spacing: -1px; }
   .gg-sub { font-size: 16px; color: var(--text-dim); line-height: 1.5; margin-bottom: 0; }
+  
+  /* Hide the double buttons */
   .gg-cta-wrap { display: none !important; } 
-  .gg-note { display: none; } 
+  .gg-note { display: none !important; } 
 
   /* Flatten and Card-ify Sections */
   .s2-wrapper, .s3-wrapper, .s4-shell, .s5-wrapper { display: flex; flex-direction: column; gap: 20px; }
@@ -285,10 +290,10 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
 
   .s2-right { border-radius: 20px; }
   
-  /* --- FIX FOR THE OVERLAPPING GRAPH --- */
-  .s3-tracker-graph { margin-bottom: 40px; } /* Pushes the graph line up */
-  .s3-tracker-footer { flex-direction: row; align-items: center; gap: 20px; margin-top: 10px; } /* Keeps donut and text side-by-side */
-  .s3-tooltip { position: relative; margin-bottom: 15px; background: transparent; border: none; padding: 0; } 
+  /* Fix Overlapping Graph */
+  .s3-tracker-graph { margin-bottom: 50px !important; } 
+  .s3-tracker-footer { flex-direction: row !important; align-items: center !important; justify-content: flex-start !important; margin-top: 15px !important; gap: 20px !important; }
+  .s3-tooltip { position: relative !important; top: auto !important; right: auto !important; background: transparent !important; border: none !important; padding: 0 !important; margin-bottom: 20px !important; }
   
   .s3-network-viz { display: flex; flex-direction: column; gap: 16px; }
   .net-lines { display: none; }
@@ -302,7 +307,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
   .s4-right { border-top: 1px solid var(--border); padding-top: 20px; }
   .s4-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
 
-  /* --- FIX FOR THE DOUBLE BUTTON --- */
+  /* Hide double button on bottom section */
   .s5-center-panel .s5-btn-orange { display: none !important; } 
   .s5-center-panel .s5-note { display: none !important; } 
   
@@ -312,7 +317,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
   .s5-msg .bbl { max-width: 100%; }
   .s5-chat-flow { overflow-y: visible; }
 
-  /* Sticky Mobile CTA (Single Button at Bottom) */
+  /* Sticky Mobile CTA */
   .mobile-sticky-cta {
     display: flex; flex-direction: column; align-items: center;
     position: fixed; bottom: 0; left: 0; width: 100%;

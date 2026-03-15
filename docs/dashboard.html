@@ -149,8 +149,9 @@
     @media (max-width: 992px) {
       body { height: 100vh; overflow: hidden; background: var(--bg); }
       
+      /* RESTORED SIGN OUT BUTTON ON MOBILE */
       .topbar { padding: 10px 20px; height: 60px; border-bottom: 1px solid var(--stroke); }
-      .topbar .btn-orange { display: none; } 
+      .topbar .btn-orange { display: block; padding: 8px 12px; font-size: 10px; } 
       
       .app-container { 
         display: block; 
@@ -222,7 +223,7 @@
       </div>
     </a>
     <div style="display:flex; gap:20px; align-items:center;">
-        <span id="navUserName" class="user-name" style="font-weight:700; font-size:14px;">User</span>
+        <span id="navUserName" class="user-name" style="font-weight:700; font-size:14px; display: none;">User</span>
         <button id="logoutBtn" class="btn-orange" onclick="logout()">SIGN OUT</button>
     </div>
   </div>
