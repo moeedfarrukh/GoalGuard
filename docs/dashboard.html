@@ -147,10 +147,9 @@
     .mobile-bottom-nav { display: none; }
 
     @media (max-width: 992px) {
+      /* Base Container Reset */
       body { height: 100vh; overflow: hidden; background: var(--bg); }
-      
-      /* RESTORED SIGN OUT BUTTON ON MOBILE */
-      .topbar { padding: 10px 20px; height: 60px; border-bottom: 1px solid var(--stroke); }
+      .topbar { padding: 10px 20px; height: 60px; border-bottom: 1px solid var(--stroke); position: relative; z-index: 200; background: rgba(13, 17, 23, 1); }
       .topbar .btn-orange { display: block; padding: 8px 12px; font-size: 10px; } 
       
       .app-container { 
@@ -158,38 +157,66 @@
         padding: 0; 
         height: calc(100vh - 130px); 
         position: relative;
+        overflow-y: auto; 
+        scrollbar-width: none;
       }
       
-      #tab-goals, #tab-home, #tab-coach { 
+      /* Hide all columns by default */
+      #tab-goals, #tab-home, #tab-right-sidebar { 
         display: none; 
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        overflow-y: auto;
         padding: 20px;
-        background: var(--bg);
       }
-      #tab-goals.active, #tab-home.active, #tab-coach.active { 
+
+      /* 1. HOME TAB: Stacks Middle Column + Right Column into one scrolling feed */
+      .home-view-active #tab-home, 
+      .home-view-active #tab-right-sidebar { 
         display: flex; 
+        flex-direction: column;
         animation: fadeIn 0.3s ease-out;
       }
 
+      /* 2. GOALS TAB: Shows the Goals sidebar with an upgraded ADD button */
+      .goals-view-active #tab-goals { 
+        display: flex; 
+        flex-direction: column;
+        animation: fadeIn 0.3s ease-out;
+      }
+      .btn-add-goal-mobile { 
+        background: rgba(255, 91, 4, 0.1) !important; 
+        color: var(--orange) !important; 
+        border: 1px solid rgba(255,91,4,0.3) !important; 
+        padding: 8px 16px !important; 
+        border-radius: 8px !important; 
+        font-weight: 800 !important; 
+      }
+
+      /* 3. COACH TAB: Embeds the AI Chat interface natively full-screen */
+      .coach-view-active #queryTerminal {
+        opacity: 1 !important; pointer-events: auto !important;
+        transform: none !important; top: 60px !important; left: 0 !important; position: fixed !important;
+        width: 100% !important; height: calc(100vh - 130px) !important; max-height: none !important;
+        border-radius: 0 !important; border: none !important; box-shadow: none !important; background: var(--bg) !important;
+        padding: 20px !important; z-index: 100 !important;
+        animation: fadeIn 0.3s ease-out;
+      }
+      .coach-view-active #appDimmer { display: none !important; }
+
+      /* Hide redundant trigger buttons on mobile since we have tabs now */
+      .search-trigger { display: none !important; }
+
+      /* Component overrides for mobile spacing */
       .panel { border: none; background: transparent; box-shadow: none; }
       .chart-grid { grid-template-columns: 1fr; }
       .health-grid { flex-direction: column; }
       .feature-grid-2x2 { grid-template-columns: 1fr 1fr; margin-bottom: 20px; }
       .stat-tile, .spends-box { background: var(--panel); }
 
+      /* Bottom App Navigation */
       .mobile-bottom-nav {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        position: fixed;
-        bottom: 0; left: 0; width: 100%;
-        height: 70px;
-        background: rgba(22, 27, 34, 0.95);
-        backdrop-filter: blur(10px);
-        border-top: 1px solid var(--stroke);
-        z-index: 1000;
+        display: flex; justify-content: space-around; align-items: center;
+        position: fixed; bottom: 0; left: 0; width: 100%; height: 70px;
+        background: rgba(22, 27, 34, 0.95); backdrop-filter: blur(10px);
+        border-top: 1px solid var(--stroke); z-index: 1000;
         padding-bottom: env(safe-area-inset-bottom);
       }
       .nav-item {
@@ -202,8 +229,6 @@
       .nav-item.active svg { opacity: 1; stroke: var(--blue); }
 
       .modal-content { width: 92%; padding: 20px; }
-      .query-terminal-modal { width: 95%; padding: 20px; max-height: 85vh; display: flex; flex-direction: column; }
-      .chat-history { flex: 1; min-height: 150px; }
       #allSpendsModal > div:last-child { flex-wrap: wrap; }
       #quickLogDesc { flex: 100% !important; }
     }
@@ -212,7 +237,7 @@
   </style>
 </head>
 
-<body>
+<body class="home-view-active">
   <div class="app-dimmer" id="appDimmer"></div>
 
   <div class="topbar">
@@ -232,13 +257,13 @@
     <aside class="panel animate-item delay-1" id="tab-goals">
       <div style="padding: 10px 0 10px; display: flex; justify-content: space-between; align-items: baseline;">
         <h2 style="font-size:16px; font-weight:800; margin:0; color:#fff;">Active Goals</h2>
-        <button class="btn-stealth" onclick="openGoalModal()" style="border-color:var(--orange); color:var(--orange);">+ ADD</button>
+        <button class="btn-stealth btn-add-goal-mobile" onclick="openGoalModal()">+ NEW GOAL</button>
       </div>
       <div class="main-scroll" style="padding-top:10px;" id="goalList"></div>
     </aside>
 
-    <main style="display:flex; flex-direction:column; min-height:0; position: relative;" id="tab-home" class="active">
-      <div class="main-scroll animate-item delay-2" style="display:flex; flex-direction:column; padding-right: 4px;">
+    <main style="display:flex; flex-direction:column; min-height:0; position: relative;" id="tab-home" class="animate-item delay-2">
+      <div class="main-scroll" style="display:flex; flex-direction:column; padding-right: 4px;">
         <div style="margin-bottom: 24px;">
           <h1 id="heroGreetingTitle" style="margin: 0 0 6px; font-size: 30px; font-weight: 800; letter-spacing: -0.5px;">Hello User</h1>
           <div style="min-height: 20px;">
@@ -277,7 +302,7 @@
       </div>
     </main>
 
-    <aside style="display:flex; flex-direction:column; min-height:0;" class="animate-item delay-3" id="tab-coach">
+    <aside style="display:flex; flex-direction:column; min-height:0;" class="animate-item delay-3" id="tab-right-sidebar">
       <div class="main-scroll" style="padding-right: 5px; display:flex; flex-direction:column;">
         
         <div class="premium-savings hover-lift">
@@ -298,11 +323,6 @@
               <span style="font-size:12px; font-weight:800; color:var(--text-dim);">NET SURPLUS:</span>
               <span style="font-size:18px; font-weight:800; color:var(--blue);" id="surplusValue">—</span>
           </div>
-        </div>
-
-        <div class="search-trigger" onclick="openSearch()" style="margin-top: 10px; margin-bottom: 20px; justify-content:center; border-color:var(--blue); color:var(--blue);">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          Ask AI Coach
         </div>
 
         <div class="spends-box hover-lift">
@@ -418,30 +438,38 @@
     const currentYear = now.getFullYear();
     document.getElementById('currentMonthLabel').textContent = "- " + now.toLocaleString('default', { month: 'short' }).toUpperCase();
 
-    // MOBILE TAB SWITCHING LOGIC
+    // NATIVE APP TAB SWITCHING LOGIC (Mobile Only)
     window.switchTab = function(tabId, navElement) {
         if (window.innerWidth > 992) return; 
         
-        document.getElementById('tab-goals').classList.remove('active');
-        document.getElementById('tab-home').classList.remove('active');
-        document.getElementById('tab-coach').classList.remove('active');
+        // Remove active class from the body
+        document.body.classList.remove('home-view-active', 'goals-view-active', 'coach-view-active');
         
+        // Apply the newly selected tab's class
+        if (tabId === 'tab-home') document.body.classList.add('home-view-active');
+        if (tabId === 'tab-goals') document.body.classList.add('goals-view-active');
+        if (tabId === 'tab-coach') document.body.classList.add('coach-view-active');
+        
+        // Update nav icon highlights
         document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-        
-        document.getElementById(tabId).classList.add('active');
         navElement.classList.add('active');
     };
 
+    // Ensure resizing fixes the views seamlessly
     window.addEventListener('resize', () => {
         if(window.innerWidth > 992) {
-            document.getElementById('tab-goals').style.display = '';
-            document.getElementById('tab-home').style.display = '';
-            document.getElementById('tab-coach').style.display = '';
-            document.querySelectorAll('.mobile-hide').forEach(el => el.style.display = '');
+            // Restore pure desktop layout
+            document.body.classList.remove('home-view-active', 'goals-view-active', 'coach-view-active');
         } else {
-            document.getElementById('tab-goals').style.display = '';
-            document.getElementById('tab-home').style.display = '';
-            document.getElementById('tab-coach').style.display = '';
+            // Put it back to whatever mobile tab is active
+            let activeNav = document.querySelector('.nav-item.active');
+            if(activeNav) {
+                if (activeNav.innerText.includes('Home')) document.body.classList.add('home-view-active');
+                else if (activeNav.innerText.includes('Goals')) document.body.classList.add('goals-view-active');
+                else if (activeNav.innerText.includes('Coach')) document.body.classList.add('coach-view-active');
+            } else {
+                document.body.classList.add('home-view-active');
+            }
         }
     });
 
@@ -790,7 +818,13 @@
 
     const appDimmer = document.getElementById("appDimmer");
     const qTerminal = document.getElementById("queryTerminal");
-    window.openSearch = function() { appDimmer.classList.add("active"); qTerminal.classList.add("active"); document.getElementById("queryInput").focus(); }
+    
+    window.openSearch = function() { 
+        if (window.innerWidth <= 992) return; // Prevent modal popup on mobile since Coach Tab handles it
+        appDimmer.classList.add("active"); 
+        qTerminal.classList.add("active"); 
+        document.getElementById("queryInput").focus(); 
+    }
     
     appDimmer.addEventListener("click", () => { 
         document.querySelectorAll('.modal-overlay, .query-terminal-modal').forEach(el => el.classList.remove('active')); 
@@ -825,7 +859,7 @@
       const startCap = Number(p.startingBalance) || 0;
 
       const surplus = income - fixedExp - monthLoggedTotal;
-      const currentCap = startCap + (income - fixedExp) - allTimeLoggedTotal;
+      const currentCap = startCap + (pIncome - pExpense) - allTimeLoggedTotal;
       
       let response = "I monitor your data. Try asking about your 'surplus', 'current savings', or 'Can I afford a $500 item?'.";
 
