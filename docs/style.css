@@ -309,3 +309,42 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus 
   .s4-connection-svg, .s5-bg-lines, .s5-mini-nodes { display: none; }
   .gg-snap-section { height: auto; padding: 100px 0; }
 }
+/* =========================================
+   LANDING PAGE MOBILE RESPONSIVENESS
+========================================= */
+@media (max-width: 900px) {
+  /* Navigation */
+  .gg-nav-inner { flex-direction: column; gap: 15px; padding: 10px 20px; }
+  .gg-nav-links { flex-wrap: wrap; justify-content: center; }
+  .gg-nav-actions { width: 100%; justify-content: space-between; }
+  .gg-nav-actions .gg-btn { flex: 1; text-align: center; }
+
+  /* Hero Section */
+  .gg-title { font-size: 2.5rem; line-height: 1.2; }
+  .gg-sub { font-size: 1rem; }
+
+  /* Section 2 (How it works) */
+  .s2-wrapper { flex-direction: column; }
+  .s2-cards-row { flex-direction: column; }
+  .s2-engine-flow { flex-direction: column; gap: 10px; }
+  .s2-flow-arrow { transform: rotate(90deg); margin: 10px 0; }
+  .s2-right { width: 100%; margin-top: 30px; }
+
+  /* Section 3 (Features) */
+  .s3-wrapper { flex-direction: column; }
+  .s3-network-viz { flex-direction: column; gap: 20px; }
+  .net-lines { display: none; } /* Hide complex SVG lines on small screens */
+  .net-center, .net-right { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+  
+  /* Section 4 (Explorer) */
+  .s4-shell { flex-direction: column; }
+  .s4-connection-svg { display: none; }
+  .s4-left, .s4-right { width: 100%; min-width: unset; border: none; }
+  .s4-right { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; }
+
+  /* Section 5 (Start) */
+  .s5-wrapper { flex-direction: column; }
+  .s5-card { width: 100%; min-width: unset; }
+  .s5-center-panel { padding: 40px 10px; text-align: center; }
+  .s5-mini-nodes { display: none; } /* Hide mini nodes for cleaner mobile UI */
+}

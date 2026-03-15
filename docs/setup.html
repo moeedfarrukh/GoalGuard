@@ -7,9 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Forces native browser elements (scrollbars, number arrows, date pickers) to dark mode */
       color-scheme: dark; 
-      
       --bg: #0d1117;
       --panel: #161B22; 
       --orange: #FF5B04;
@@ -37,9 +35,7 @@
     @keyframes slideInRight { 0% { opacity: 0; transform: translateX(20px); } 100% { opacity: 1; transform: translateX(0); } }
     @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-    /* =========================================
-       LEFT SIDEBAR 
-    ========================================= */
+    /* LEFT SIDEBAR */
     .sidebar {
       width: 320px;
       background-color: var(--panel); 
@@ -52,7 +48,6 @@
       box-shadow: 4px 0 20px rgba(0,0,0,0.2);
     }
 
-    /* CUSTOM CSS LOGO */
     .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 50px; user-select: none; }
     .brand-icon {
       width: 30px; height: 30px;
@@ -66,7 +61,6 @@
     .welcome-text h1 { font-size: 32px; font-weight: 800; margin: 0 0 10px; line-height: 1.15; letter-spacing: -0.5px; }
     .welcome-text p { color: var(--text-dim); font-size: 14px; line-height: 1.5; margin: 0; }
 
-    /* AI Analysis Terminal (Perfected) */
     .ai-terminal {
       background: var(--bg); 
       border: 1px solid var(--stroke);
@@ -110,9 +104,7 @@
     }
     .btn-launch:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 91, 4, 0.3); background: #ff6a1a; }
 
-    /* =========================================
-       RIGHT CONTENT (Scrollable Form)
-    ========================================= */
+    /* RIGHT CONTENT */
     .main-content {
       flex: 1;
       padding: 60px 60px;
@@ -163,14 +155,9 @@
     input::placeholder { color: #4b5563; }
     select option { background: var(--panel); color: #fff; }
 
-    /* Force Number Input Arrows to Always Show */
     input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-      opacity: 1;
-      cursor: pointer;
-    }
+    input[type="number"]::-webkit-outer-spin-button { opacity: 1; cursor: pointer; }
 
-    /* Persona Cards */
     .persona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .persona-card {
       background: var(--panel);
@@ -195,7 +182,6 @@
     .persona-title { font-weight: 700; font-size: 14px; color: #fff; display: block; margin-bottom: 4px; }
     .persona-desc { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
 
-    /* Goal Rows */
     .goal-list { display: flex; flex-direction: column; gap: 12px; }
     .goal-row {
       display: grid;
@@ -222,6 +208,21 @@
     }
     .btn-add:hover { border-color: var(--blue); color: var(--blue); background: rgba(59, 130, 246, 0.05); }
 
+    /* =========================================
+       MOBILE RESPONSIVENESS (Screens under 900px)
+    ========================================= */
+    @media (max-width: 900px) {
+      body { flex-direction: column; overflow-y: auto; }
+      .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--stroke); padding: 30px 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); z-index: 20; }
+      .brand { margin-bottom: 30px; }
+      .main-content { padding: 30px 20px; overflow-y: visible; }
+      .grid-2 { grid-template-columns: 1fr; gap: 16px; }
+      .persona-grid { grid-template-columns: 1fr; }
+      .goal-row { grid-template-columns: 1fr 1fr; gap: 10px; padding: 16px; }
+      .goal-row .goal-priority, .goal-row .goal-name { grid-column: span 2; }
+      .goal-row .goal-date { grid-column: span 2; }
+      .goal-row .btn-remove { grid-column: span 2; width: 100%; background: rgba(248, 113, 113, 0.1); margin-top: 5px; }
+    }
   </style>
 </head>
 <body>
@@ -244,7 +245,6 @@
     <div>
       <div class="ai-terminal" id="aiBar">
         <div class="ai-badge">SYSTEM ANALYSIS</div>
-        
         <div class="ai-terminal-icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
         </div>
@@ -259,7 +259,6 @@
 
   <main class="main-content">
     <form id="setupForm">
-      
       <div class="form-section">
         <div class="section-header">1. Financial Baseline</div>
         <div class="grid-2">
@@ -291,7 +290,6 @@
       <div class="form-section">
         <div class="section-header">2. System Persona</div>
         <div class="persona-grid">
-          
           <div class="persona-card active" data-value="Friendly" onclick="selectPersona(this)">
             <div class="persona-icon">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
@@ -315,7 +313,6 @@
             <span class="persona-title">Analyst</span>
             <span class="persona-desc">Pure data, projections, and probability.</span>
           </div>
-
         </div>
         <input type="hidden" id="personaValue" value="Friendly">
       </div>
@@ -344,34 +341,26 @@
   <script type="module">
     import { supabase } from "./supabaseClient.js";
 
-    // 1. Initial Load - Dynamic Username
     async function init() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { window.location.href = "./signin.html"; return; }
-      
       const fullName = user.user_metadata?.full_name || "User";
       const firstName = fullName.split(' ')[0];
-      
       document.getElementById('userName').innerText = `Hello ${firstName}`;
     }
     init();
 
-    // 2. Persona Selection Helper
     window.selectPersona = function(cardElement) {
       document.querySelectorAll('.persona-card').forEach(c => c.classList.remove('active'));
       cardElement.classList.add('active');
       document.getElementById('personaValue').value = cardElement.dataset.value;
     };
 
-    // 3. Goal Management
     window.addGoalRow = function() {
       const row = document.createElement('div');
       row.className = 'goal-row';
       row.innerHTML = `
-        <select class="goal-priority">
-          <option value="Primary">Primary</option>
-          <option value="Secondary" selected>Secondary</option>
-        </select>
+        <select class="goal-priority"><option value="Primary">Primary</option><option value="Secondary" selected>Secondary</option></select>
         <input type="text" class="goal-name" placeholder="Objective Name" required>
         <input type="number" class="goal-target" placeholder="Target ($)" required>
         <input type="number" class="goal-monthly" placeholder="Alloc/Mo ($)" required>
@@ -382,20 +371,13 @@
       row.querySelectorAll('input, select').forEach(el => el.addEventListener('input', runAnalysis));
     };
 
-    window.removeRow = function(btn) {
-      btn.parentElement.remove();
-      runAnalysis();
-    };
+    window.removeRow = function(btn) { btn.parentElement.remove(); runAnalysis(); };
 
-    // 4. Live AI Analysis Logic
     window.runAnalysis = function() {
       const inc = parseFloat(document.getElementById('income').value) || 0;
       const exp = parseFloat(document.getElementById('expenses').value) || 0;
-      
       let totalGoalCommit = 0;
-      document.querySelectorAll('.goal-monthly').forEach(input => {
-        totalGoalCommit += parseFloat(input.value) || 0;
-      });
+      document.querySelectorAll('.goal-monthly').forEach(input => { totalGoalCommit += parseFloat(input.value) || 0; });
 
       const remaining = inc - exp;
       const aiText = document.getElementById('aiMessage');
@@ -408,7 +390,7 @@
       }
 
       if (remaining >= totalGoalCommit) {
-        aiBar.style.borderColor = "var(--stroke)"; // Neutral safe state
+        aiBar.style.borderColor = "var(--stroke)"; 
         aiText.innerHTML = `System Viable. Operating surplus stands at <b>$${remaining}</b>. Objective allocations (<b>$${totalGoalCommit}</b>) fall safely within guardrails.`;
       } else {
         aiBar.style.borderColor = "var(--orange)";
@@ -416,18 +398,12 @@
       }
     };
 
-    // Attach listeners for live analysis
     ['income', 'expenses'].forEach(id => document.getElementById(id).addEventListener('input', runAnalysis));
     document.querySelectorAll('.goal-monthly').forEach(el => el.addEventListener('input', runAnalysis));
 
-    // 5. Submit Handler
     window.submitSetup = async function() {
-      // Basic HTML5 validation check
       const form = document.getElementById('setupForm');
-      if(!form.checkValidity()) {
-          form.reportValidity();
-          return;
-      }
+      if(!form.checkValidity()) { form.reportValidity(); return; }
 
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;

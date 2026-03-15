@@ -10,14 +10,7 @@
   <link rel="stylesheet" href="./style.css" />
 
   <style>
-    /* Custom CSS Logo Styles injected for the landing page */
-    .brand-icon {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      border: 3px solid #FF5B04; /* Matches var(--orange) */
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 14px; color: #fff;
-    }
+    .brand-icon { width: 28px; height: 28px; border-radius: 50%; border: 3px solid #FF5B04; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color: #fff; }
     .brand-text { font-weight: 800; font-size: 16px; letter-spacing: 0.15em; text-transform: uppercase; }
     .gg-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; user-select: none; }
   </style>
@@ -358,7 +351,6 @@
     const startSavingBtn = document.getElementById("startSavingBtn");
     const startSavingBtnFinal = document.getElementById("startSavingBtnFinal");
 
-    // Top links go straight to signin/signup
     navSignInBtn?.addEventListener("click", () => { window.location.href = "./signin.html"; });
     navSignUpBtn?.addEventListener("click", () => { window.location.href = "./signup.html"; }); 
 

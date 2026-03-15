@@ -33,31 +33,21 @@
       height: 100vh; overflow: hidden; display: flex; flex-direction: column;
     }
 
-    /* GLOBAL ANIMATIONS */
     @keyframes slideUpFade { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
     .animate-item { animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
     .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; } .delay-3 { animation-delay: 0.3s; }
 
-    /* TOPBAR */
     .topbar {
       height: 64px; display: flex; align-items: center; justify-content: space-between;
       padding: 0 40px; background: rgba(13, 17, 23, 0.9); backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--stroke); flex-shrink: 0; z-index: 100;
     }
     
-    /* CUSTOM CSS LOGO (Ported from Setup) */
     .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; transition: transform 0.2s; user-select: none; }
     .brand:hover { transform: scale(1.02); }
-    .brand-icon {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      border: 3px solid var(--orange);
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 14px; color: #fff;
-    }
+    .brand-icon { width: 28px; height: 28px; border-radius: 50%; border: 3px solid var(--orange); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color: #fff; }
     .brand-text { font-weight: 800; font-size: 16px; letter-spacing: 0.15em; }
 
-    /* LAYOUT */
     .app-container {
       flex: 1; max-width: 1650px; width: 100%; margin: 0 auto; padding: 20px 30px;
       display: grid; grid-template-columns: 300px 1fr 340px; gap: 24px; min-height: 0;
@@ -67,19 +57,15 @@
       background: var(--panel); border: 1px solid var(--stroke); border-radius: 14px; 
       display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.2);
     }
-    .panel-header { padding: 14px 20px; border-bottom: 1px solid var(--stroke); display: flex; justify-content: space-between; align-items: center; }
-    .panel-title { font-size: 11px; font-weight: 800; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin: 0; }
-
+    
     .main-scroll { flex: 1; overflow-y: auto; scrollbar-width: none; padding-bottom: 8px; padding-top: 4px; }
     .main-scroll::-webkit-scrollbar { display: none; }
 
     .hover-lift { transition: all 0.2s ease-out; }
     .hover-lift:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); border-color: rgba(255,255,255,0.15); }
 
-    /* SECTION TITLES (EXTERNAL) */
     .section-title { font-size: 14px; font-weight: 800; color: #fff; margin: 0 0 12px 0; }
 
-    /* GOALS */
     .goal-item {
       padding: 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--stroke);
       border-radius: 10px; margin-bottom: 10px; border-left: 4px solid var(--blue);
@@ -92,25 +78,21 @@
     .goal-item:hover .btn-remove-goal { opacity: 1; }
     .btn-remove-goal:hover { color: #f87171; transform: scale(1.2); }
 
-    /* HEALTH CARDS */
     .health-grid { display: flex; gap: 16px; margin-bottom: 24px; width: 100%; }
     .health-card { flex: 1; min-width: 0; background: var(--panel); border: 1px solid var(--stroke); border-radius: 14px; padding: 18px 20px; display: flex; justify-content: space-between; align-items: center;}
 
-    /* CHARTS - INCREASED SIZE */
     .chart-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; flex: 1;}
     .chart-box { background: var(--panel); border: 1px solid var(--stroke); border-radius: 14px; padding: 20px 24px; display: flex; flex-direction: column; flex: 1; min-height: 250px;}
     .chart-svg { width: 100%; height: 180px; display: block; margin-top: auto; filter: drop-shadow(0 0 6px rgba(59,130,246,0.3)); }
 
-    /* SEARCH TRIGGER - INTEGRATED INTO FLOW */
     .search-trigger {
       background: rgba(255,255,255,0.02); border: 1px solid var(--stroke); border-radius: 10px; 
       padding: 16px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer; 
       color: var(--text-dim); font-size: 14px; font-weight: 600; transition: all 0.2s; 
-      flex-shrink: 0; margin-top: 24px; margin-bottom: 20px; /* Hugs the bottom of charts */
+      flex-shrink: 0; margin-top: 24px; margin-bottom: 20px; 
     }
     .search-trigger:hover { border-color: var(--blue); color: #fff; background: rgba(59, 130, 246, 0.05); transform: translateY(-2px); }
 
-    /* RIGHT SIDEBAR */
     .premium-savings {
       background: #010409; border-radius: 12px; padding: 16px 20px; text-align: center; margin-bottom: 12px;
       border: 1px solid var(--stroke); position: relative; overflow: hidden;
@@ -121,7 +103,6 @@
     .premium-savings span { font-size: 10px; font-weight: 800; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; display:block;}
     .premium-savings h2 { font-size: 32px; font-weight: 900; margin: 0; color: #fff; line-height: 1.1; display:block;}
 
-    /* STATS & SPENDS TILES */
     .stat-tile, .spends-box { background: rgba(255,255,255,0.02); border: 1px solid var(--stroke); border-radius: 12px; padding: 14px 18px; margin-bottom: 12px; flex-shrink: 0; }
     .stat-label, .spends-title { font-size: 11px; color: var(--text-dim); font-weight: 800; text-transform: uppercase; margin-bottom: 10px; display: block; letter-spacing: 0.1em; }
     .data-row { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 13px; font-weight: 500; }
@@ -141,26 +122,19 @@
     .view-all-link { display: block; text-align: center; color: var(--text-dim); font-size: 11px; font-weight: 600; cursor: pointer; text-decoration: none; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--stroke); transition: 0.2s;}
     .view-all-link:hover { color: var(--blue); }
 
-    .btn-log-spend {
-      width: 100%; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.15); color: var(--text-dim);
-      border-radius: 10px; padding: 12px; font-weight: 800; font-size: 11px; cursor: pointer; transition: 0.2s; margin-bottom: 12px; letter-spacing: 0.1em; text-transform: uppercase; flex-shrink: 0;
-    }
-    .btn-log-spend:hover { border-color: var(--blue); color: var(--blue); background: rgba(59,130,246,0.05); transform: translateY(-2px); }
+    .btn-orange { background: var(--orange); color: #fff; border: none; border-radius: 6px; padding: 10px 20px; font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 11px; transition: all 0.2s; }
+    .btn-orange:hover { filter: brightness(1.15); transform: translateY(-1px); box-shadow: 0 6px 15px rgba(255,91,4,0.3); }
+    .btn-stealth { background: transparent; border: 1px solid var(--stroke); color: var(--text-dim); border-radius: 6px; padding: 6px 12px; font-size: 10px; font-weight: 800; cursor: pointer; transition: 0.2s;}
+    .btn-stealth:hover { background: rgba(255,255,255,0.05); color: #fff; border-color: rgba(255,255,255,0.3); }
 
-    /* 2x2 ANIMATED COMING SOON GRID */
     .feature-grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: auto; flex-shrink: 0; }
-    .feature-box { 
-      background: rgba(255,255,255,0.015); border: 1px solid var(--stroke); border-radius: 10px; 
-      padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70px; 
-      transition: all 0.2s; cursor: not-allowed; text-align: center; position: relative; overflow: hidden;
-    }
+    .feature-box { background: rgba(255,255,255,0.015); border: 1px solid var(--stroke); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70px; transition: all 0.2s; cursor: not-allowed; text-align: center; position: relative; overflow: hidden; }
     .feature-box:hover { border-color: rgba(255,255,255,0.3); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
     .feature-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
     .feature-content h2 { font-size: 11px; color: #fff; margin: 4px 0 4px; font-weight: 700; }
     .badge { font-size: 8px; font-weight: 900; background: var(--orange); color: #fff; padding: 2px 4px; border-radius: 3px; }
     .f-icon { width: 18px; height: 18px; }
 
-    /* BACKGROUND ANIMATIONS */
     .anim-bg { position: absolute; inset: 0; z-index: 0; opacity: 0.25; pointer-events: none;}
     .trading-bg { display: flex; gap: 3px; align-items: flex-end; padding: 4px; filter: blur(1px); }
     .t-bar { width: 100%; background: var(--mint); animation: pulseBar 2s infinite alternate ease-in-out; border-radius: 2px 2px 0 0; }
@@ -173,13 +147,6 @@
     .auto-bg { background: linear-gradient(to top, transparent, var(--purple), transparent); background-size: 100% 200%; animation: scanLine 3s linear infinite; opacity: 0.2; }
     @keyframes scanLine { 0% { background-position: 0% 100%; } 100% { background-position: 0% -100%; } }
 
-    /* BUTTONS */
-    .btn-orange { background: var(--orange); color: #fff; border: none; border-radius: 6px; padding: 10px 20px; font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 11px; transition: all 0.2s; }
-    .btn-orange:hover { filter: brightness(1.15); transform: translateY(-1px); box-shadow: 0 6px 15px rgba(255,91,4,0.3); }
-    .btn-stealth { background: transparent; border: 1px solid var(--stroke); color: var(--text-dim); border-radius: 6px; padding: 6px 12px; font-size: 10px; font-weight: 800; cursor: pointer; transition: 0.2s;}
-    .btn-stealth:hover { background: rgba(255,255,255,0.05); color: #fff; border-color: rgba(255,255,255,0.3); }
-
-    /* MODALS & OVERLAYS */
     .app-dimmer { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 1500; display: none; opacity: 0; transition: opacity 0.3s; }
     .app-dimmer.active { display: block; opacity: 1; }
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 2000; }
@@ -188,10 +155,8 @@
     input.modal-input { background: rgba(0,0,0,0.3); border: 1px solid var(--stroke); border-radius: 8px; padding: 14px; color: #fff; width: 100%; outline: none; margin-bottom: 16px; font-size: 14px; transition: 0.3s;}
     input.modal-input:focus { border-color: var(--blue); }
 
-    /* ENGINE/TERMINAL STYLE MODALS */
     .query-terminal-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -45%) scale(0.95); width: 100%; max-width: 650px; background: var(--panel); border: 1px solid var(--blue); border-radius: 16px; padding: 32px; z-index: 1501; opacity: 0; pointer-events: none; transition: all 0.3s; box-shadow: 0 30px 80px rgba(0,0,0,0.8); box-sizing: border-box; }
     .query-terminal-modal.active { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
-    
     .chat-history { height: 180px; overflow-y: auto; scrollbar-width: none; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
     .chat-msg { padding: 12px 16px; border-radius: 8px; max-width: 85%; line-height: 1.4; animation: slideUpFade 0.3s ease-out; }
     .chat-user { background: rgba(255, 255, 255, 0.08); align-self: flex-end; color: #fff; }
@@ -202,6 +167,27 @@
     .full-spends-list { max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 4px; }
     .full-spends-list::-webkit-scrollbar { width: 4px; }
     .full-spends-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+    /* =========================================
+       MOBILE RESPONSIVENESS (Screens under 992px)
+    ========================================= */
+    @media (max-width: 992px) {
+      body { height: auto; overflow-y: auto; }
+      .topbar { padding: 0 20px; }
+      .app-container { display: flex; flex-direction: column; padding: 16px; gap: 20px; }
+      aside.panel, main, aside:last-child { flex: none; width: 100%; }
+      .main-scroll { overflow-y: visible; padding-right: 0; }
+      .health-grid { flex-direction: column; gap: 12px; }
+      .chart-grid { grid-template-columns: 1fr; gap: 20px; }
+      .feature-grid-2x2 { grid-template-columns: 1fr 1fr; }
+      .modal-content { width: 92%; padding: 20px; }
+      .query-terminal-modal { width: 95%; padding: 20px; max-height: 85vh; display: flex; flex-direction: column; }
+      .chat-history { flex: 1; min-height: 150px; }
+      
+      /* Make Quick Log inputs wrap nicely on mobile */
+      #allSpendsModal > div:last-child { flex-wrap: wrap; }
+      #quickLogDesc { flex: 100% !important; }
+    }
   </style>
 </head>
 
@@ -231,9 +217,7 @@
     </aside>
 
     <main style="display:flex; flex-direction:column; min-height:0; position: relative;">
-      
       <div class="main-scroll animate-item delay-2" style="display:flex; flex-direction:column; padding-right: 4px;">
-        
         <div style="margin-bottom: 24px;">
           <h1 id="heroGreetingTitle" style="margin: 0 0 6px; font-size: 30px; font-weight: 800; letter-spacing: -0.5px;">Hello User</h1>
           <div style="min-height: 20px;">
@@ -269,7 +253,6 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           Click to open Command & Query Interface...
         </div>
-
       </div>
     </main>
 
@@ -315,31 +298,19 @@
         <div class="feature-grid-2x2">
             <div class="feature-box hover-lift">
               <div class="anim-bg trading-bg"><div class="t-bar" style="height:30%"></div><div class="t-bar" style="height:60%"></div><div class="t-bar" style="height:40%"></div><div class="t-bar" style="height:90%"></div></div>
-              <div class="feature-content">
-                <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-                <h2>Trading</h2><span class="badge">SOON</span>
-              </div>
+              <div class="feature-content"><svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg><h2>Trading</h2><span class="badge">SOON</span></div>
             </div>
             <div class="feature-box hover-lift">
               <div class="anim-bg whatsapp-bg"></div>
-              <div class="feature-content">
-                <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="var(--whatsapp)" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                <h2>WhatsApp</h2><span class="badge">SOON</span>
-              </div>
+              <div class="feature-content"><svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="var(--whatsapp)" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg><h2>WhatsApp</h2><span class="badge">SOON</span></div>
             </div>
             <div class="feature-box hover-lift">
               <div class="anim-bg crypto-bg"></div>
-              <div class="feature-content">
-                <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.5 9h5.51a2.5 2.5 0 0 1 0 5H11"></path><path d="M11 14h4a2.5 2.5 0 0 1 0 5h-5.5"></path><line x1="13" y1="2.5" x2="13" y2="9"></line><line x1="13" y1="19" x2="13" y2="21.5"></line></svg>
-                <h2>Crypto</h2><span class="badge">SOON</span>
-              </div>
+              <div class="feature-content"><svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.5 9h5.51a2.5 2.5 0 0 1 0 5H11"></path><path d="M11 14h4a2.5 2.5 0 0 1 0 5h-5.5"></path><line x1="13" y1="2.5" x2="13" y2="9"></line><line x1="13" y1="19" x2="13" y2="21.5"></line></svg><h2>Crypto</h2><span class="badge">SOON</span></div>
             </div>
             <div class="feature-box hover-lift">
               <div class="anim-bg auto-bg"></div>
-              <div class="feature-content">
-                <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                <h2>Auto-Invest</h2><span class="badge">SOON</span>
-              </div>
+              <div class="feature-content"><svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg><h2>Auto-Invest</h2><span class="badge">SOON</span></div>
             </div>
         </div>
       </div>
@@ -365,10 +336,7 @@
         <span class="panel-title" style="color: var(--pink); margin:0; font-size: 14px;">ALL LOGGED SPENDS</span>
         <button class="btn-stealth" onclick="closeAllSpendsModal()">CLOSE</button>
     </div>
-    
-    <div class="full-spends-list" id="fullSpendsList">
-        </div>
-    
+    <div class="full-spends-list" id="fullSpendsList"></div>
     <div style="display: flex; gap: 10px; padding-top: 20px; border-top: 1px solid var(--stroke); margin-top: 12px; align-items: center;">
         <input type="text" id="quickLogDesc" class="query-input" placeholder="Note (e.g., Coffee)" style="flex: 2;">
         <input type="number" id="quickLogAmount" class="query-input" placeholder="Amount ($)" style="flex: 1;">
@@ -378,7 +346,7 @@
   </div>
 
   <div class="modal-overlay" id="goalModal">
-    <div class="modal-content" style="width: 400px;">
+    <div class="modal-content">
       <h3 style="margin-top:0; font-size: 20px;">Add New Goal</h3>
       <input type="text" id="mGoalName" class="modal-input" placeholder="Goal Name (e.g., House)">
       <input type="number" id="mGoalTarget" class="modal-input" placeholder="Target Amount">
@@ -391,7 +359,7 @@
   </div>
 
   <div class="modal-overlay" id="cashFlowModal">
-    <div class="modal-content" style="width: 400px;">
+    <div class="modal-content">
       <h3 style="margin-top:0; font-size: 20px;">Edit Cash Flow</h3>
       <label style="font-size:11px; color:var(--text-dim); text-transform:uppercase; font-weight:800;">Monthly Income</label>
       <input type="number" id="editIncome" class="modal-input" style="margin-top:6px;">
@@ -488,7 +456,6 @@
       document.getElementById("heroGreetingTitle").textContent = `Hello ${firstName}`;
       startGreetingCarousel(monthlySurplus > 0);
 
-      // LEFT: ACTIVE GOALS CARDS
       document.getElementById("goalList").innerHTML = goals.map((g, index) => {
         const color = lineColors[index % lineColors.length];
         const icon = getIcon(g.name);
@@ -518,7 +485,6 @@
         </div>`;
       }).join("");
 
-      // CENTER: WEALTH HEALTH CARDS
       document.getElementById("healthGrid").innerHTML = goals.slice(0,2).map((g, index) => {
         const isSafe = monthlySurplus > 0;
         const cColor = lineColors[index % lineColors.length];
@@ -540,7 +506,6 @@
         </div>`;
       }).join("");
 
-      // CENTER: VELOCITY CHART (Curved Lines)
       const svgWidth = 600, svgHeight = 180;
       const xStart = 40, xEnd = 560, yTop = 30, yBottom = 160;
       let svgContent = '';
@@ -580,7 +545,6 @@
       });
       document.getElementById("velocityGraph").innerHTML = svgContent;
 
-      // CENTER: ASSET ALLOCATION (Dot Matrix)
       const totalTarget = goals.reduce((sum, g) => sum + g.target, 0) || 1;
       let allocHtml = goals.map((g, index) => {
           const color = lineColors[index % lineColors.length];
@@ -608,7 +572,6 @@
           </div>`;
       document.getElementById("allocationList").innerHTML = allocHtml;
 
-      // RIGHT: RECENT SPENDS LIST
       const recentSpendsList = document.getElementById("recentSpendsList");
       if (loggedSpendsArray.length === 0) {
           recentSpendsList.innerHTML = `<div style="font-size:12px; color:var(--text-dim); text-align:center; padding: 10px 0;">No recent spends.</div>`;
@@ -635,7 +598,6 @@
           }).join("");
       }
 
-      // STATS
       document.getElementById("bigCurrentSavings").textContent = formatMoney(currentCap);
       document.getElementById("valIncome").textContent = formatMoney(pIncome);
       document.getElementById("valExpenses").textContent = formatMoney(pExpense);
@@ -647,7 +609,6 @@
       document.getElementById("proj6").textContent = formatMoney(currentCap + (monthlySurplus * 6));
     }
 
-    // ALL SPENDS TERMINAL LOGIC
     window.openAllSpendsModal = function() {
         document.getElementById("appDimmer").classList.add("active");
         document.getElementById("allSpendsModal").classList.add("active");
@@ -716,7 +677,6 @@
         }
     }
 
-    // EXPLICIT WINDOW FUNCTIONS
     window.openGoalModal = function() { 
         document.getElementById("mGoalName").value = "";
         document.getElementById("mGoalTarget").value = "";
@@ -772,7 +732,6 @@
         supabase.auth.signOut().then(() => window.location.replace("./index.html"));
     }
 
-    // SEARCH & INTELLIGENCE ENGINE
     const appDimmer = document.getElementById("appDimmer");
     const qTerminal = document.getElementById("queryTerminal");
     window.openSearch = function() { appDimmer.classList.add("active"); qTerminal.classList.add("active"); document.getElementById("queryInput").focus(); }
@@ -797,7 +756,6 @@
       const goals = JSON.parse(localStorage.getItem(GOALS_KEY)) || [];
       const loggedSpendsArray = JSON.parse(localStorage.getItem(SPENDS_KEY)) || [];
 
-      // Re-calculate the current stats for accurate bot replies
       const currentMonthSpends = loggedSpendsArray.filter(s => {
           if(!s.date) return false;
           const localD = new Date(new Date(s.date).getTime() + Math.abs(new Date(s.date).getTimezoneOffset()*60000));
@@ -815,8 +773,6 @@
       
       let response = "I monitor your data. Try asking about your 'surplus', 'current savings', or 'Can I afford a $500 item?'.";
 
-      // 0. AFFORDABILITY & IMPACT CHECK (Conversational)
-      // Robust Regex: Matches numbers with or without $ symbol, ensuring it is a standalone number (ignores "5" in "ps5")
       const moneyMatch = query.match(/(?:^|\s)\$?(\d+(?:,\d{3})*(?:\.\d+)?)\$?(?=$|\s|[.,?!])/); 
       const amountAsked = moneyMatch ? parseFloat(moneyMatch[1].replace(/,/g, '')) : null;
 
@@ -847,15 +803,12 @@
       else if ((query.includes("afford") || query.includes("buy") || query.includes("purchase")) && !amountAsked) {
           response = `Please specify an amount (e.g., "Can I buy a $500 watch?"). Generally, staying under your ${formatMoney(surplus)} surplus means nothing will happen to your goals.`;
       }
-      // 1. SURPLUS CHECK
       else if (query.includes("surplus") || query.includes("leftover") || query.includes("left")) {
           response = `Your current monthly surplus is <b>${formatMoney(surplus)}</b> after all logged spends and fixed expenses.`;
       } 
-      // 2. BALANCE / SAVINGS CHECK
       else if (query.includes("capital") || query.includes("balance") || query.includes("savings") || query.includes("money")) {
           response = `Your current total liquid savings stand at <b>${formatMoney(currentCap)}</b>.`;
       }
-      // 3. GOAL SPECIFIC CHECK
       else if (query.includes("goal") || query.includes("target")) {
           if (goals.length === 0) {
               response = "You haven't set any active goals yet.";
@@ -865,11 +818,9 @@
               response = `You have <b>${goals.length}</b> active goals. Your current savings cover <b>${coverage}%</b> of your combined targets.`;
           }
       }
-      // 4. INCOME/EXPENSE CHECK
       else if (query.includes("income") || query.includes("expense")) {
           response = `Your profile shows a base monthly income of ${formatMoney(income)} and fixed expenses of ${formatMoney(fixedExp)}.`;
       }
-      // 5. NAME-BASED GOAL SEARCH (Catch-all)
       else {
           let foundGoal = false;
           goals.forEach(g => {
